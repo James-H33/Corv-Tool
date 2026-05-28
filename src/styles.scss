@@ -1,1 +1,71 @@
-/* You can add global styles to this file, and also import other style files */
+@use './app/common/common.styles' as *;
+@use '@angular/cdk' as cdk;
+
+@include cdk.overlay();
+
+*, p, h1, h2, h3, h4, h5, h6, ul, ol, li, a, span, div {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+button {
+  outline: none;
+  border: none;
+  background: none;
+}
+
+:root {
+  --ct-main-content-indent: 101px;
+
+  // Colors
+  --ct-color-primary: #064e88;
+  --ct-color-primary-hover: #064e88;
+
+  // Text Colors
+  --ct-text-color-default: #002055;
+  --ct-text-color-on-primary: #fff;
+  --ct-text-color-secondary: #868D95;
+  --ct-text-color-placeholder: #848A94;
+  --ct-text-color-disabled: #848A94;
+  --ct-text-color-error: rgba(255, 77, 79, 1);
+
+  // Background Colors
+  --ct-background-main: #ffffff;
+  --ct-background-secondary: #868D95;
+  --ct-background-tertiary: #848A94;
+
+  // Global
+  --ct-nav-height: 56px;
+
+  // Borders
+  --ct-border-default: #e2e5fa;
+  --ct-border-focused: #756EF3;
+}
+
+body {
+  font-family: 'Circular-Std';
+  font-optical-sizing: auto;
+  overflow-x: hidden;
+  background: var(--ct-background-main);
+  color: var(--ct-text-color-default);
+}
+
+.cdk-overlay-pane-default {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ct-dropdown-menu-default {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-shadow:
+    0 0 0 1px rgba(104, 113, 150, 0.1),
+    0 2.5px 3px -1.5px rgba(200, 207, 233, 1),
+    0 4.5px 5px -1px rgba(216, 220, 235, 1);
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 1);
+}

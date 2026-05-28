@@ -1,0 +1,60 @@
+<div class="ct-car-list">
+  <div class="ct-car-list-header">
+    <div class="ct-car-list-header__title">Your Cars</div>
+    <div class="ct-car-list-header__filters">
+      <input ctInput type="text" placeholder="Search cars..." />
+    </div>
+  </div>
+
+  <div class="ct-car-list-body">
+    @for (car of cars(); track $index) {
+      <a [routerLink]="['/cars', car.vin]" class="ct-car-card__link">
+        <div class="ct-car-card">
+          <div class="ct-car-card__left">
+            <div class="ct-car-card__title">{{ car.year }} {{ car.model }}</div>
+
+            <div class="ct-car-card__subtitle">vin: {{ car.vin }}</div>
+          </div>
+
+          <div class="ct-car-card__right">
+            <ct-icon [icon]="ellipsesMenuIcon" size="24"></ct-icon>
+          </div>
+        </div>
+      </a>
+    }
+  </div>
+</div>
+
+<div class="ct-camera-view">
+  <div class="ct-camera-view__col">
+    <ct-icon [icon]="galleryIcon" size="28"></ct-icon>
+    <span class="ct-camera-view__label">Gallery</span>
+  </div>
+
+  <div class="ct-camera-view__col">
+    <button
+      class="ct-camera-view__button"
+      ctButtonIcon
+      ctButtonVariant="primary"
+      ctButtonIconRounded
+    >
+      <label class="ct-camera-view__label" for="picture">
+        <ct-icon [icon]="cameraIcon" size="32"></ct-icon>
+      </label>
+
+      <input
+        hidden
+        type="file"
+        id="picture"
+        name="picture"
+        accept="image/*"
+        capture="environment"
+      />
+    </button>
+  </div>
+
+  <div class="ct-camera-view__col">
+    <ct-icon [icon]="galleryIcon" size="28"></ct-icon>
+    <span class="ct-camera-view__label">Clear</span>
+  </div>
+</div>

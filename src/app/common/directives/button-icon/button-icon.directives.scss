@@ -1,0 +1,92 @@
+button[ctButtonIcon] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  background-color: transparent;
+  color: var(--ct-text-color-on-primary);
+  border: none;
+  font-size: 14px;
+  gap: 6px;
+  padding: 6px;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  box-shadow:
+    0 2px 4px 0px rgb(177 183 188),
+    0 1px 3px 0 rgb(200, 207, 233);
+  transition: all 0.2s ease-in-out;
+
+  &[ctButtonIconRounded] {
+    border-radius: 50%;
+  }
+
+  &[ctButtonSize='medium'] {
+    height: auto;
+    padding: 10px;
+  }
+
+  &[ctButtonSize='compact'] {
+    height: auto;
+    padding: 4px;
+    font-size: 12px;
+  }
+
+  &[ctButtonSize='small'] {
+    height: auto;
+    font-size: 12px;
+    padding: 2px;
+  }
+
+  &[ctButtonSize='xsmall'] {
+    height: auto;
+    font-size: 10px;
+    padding: 1px;
+  }
+
+  &[ctButtonVariant='outline'] {
+    color: var(--ct-text-color-default);
+    background-color: var(--ct-background-main);
+    box-shadow:
+      0 0 4px 1px rgb(244 240 240),
+      0 1px 3px 0 rgb(200, 207, 233);
+  }
+
+  &[ctButtonVariant='primary'] {
+    color: #fff;
+    background-color: var(--ct-color-primary);
+    box-shadow:
+      0 2px 4px 0px rgb(177 183 188),
+      0 1px 3px 0 rgb(200, 207, 233);
+
+    &:hover {
+      background-color: var(--ct-color-primary-hover);
+    }
+
+    &:active,
+    &:focus {
+      background-color: var(--ct-color-primary-hover);
+    }
+  }
+
+  &:hover {
+    background-color: #fafafa;
+  }
+
+  &:active,
+  &:focus {
+    outline: none;
+    background-color: #fafafa;
+  }
+
+  &[disabled] {
+    background-color: rgb(204, 204, 204);
+    color: var(--ct-text-color-disabled);
+    cursor: not-allowed;
+    box-shadow: none;
+
+    &:hover {
+      background-color: rgb(204, 204, 204);
+    }
+  }
+}

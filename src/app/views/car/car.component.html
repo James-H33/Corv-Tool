@@ -1,0 +1,126 @@
+<div class="ct-car">
+  <div class="ct-car-nav">
+    <button ctButtonIcon ctButtonVariant="outline">
+      <a [routerLink]="['/cars']" class="ct-car-nav__link">
+        <ct-icon [icon]="backArrowIcon" size="20"></ct-icon>
+      </a>
+    </button>
+  </div>
+
+  <header class="ct-car-header">
+    <div class="ct-car-header__title">1966 Chevrolet Corvette</div>
+    <!-- <div class="ct-car-header__subtitle">VIN: 1234567890</div> -->
+  </header>
+
+  <div class="ct-car-body">
+    <div class="ct-car-item">
+      <div class="ct-car-item__title">VIN: 1234567890</div>
+
+      <div
+        class="ct-car-item__image-container"
+        [style.backgroundImage]="'url(https://www.corvetteforum.com/forums/attachments/c1-and-c2-corvettes/47903478-1965-corvette-date-codes-vin-and-trim-tags-stamp-pad-040.jpg)'"
+      ></div>
+
+      <div class="ct-car-item__action">
+        <div class="ct-car-item__action-left">
+          <button ctButtonIcon ctButtonVariant="primary">Actual</button>
+          <button ctButtonIcon ctButtonVariant="outline">Sketch</button>
+        </div>
+
+        <div class="ct-car-item__action-right">
+          <button ctButtonIcon ctButtonVariant="outline">
+            <ct-icon [icon]="'gallery'" size="20"></ct-icon>
+            Retake
+          </button>
+        </div>
+      </div>
+
+      <div class="ct-car-item__details">
+        <div class="ct-car-item__detail">
+          <span class="ct-car-item__detail-label">Make:</span>
+          <span class="ct-car-item__detail-value">Chevrolet</span>
+        </div>
+
+        <div class="ct-car-item__detail">
+          <span class="ct-car-item__detail-label">Series:</span>
+          <span class="ct-car-item__detail-value">Corvette</span>
+        </div>
+
+        <div class="ct-car-item__detail">
+          <span class="ct-car-item__detail-label">Engine:</span>
+          <span class="ct-car-item__detail-value">327 V8</span>
+        </div>
+
+        <div class="ct-car-item__detail">
+          <span class="ct-car-item__detail-label">Body Style:</span>
+          <span class="ct-car-item__detail-value">2-door coupe</span>
+        </div>
+
+        <div class="ct-car-item__detail">
+          <span class="ct-car-item__detail-label">Model Year:</span>
+          <span class="ct-car-item__detail-value">1966</span>
+        </div>
+
+        <div class="ct-car-item__detail">
+          <span class="ct-car-item__detail-label">Assembly Plant:</span>
+          <span class="ct-car-item__detail-value">St. Louis, MO</span>
+        </div>
+
+        <div class="ct-car-item__detail">
+          <span class="ct-car-item__detail-label">Production Number:</span>
+          <span class="ct-car-item__detail-value">12345</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ct-car-item">
+      <div class="ct-car-item__title">Trim Tag</div>
+
+      <div
+        class="ct-car-item__image-container"
+        [style.backgroundImage]="'url(https://macswebs.com/corvetteworld/c2/1965/tags/65_trim_tag_a.jpg)'"
+      ></div>
+
+      <div class="ct-car-item__action">
+        <div class="ct-car-item__action-left">
+          <button ctButtonIcon ctButtonVariant="primary">Actual</button>
+          <button ctButtonIcon ctButtonVariant="outline">Sketch</button>
+        </div>
+
+        <div class="ct-car-item__action-right">
+          <button ctButtonIcon ctButtonVariant="outline">
+            <ct-icon [icon]="'gallery'" size="20"></ct-icon>
+            Retake
+          </button>
+        </div>
+      </div>
+
+      <div class="ct-car-item__details">
+        <div class="ct-car-item__detail">
+          <span class="ct-car-item__detail-label">Body: {{ trimTagData().codes.body }}</span>
+          <span class="ct-car-item__detail-value">{{ trimTagData().definition.body }}</span>
+        </div>
+
+        <div class="ct-car-item__detail">
+          <span class="ct-car-item__detail-label">Trim: {{ trimTagData().codes.trim }}</span>
+          <span class="ct-car-item__detail-value">{{ trimTagData().definition.trim }}</span>
+        </div>
+
+        <div class="ct-car-item__detail">
+          <span class="ct-car-item__detail-label">Style: {{ trimTagData().codes.style }}</span>
+          <span class="ct-car-item__detail-value">{{ trimTagData().definition.style }}</span>
+        </div>
+
+        <div class="ct-car-item__detail">
+          <span class="ct-car-item__detail-label">Paint: {{ trimTagData().codes.paint }}</span>
+          <span class="ct-car-item__detail-value">{{ trimTagData().definition.paint }}</span>
+        </div>
+
+        <div class="ct-car-item__detail">
+          <span class="ct-car-item__detail-label">Date: {{ trimTagData().codes.date_code }}</span>
+          <span class="ct-car-item__detail-value">{{ trimTagData().definition.date_code }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
