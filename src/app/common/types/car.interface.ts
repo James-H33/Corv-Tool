@@ -23,15 +23,15 @@ export interface Car {
   vinData?: CarVinData;
 }
 
-const exampleCar: Car = {
-  id: '1',
-  vin: '1234567890123456',
-  tagData: {
-    body: 'A-7681',
-    trim: '418',
-    style: '66 467',
-    paint: 'F-F',
-    dateCode: 'K06',
-  },
-  vinData: undefined,
-}
+// const exampleCar: Car = {
+//   id: '1',
+//   vin: '1234567890123456',
+//   tagData: {
+//     body: 'A-7681',
+//     trim: '418',
+//     style: '66 467',
+//     paint: 'F-F',
+//     dateCode: 'K06',
+//   },
+//   vinData: undefined,
+// }

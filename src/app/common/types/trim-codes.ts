@@ -1,11 +1,12 @@
 const regExp63: [RegExp, string][] = [
-  [/^(STD|BLK)$/, 'Black, Vinyl'],
-  [/^(490(A|J|S|XE|XG))$/, 'Dark Blue, Vinyl'],
-  [/^(490(C|L|Q|XA|XC))$/, 'Red, Vinyl'],
-  [/^(490(E|N|U|XJ|XL))$/, 'Saddle, Vinyl'],
-  [/^(898(A|E|Q|G|S))$/, 'Saddle, Vinyl or Leather'],
+  [/^(STD|BLK)$/, 'Black Vinyl'],
+  [/^(490(A|B|J|K|S|T|XE|XF|XG|XH))$/, 'Blue Vinyl'],
+  [/^(490(C|D|L|M|Q|R|XA|XB|XC|XD))$/, 'Red Vinyl'],
+  [/^(490(E|F|N|P|U|V|XJ|XK|XL|XM))$/, 'Saddle Vinyl'],
+  [/^(898(A|B|E|F|G|H|Q|R|S|T))$/, 'Saddle Leather'],
 ];
 
+// Some codes for 64 models might only have the first letter after the number
 const regExp64: [RegExp, string][] = [
   [/^(490(AA|AB|AC|AD|AE|AF|AG|AH))$/, 'Red Vinyl'],
 
@@ -47,91 +48,74 @@ const regExp64: [RegExp, string][] = [
 
   [/^(899(DA|DB|DC|DD|DE|DF|DG|DH))$/, 'White Leather, Red Dash'],
 
-  // Red Vinyl Continue?
   [
     /^(490(GA|GB|GC|GD|GG|GH|GJ|GK|GL|GM|GN|GP|GQ|GR|GS|GT|HA|HB|HC|HD|HG|HH|HJ|HK|HL|HM|HN|HP|HQ|HR|HS|HT))$/,
     'Red Vinyl',
   ],
 
-  // Blue Vinyl Continue?
   [
     /^(490(JA|JB|JC|JD|JG|JH|JJ|JK|JL|JM|JN|JP|JQ|JR|JS|JT|KA|KB|KC|KD|KG|KH|KJ|KK|KL|KM|KN|KP|KQ|KR|KS|KT))$/,
     'Blue Vinyl',
   ],
 
-  // Saddle Vinyl Continue?
   [
     /^(490(LA|LB|LC|LD|LG|LH|LJ|LK|LL|LM|LN|LP|LQ|LR|LS|LT|MA|MB|MC|MD|MG|MH|MJ|MK|ML|MM|MN|MP|MQ|MR|MS|MT))$/,
     'Saddle Vinyl',
   ],
 
   // Two Tone Vinyl ********** ********** ********** ********** **********
-
-  // Silver Vinyl, Blue Dash
   [
     /^(491(MA|MB|MC|MD|ME|MF|MG|MH|MJ|MK|ML|MM|MN|MP|MQ|MR|NA|NB|NC|ND|NE|NF|NG|NH|NJ|NK|NL|NM|NN|NP|NQ|NR))$/,
     'Silver Vinyl, Blue Dash',
   ],
 
-  // White Vinyl, Red Dash
   [
     /^(491(PA|PB|PC|PD|PE|PF|PG|PH|PJ|PK|PL|PM|PN|PP|PQ|PR|QA|QB|QC|QD|QE|QF|QG|QH|QJ|QK|QL|QM|QN|QP|QQ|QR))$/,
     'White Vinyl, Red Dash',
   ],
 
-  // White Vinyl, Blue Dash
   [
     /^(491(RA|RB|RC|RD|RE|RF|RG|RH|RJ|RK|RL|RM|RN|RP|RQ|RR|SA|SB|SC|SD|SE|SF|SG|SH|SJ|SK|SL|SM|SN|SP|SQ|SR))$/,
     'White Vinyl, Blue Dash',
   ],
 
-  // White Vinyl, Saddle Dash
   [
     /^(491(TA|TB|TC|TD|TE|TF|TG|TH|TJ|TK|TL|TM|TN|TP|TQ|TR|UA|UB|UC|UD|UE|UF|UG|UH|UJ|UK|UL|UM|UN|UP|UQ|UR))$/,
-    'White Vinyl, Saddle  Dash',
+    'White Vinyl, Saddle Dash',
   ],
 
   // Leather ********** ********** ********** ********** **********
-
-  // Saddle Leather Continue?
   [
     /^(898(GA|GB|GC|GD|GG|GH|GJ|GK|GL|GM|GN|GP|GQ|GR|GS|GT|HA|HB|HC|HD|HG|HH|HJ|HK|HL|HM|HN|HP|HQ|HR|HS|HT))$/,
     'Saddle Leather',
   ],
 
-  // Red Leather Continue?
   [
     /^(898(LA|LB|LC|LD|LG|LH|LJ|LK|LL|LM|LN|LP|LQ|LR|LS|LT|MA|MB|MC|MD|MG|MH|MJ|MK|ML|MM|MN|MP|MQ|MR|MS|MT))$/,
     'Red Leather',
   ],
 
-  // Blue Leather Continue?
   [
     /^(898(NA|NB|NC|ND|NG|NH|NJ|NK|NL|NM|NN|NP|NQ|NR|NS|NT|PA|PB|PC|PD|PG|PH|PJ|PK|PL|PM|PN|PP|PQ|PR|PS|PT))$/,
     'Blue Leather',
   ],
 
   // Two Tone Leather ********** ********** ********** ********** **********
-
-  // Silver Leather, Blue Dash
   [
     /^(899(MA|MB|MC|MD|ME|MF|MG|MH|MJ|MK|ML|MM|MN|MP|MQ|MR|NA|NB|NC|ND|NE|NF|NG|NH|NJ|NK|NL|NM|NN|NP|NQ|NR))$/,
     'Silver Leather, Blue Dash',
   ],
 
-  // White Leather, Blue Dash
   [
     /^(899(RA|RB|RC|RD|RE|RF|RG|RH|RJ|RK|RL|RM|RN|RP|RQ|RR|SA|SB|SC|SD|SE|SF|SG|SH|SJ|SK|SL|SM|SN|SP|SQ|SR))$/,
     'White Leather, Blue Dash',
   ],
 
-  // White Leather, Saddle Dash
   [
     /^(899(TA|TB|TC|TD|TE|TF|TG|TH|TJ|TK|TL|TM|TN|TP|TQ|TR|UA|UB|UC|UD|UE|UF|UG|UH|UJ|UK|UL|UM|UN|UP|UQ|UR))$/,
-    'White Leather, Saddle  Dash',
+    'White Leather, Saddle Dash',
   ],
 
-  // White Leather, Red Dash
   [
     /^(899(PA|PB|PC|PD|PE|PF|PG|PH|PJ|PK|PL|PM|PN|PP|PQ|PR|QA|QB|QC|QD|QE|QF|QG|QH|QJ|QK|QL|QM|QN|QP|QQ|QR))$/,
     'White Leather, Red Dash',
@@ -175,11 +159,9 @@ const regExp66: [RegExp, string][] = [
   [/^426$/, 'Silver Vinyl'],
   [/^427$/, 'Silver Leather'],
   [/^430$/, 'Green Vinyl'],
-  // [/^431$/, 'Green Leather'], // No Green Leather option in 1966??
   [/^437$/, 'White Vinyl'],
   [/^438$/, 'White Leather'],
   [/^450$/, 'White/Blue Vinyl'],
-  // [/^451$/, 'White/Blue Leather'], // No White/Blue Leather option in 1966??
 ];
 
 const regExp67: [RegExp, string][] = [
