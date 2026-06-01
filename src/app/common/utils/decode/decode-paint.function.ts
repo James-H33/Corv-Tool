@@ -42,14 +42,14 @@ export function decodePaintCode(carTagData: CarTagData, year: string): string {
 
   const paintMap1965: Record<string, Record<string, string>> = {
     A: {
-      AA: 'Tuexdo Black',
-      CC: 'Ermine White',
-      FF: 'Nassau Blue',
-      GG: 'Glen Green',
-      MM: 'Milano Maroon',
-      UU: 'Rally Red',
-      XX: 'Goldwood Yellow',
-      QQ: 'Silver Pearl',
+      'AA': 'Tuexdo Black',
+      'CC': 'Ermine White',
+      'FF': 'Nassau Blue',
+      'GG': 'Glen Green',
+      'MM': 'Milano Maroon',
+      'UU': 'Rally Red',
+      'XX': 'Goldwood Yellow',
+      'QQ': 'Silver Pearl',
     },
     S: {
       '900AA': 'Tuexdo Black',

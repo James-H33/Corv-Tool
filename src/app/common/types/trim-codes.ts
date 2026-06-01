@@ -7,12 +7,13 @@ const regExp63: [RegExp, string][] = [
 ];
 
 // Some codes for 64 models might only have the first letter after the number
+// TODO: Update to support single letter codes for 64 models if they are found
 const regExp64: [RegExp, string][] = [
-  [/^(490(AA|AB|AC|AD|AE|AF|AG|AH))$/, 'Red Vinyl'],
+  [/^(490(AA|AB|AC|AD|AE|AF|AG|AH|GA|GB|GC|GD|GG|GH|GJ|GK|GL|GM|GN|GP|GQ|GR|GS|GT|HA|HB|HC|HD|HG|HH|HJ|HK|HL|HM|HN|HP|HQ|HR|HS|HT))$/, 'Red Vinyl'],
 
-  [/^(490(BA|BB|BC|BD|BE|BF|BG|BH))$/, 'Blue Vinyl'],
+  [/^(490(BA|BB|BC|BD|BE|BF|BG|BH|JA|JB|JC|JD|JG|JH|JJ|JK|JL|JM|JN|JP|JQ|JR|JS|JT|KA|KB|KC|KD|KG|KH|KJ|KK|KL|KM|KN|KP|KQ|KR|KS|KT))$/, 'Blue Vinyl'],
 
-  [/^(490(CA|CB|CC|CD|CE|CF|CG|CH))$/, 'Saddle Vinyl'],
+  [/^(490(CA|CB|CC|CD|CE|CF|CG|CH|LA|LB|LC|LD|LG|LH|LJ|LK|LL|LM|LN|LP|LQ|LR|LS|LT|MA|MB|MC|MD|MG|MH|MJ|MK|ML|MM|MN|MP|MQ|MR|MS|MT))$/, 'Saddle Vinyl'],
 
   [/^(490(DA|DB|DC|DD|DE|DF|DG|DH))$/, 'Silver Vinyl'],
 
@@ -30,11 +31,11 @@ const regExp64: [RegExp, string][] = [
 
   [/^(898(AA|AB))$/, 'Black Leather'],
 
-  [/^(898(CA|CB|CC|CD|DA|DB|DC|DD))$/, 'Saddle Leather'],
+  [/^(898(CA|CB|CC|CD|DA|DB|DC|DD|GA|GB|GC|GD|GG|GH|GJ|GK|GL|GM|GN|GP|GQ|GR|GS|GT|HA|HB|HC|HD|HG|HH|HJ|HK|HL|HM|HN|HP|HQ|HR|HS|HT))$/, 'Saddle Leather'],
 
-  [/^(898(EA|EB|EC|ED|FA|FB|FC|FD))$/, 'Red Leather'],
+  [/^(898(EA|EB|EC|ED|FA|FB|FC|FD|LA|LB|LC|LD|LG|LH|LJ|LK|LL|LM|LN|LP|LQ|LR|LS|LT|MA|MB|MC|MD|MG|MH|MJ|MK|ML|MM|MN|MP|MQ|MR|MS|MT))$/, 'Red Leather'],
 
-  [/^(898(JA|JB|JC|JD|KA|KB|KC|KD))$/, 'Blue Leather'],
+  [/^(898(JA|JB|JC|JD|KA|KB|KC|KD|NA|NB|NC|ND|NG|NH|NJ|NK|NL|NM|NN|NP|NQ|NR|NS|NT|PA|PB|PC|PD|PG|PH|PJ|PK|PL|PM|PN|PP|PQ|PR|PS|PT))$/, 'Blue Leather'],
 
   [/^(899(AA|AB|AC|AD|AE|AF|AG|AH))$/, 'Silver Leather, Black Dash'],
 
@@ -47,21 +48,6 @@ const regExp64: [RegExp, string][] = [
   [/^(899(HA|HB|HC|HD|HE|HF|HG|HH))$/, 'White Leather, Saddle Dash'],
 
   [/^(899(DA|DB|DC|DD|DE|DF|DG|DH))$/, 'White Leather, Red Dash'],
-
-  [
-    /^(490(GA|GB|GC|GD|GG|GH|GJ|GK|GL|GM|GN|GP|GQ|GR|GS|GT|HA|HB|HC|HD|HG|HH|HJ|HK|HL|HM|HN|HP|HQ|HR|HS|HT))$/,
-    'Red Vinyl',
-  ],
-
-  [
-    /^(490(JA|JB|JC|JD|JG|JH|JJ|JK|JL|JM|JN|JP|JQ|JR|JS|JT|KA|KB|KC|KD|KG|KH|KJ|KK|KL|KM|KN|KP|KQ|KR|KS|KT))$/,
-    'Blue Vinyl',
-  ],
-
-  [
-    /^(490(LA|LB|LC|LD|LG|LH|LJ|LK|LL|LM|LN|LP|LQ|LR|LS|LT|MA|MB|MC|MD|MG|MH|MJ|MK|ML|MM|MN|MP|MQ|MR|MS|MT))$/,
-    'Saddle Vinyl',
-  ],
 
   // Two Tone Vinyl ********** ********** ********** ********** **********
   [
@@ -82,22 +68,6 @@ const regExp64: [RegExp, string][] = [
   [
     /^(491(TA|TB|TC|TD|TE|TF|TG|TH|TJ|TK|TL|TM|TN|TP|TQ|TR|UA|UB|UC|UD|UE|UF|UG|UH|UJ|UK|UL|UM|UN|UP|UQ|UR))$/,
     'White Vinyl, Saddle Dash',
-  ],
-
-  // Leather ********** ********** ********** ********** **********
-  [
-    /^(898(GA|GB|GC|GD|GG|GH|GJ|GK|GL|GM|GN|GP|GQ|GR|GS|GT|HA|HB|HC|HD|HG|HH|HJ|HK|HL|HM|HN|HP|HQ|HR|HS|HT))$/,
-    'Saddle Leather',
-  ],
-
-  [
-    /^(898(LA|LB|LC|LD|LG|LH|LJ|LK|LL|LM|LN|LP|LQ|LR|LS|LT|MA|MB|MC|MD|MG|MH|MJ|MK|ML|MM|MN|MP|MQ|MR|MS|MT))$/,
-    'Red Leather',
-  ],
-
-  [
-    /^(898(NA|NB|NC|ND|NG|NH|NJ|NK|NL|NM|NN|NP|NQ|NR|NS|NT|PA|PB|PC|PD|PG|PH|PJ|PK|PL|PM|PN|PP|PQ|PR|PS|PT))$/,
-    'Blue Leather',
   ],
 
   // Two Tone Leather ********** ********** ********** ********** **********

@@ -2,7 +2,7 @@ import { CarTagData } from '@common/types/car.interface';
 import { regExp63, regExp64, regExp65, regExp66, regExp67 } from '@common/types/trim-codes';
 
 export function decodeTrim(tagData: CarTagData, year: string): string {
-  const trimCode = tagData.trim;
+  const trimCode = tagData.trim.trim().toUpperCase();
 
   if (!trimCode) {
     return 'Unknown Trim';
