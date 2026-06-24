@@ -4,9 +4,9 @@ export const ApplicationActions = createActionGroup({
   source: 'Application',
   events: {
     init: emptyProps(),
-    initSuccess: props<{ workspaceId: string; authToken: string }>(),
+    initSuccess: props<{ authToken: string }>(),
     login: props<{ username: string; password: string }>(),
-    loginSuccess: props<{ workspaceId: string; authToken: string }>(),
+    loginSuccess: props<{ authToken: string }>(),
     logout: emptyProps(),
   },
 });

@@ -120,3 +120,30 @@
     font-size: 16px;
   }
 }
+
+::ng-deep .ct-car-list-options-menu {
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px;
+  margin-right: 15px;
+
+  &__item {
+    font-size: 14px;
+    color: var(--ct-text-color-default);
+    padding: 6px 12px;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 6px;
+
+    &--danger {
+      color: var(--ct-text-color-danger);
+    }
+
+    &:hover, &:focus-within {
+      background-color: #e5edf5;
+    }
+  }
+}

@@ -1,0 +1,81 @@
+<div class="ct-car-list">
+  <div class="ct-car-list-header">
+    <div class="ct-car-list-header__title">Your Cars</div>
+    <div class="ct-car-list-header__filters">
+      <input ctInput type="text" placeholder="Search cars..." />
+    </div>
+  </div>
+
+  <div class="ct-car-list-body">
+    @if (cars().length > 0) {
+      @for (car of cars(); track $index) {
+        <a [routerLink]="['/v/cars', car.id]" class="ct-car-card__link">
+          <div class="ct-car-card">
+            <div class="ct-car-card__left">
+              <div class="ct-car-card__title">{{ car.name }}</div>
+
+              <div class="ct-car-card__subtitle">vin: {{ car.vin }}</div>
+            </div>
+
+            <div class="ct-car-card__right">
+              <div
+                ctDropdown
+                [ctDropdownTemplate]="optionsMenu"
+                ctDropdownTriggerType="click"
+                [attr.dropdown-id]="car.id"
+                role="button"
+                aria-label="Car options"
+                tabindex="0"
+                (click)="openOptionsMenu($event)"
+              >
+                <ct-icon [icon]="ellipsesMenuIcon" size="24"></ct-icon>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <ng-template #optionsMenu>
+          <div class="cdk-overlay-pane-default ct-car-list-options-menu">
+            <div class="ct-car-list-options-menu__item" role="button" tabindex="0">Edit</div>
+            <div
+              class="ct-car-list-options-menu__item ct-car-list-options-menu__item--danger"
+              (click)="onDeleteCar(car.id)"
+              role="button"
+              tabindex="0"
+            >
+              Delete
+            </div>
+          </div>
+        </ng-template>
+      }
+    } @else {
+      <div>No cars available.</div>
+    }
+  </div>
+</div>
+
+<div class="ct-camera-view">
+  <div class="ct-camera-view__col">
+    <ct-icon [icon]="galleryIcon" size="28"></ct-icon>
+    <span class="ct-camera-view__label">Gallery</span>
+  </div>
+
+  <div class="ct-camera-view__col">
+    <button
+      class="ct-camera-view__button"
+      ctButtonIcon
+      ctButtonVariant="primary"
+      ctButtonIconRounded
+      (click)="openDialog()"
+    >
+      <label class="ct-camera-view__label" for="picture">
+        <ct-icon icon="plus" size="32"></ct-icon>
+      </label>
+    </button>
+  </div>
+
+  <div class="ct-camera-view__col">
+    <ct-icon [icon]="galleryIcon" size="28"></ct-icon>
+    <span class="ct-camera-view__label">Clear</span>
+  </div>
+</div>

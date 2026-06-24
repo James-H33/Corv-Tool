@@ -1,13 +1,14 @@
-.nl-login {
+.ct-login {
   display: flex;
   justify-content: center;
   height: 100vh;
   padding-top: 20vh;
 }
 
-.nl-login-form {
+.ct-login-form {
   width: 100%;
   max-width: 400px;
+  padding-inline: 20px;
   margin: 0 auto;
 
   label {
@@ -17,7 +18,7 @@
   }
 }
 
-.nl-login-form__row {
+.ct-login-form__row {
   margin-bottom: 20px;
 
   &--error {
@@ -29,7 +30,7 @@
     justify-content: flex-end;
     gap: 8px;
     button {
-      &[nlButtonVariant="primary"] {
+      &[ctButtonVariant="primary"] {
         padding: 6px 16px;
       }
     }

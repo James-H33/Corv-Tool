@@ -29,6 +29,7 @@ button {
   --ct-text-color-placeholder: #848A94;
   --ct-text-color-disabled: #848A94;
   --ct-text-color-error: rgba(255, 77, 79, 1);
+  --ct-text-color-danger: rgba(255, 77, 79, 1);
 
   // Background Colors
   --ct-background-main: #ffffff;
@@ -50,6 +51,11 @@ body {
   background: var(--ct-background-main);
   color: var(--ct-text-color-default);
 }
+
+// Maybe?
+// body:has(.cdk-overlay-pane-default) {
+//   overflow: hidden;
+// }
 
 .cdk-overlay-pane-default {
   background: white;

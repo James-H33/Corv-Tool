@@ -2,12 +2,10 @@ import { createFeature, createReducer, on } from '@ngrx/store';
 import { ApplicationActions } from './application.actions';
 
 interface ApplicationState {
-  workspaceId: string | null;
   authToken: string | null;
 }
 
 export const initialApplicationState: ApplicationState = {
-  workspaceId: null,
   authToken: null,
 };
 
@@ -16,18 +14,16 @@ export const applicationFeature = createFeature({
   reducer: createReducer<ApplicationState>(
     initialApplicationState,
 
-    on(ApplicationActions.initSuccess, (state, { workspaceId, authToken }) => {
+    on(ApplicationActions.initSuccess, (state, { authToken }) => {
       return {
         ...state,
-        workspaceId,
         authToken,
       };
     }),
 
-    on(ApplicationActions.loginSuccess, (state, { workspaceId, authToken }) => {
+    on(ApplicationActions.loginSuccess, (state, { authToken }) => {
       return {
         ...state,
-        workspaceId,
         authToken,
       };
     }),
@@ -35,7 +31,6 @@ export const applicationFeature = createFeature({
     on(ApplicationActions.logout, (state) => {
       return {
         ...state,
-        workspaceId: null,
         authToken: null,
       };
     }),

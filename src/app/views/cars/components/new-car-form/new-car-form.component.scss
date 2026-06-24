@@ -1,0 +1,78 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: var(--ct-background-main);
+  min-height: 400px;
+}
+
+.ct-new-car-form {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.ct-new-car-form__header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 6px;
+}
+
+.ct-new-car-form__close {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ct-text-secondary);
+  cursor: pointer;
+}
+
+.ct-new-car-form__slider {
+  --ct-new-car-form-slider-postion: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 330px 330px;
+  gap: 24px;
+  padding: 2px;
+  transition: 300ms ease;
+  transform: translateX(calc(-355px * var(--ct-new-car-form-slider-postion)));
+}
+
+.ct-new-car-form__title {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.ct-new-car-form__content {
+  padding-block: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ct-new-car-form__group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.ct-new-car-form__year-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  button {
+    flex: 1;
+    font-size: 16px;
+  }
+}
+
+.ct-new-car-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: auto;
+}

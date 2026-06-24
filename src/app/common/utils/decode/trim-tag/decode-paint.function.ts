@@ -1,8 +1,10 @@
 import { CarTagData } from '@common/types/car.interface';
-import { getPlantCode } from '../strip-plant-code.function';
+import { getPlantCode } from '../../strip-plant-code.function';
+import { stripLetters } from '../../strip-letter.function';
+import { stripDigits } from '../../strip-digits.function';
 
 export function decodePaintCode(carTagData: CarTagData, year: string): string {
-  const paintCode = carTagData.paint;
+  const paintCode = stripPaintCode(carTagData);
   const plantCode = getPlantCode(carTagData.body);
 
   if (!paintCode) {
@@ -10,31 +12,31 @@ export function decodePaintCode(carTagData: CarTagData, year: string): string {
   }
 
   const paintMap1963: Record<string, string> = {
-    '900A': 'Tuexdo Black',
+    '900A': 'Tuxedo Black',
     '912A': 'Silver Blue',
     '916A': 'Daytona Blue',
     '923A': 'Riverside Red',
-    '932A': 'Saddie Tan',
+    '932A': 'Saddle Tan',
     '936A': 'Ermine White',
     '941A': 'Sebring Silver',
   };
 
   const paintMap1964: Record<string, Record<string, string>> = {
     A: {
-      '900A': 'Tuexdo Black',
+      '900A': 'Tuxedo Black',
       '912A': 'Silver Blue',
       '916A': 'Daytona Blue',
       '923A': 'Riverside Red',
-      '932A': 'Saddie Tan',
+      '932A': 'Saddle Tan',
       '936A': 'Ermine White',
       '940A': 'Satin Silver',
     },
     S: {
-      '900AA': 'Tuexdo Black',
+      '900AA': 'Tuxedo Black',
       '912AA': 'Silver Blue',
       '916AA': 'Daytona Blue',
       '923AA': 'Riverside Red',
-      '932AA': 'Saddie Tan',
+      '932AA': 'Saddle Tan',
       '936AA': 'Ermine White',
       '940AA': 'Satin Silver',
     },
@@ -42,7 +44,7 @@ export function decodePaintCode(carTagData: CarTagData, year: string): string {
 
   const paintMap1965: Record<string, Record<string, string>> = {
     A: {
-      'AA': 'Tuexdo Black',
+      'AA': 'Tuxedo Black',
       'CC': 'Ermine White',
       'FF': 'Nassau Blue',
       'GG': 'Glen Green',
@@ -52,7 +54,7 @@ export function decodePaintCode(carTagData: CarTagData, year: string): string {
       'QQ': 'Silver Pearl',
     },
     S: {
-      '900AA': 'Tuexdo Black',
+      '900AA': 'Tuxedo Black',
       '900CC': 'Ermine White',
       '900FF': 'Nassau Blue',
       '900GG': 'Glen Green',
@@ -65,7 +67,7 @@ export function decodePaintCode(carTagData: CarTagData, year: string): string {
 
   const paintMap1966: Record<string, Record<string, string>> = {
     A: {
-      '900': 'Tuexdo Black',
+      '900': 'Tuxedo Black',
       '972': 'Ermine White',
       '974': 'Rally Red',
       '976': 'Nassau Blue',
@@ -77,7 +79,7 @@ export function decodePaintCode(carTagData: CarTagData, year: string): string {
       '988': 'Milano Maroon',
     },
     S: {
-      '900AA': 'Tuexdo Black',
+      '900AA': 'Tuxedo Black',
       '972AA': 'Ermine White',
       '974AA': 'Rally Red',
       '976AA': 'Nassau Blue',
@@ -92,7 +94,7 @@ export function decodePaintCode(carTagData: CarTagData, year: string): string {
 
   const paintMap1967: Record<string, Record<string, string>> = {
     A: {
-      '900': 'Tuexdo Black',
+      '900': 'Tuxedo Black',
       '972': 'Ermine White',
       '974': 'Rally Red',
       '976': 'Marina Blue',
@@ -104,7 +106,7 @@ export function decodePaintCode(carTagData: CarTagData, year: string): string {
       '988': 'Marlboro Maroon',
     },
     S: {
-      '900AA': 'Tuexdo Black',
+      '900AA': 'Tuxedo Black',
       '972AA': 'Ermine White',
       '974AA': 'Rally Red',
       '976AA': 'Marina Blue',
@@ -140,4 +142,11 @@ export function decodePaintCode(carTagData: CarTagData, year: string): string {
   }
 
   return result ?? 'Unknown Paint Code';
+}
+
+function stripPaintCode(carTagData: CarTagData): string {
+  const letters = stripLetters(carTagData.paint).trim().toUpperCase();
+  const digits = stripDigits(carTagData.paint).trim();
+
+  return `${digits}${letters}`;
 }

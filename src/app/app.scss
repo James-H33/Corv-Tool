@@ -1,10 +1,5 @@
 .main {
-  // padding-left: var(--nl-main-content-indent);
-  // width: calc(100vw - var(--nl-main-content-indent));
-  height: calc(100vh - var(--ct-nav-height));
+  height: calc(100vh - (var(--ct-nav-height) * 2));
   overflow-x: hidden;
   margin-top: 30px;
-
-  @media (min-width: 768px) {
-  }
 }

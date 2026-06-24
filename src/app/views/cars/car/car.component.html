@@ -1,0 +1,256 @@
+<div class="ct-car">
+  <div class="ct-car-nav">
+    <button ctButtonIcon ctButtonVariant="outline">
+      <a [routerLink]="['/v/cars']" class="ct-car-nav__link">
+        <ct-icon [icon]="backArrowIcon" size="20"></ct-icon>
+      </a>
+    </button>
+  </div>
+
+  <header class="ct-car-header">
+    @if (activeForm() === 'name') {
+      <div class="ct-car-header__name-form">
+        <input
+          ctInput
+          class="ct-car-header__name-input"
+          type="text"
+          placeholder="Car Name"
+          [value]="nameModel()"
+          (input)="nameModel.set($event.target.value)"
+          ctAutoFocus
+        />
+
+        <div class="ct-car-name-edit-actions">
+          <button ctButtonIcon ctButtonVariant="primary" (click)="saveName()">Save</button>
+          <button ctButtonIcon ctButtonVariant="outline" (click)="cancelEditName()">Cancel</button>
+        </div>
+      </div>
+    } @else {
+      <div class="ct-car-header__title" (click)="editName()" role="button" tabindex="0">
+        {{ car()?.name }}
+      </div>
+    }
+  </header>
+
+  <div class="ct-car-body">
+    <div class="ct-car-item">
+      @if (!isExtractingDataForVin()) {
+        @if (vinImageUrl()) {
+          <div
+            class="ct-car-item__image-container"
+            [style.backgroundImage]="'url(' + vinImageUrl() + ')'"
+          ></div>
+        } @else {
+          <div class="ct-car-item__no-image" (click)="retakeVin()" role="button" tabindex="0">
+            <label for="vinPicture" class="ct-car-options-menu__upload-label">
+              Click here to add Vin Image
+            </label>
+          </div>
+        }
+      } @else {
+        <div class="ct-car-item__no-image" (click)="retakeVin()" role="button" tabindex="0">
+          <span class="ct-car-item__extracting-text shimmer-text">Processing Image...</span>
+        </div>
+      }
+
+      <div class="ct-car-item__action">
+        @if (vinImageUrl()) {
+          <div class="ct-car-item__action-left">
+            <button ctButtonIcon ctButtonVariant="primary">Actual</button>
+            <button ctButtonIcon ctButtonVariant="outline">Sketch</button>
+          </div>
+        }
+
+        <div class="ct-car-item__action-right">
+          @if (car()?.vin) {
+            <button
+              #vinDropdown
+              ctButton
+              ctButtonVariant="outline"
+              ctDropdown
+              [ctDropdownTemplate]="vinOptionsMenu"
+              ctDropdownTriggerType="click"
+              (ctDropdownOpened)="onDropdownOpened('vin')"
+            >
+              ...
+            </button>
+          }
+        </div>
+      </div>
+
+      @if (activeForm() === 'vin') {
+        <div class="ct-car-item__vin ct-car-item__detail">
+          <span class="ct-car-item__detail-label">Vin:</span>
+          <input ctInput type="text" [formField]="vinForm.vin" ctAutoFocus />
+        </div>
+      } @else {
+        <div class="ct-car-item__vin">VIN: {{ car()?.vin }}</div>
+      }
+
+      @if (activeForm() === 'vin') {
+        <div class="ct-car-item__edit-actions">
+          <button
+            ctButton
+            ctButtonVariant="primary"
+            (click)="saveVinEdits()"
+            [disabled]="!vinForm().dirty()"
+          >
+            Save
+          </button>
+          <button ctButton ctButtonVariant="outline" (click)="cancelVinEdits()">Cancel</button>
+        </div>
+      }
+
+      @if (vinData()) {
+        <div class="ct-car-item__details">
+          @for (field of vinDisplayFields; track field.label; let i = $index) {
+            <div class="ct-car-item__detail">
+              <span class="ct-car-item__detail-label"
+                >{{ field.label }}: {{ vinData()?.[field.value]?.value }}</span
+              >
+              <span class="ct-car-item__detail-value">{{
+                vinData()?.[field.value]?.description
+              }}</span>
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="ct-car-item__details">No VIN Data Available Yet.</div>
+      }
+    </div>
+
+    <div class="ct-car-item">
+      @if (!isExtractingDataForTag()) {
+        @if (tagImageUrl()) {
+          <div
+            class="ct-car-item__image-container"
+            [style.backgroundImage]="'url(' + tagImageUrl() + ')'"
+          ></div>
+        } @else {
+          <div class="ct-car-item__no-image" (click)="retakeTag()" role="button" tabindex="0">
+            <label for="tagPicture" class="ct-car-options-menu__upload-label">
+              Click here to add Trim Tag Image
+            </label>
+          </div>
+        }
+      } @else {
+        <div class="ct-car-item__no-image" (click)="retakeTag()" role="button" tabindex="0">
+          <span class="ct-car-item__extracting-text shimmer-text">Processing Image...</span>
+        </div>
+      }
+
+      <div class="ct-car-item__action">
+        @if (tagImageUrl()) {
+          <div class="ct-car-item__action-left">
+            <button ctButtonIcon ctButtonVariant="primary">Actual</button>
+            <button ctButtonIcon ctButtonVariant="outline">Sketch</button>
+          </div>
+        }
+
+        <div class="ct-car-item__action-right">
+          @if (car()?.tagData) {
+            <button
+              #trimTagDropdown
+              ctButton
+              ctButtonVariant="outline"
+              ctDropdown
+              [ctDropdownTemplate]="tagOptionsMenu"
+              ctDropdownTriggerType="click"
+              (ctDropdownOpened)="onDropdownOpened('tag')"
+            >
+              ...
+            </button>
+          }
+        </div>
+      </div>
+
+      @if (tagData()) {
+        <div class="ct-car-item__details">
+          @for (field of trimTagDisplayFields; track field.label; let i = $index) {
+            @if (activeForm() === 'tag') {
+              <div class="ct-car-item__detail ct-car-item__detail--editing">
+                <span class="ct-car-item__detail-label">{{ field.label }}:</span>
+                @if (i === 0) {
+                  <input ctInput type="text" [formField]="trimFieldsMap[field.value]" ctAutoFocus />
+                } @else {
+                  <input ctInput type="text" [formField]="trimFieldsMap[field.value]" />
+                }
+              </div>
+            } @else {
+              <div class="ct-car-item__detail">
+                <span class="ct-car-item__detail-label"
+                  >{{ field.label }}: {{ trimTagData()?.[field.value]?.value }}</span
+                >
+                <span class="ct-car-item__detail-value">{{
+                  trimTagData()?.[field.value]?.description
+                }}</span>
+              </div>
+            }
+          }
+
+          @if (activeForm() === 'tag') {
+            <div class="ct-car-item__edit-actions">
+              <button
+                ctButton
+                ctButtonVariant="primary"
+                (click)="saveTrimTagEdits()"
+                [disabled]="!trimForm().dirty()"
+              >
+                Save
+              </button>
+              <button ctButton ctButtonVariant="outline" (click)="cancelTrimTagEdits()">
+                Cancel
+              </button>
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="ct-car-item__details">No Trim Tag Data Available Yet.</div>
+      }
+    </div>
+  </div>
+</div>
+
+<ng-template #tagOptionsMenu>
+  <div class="cdk-overlay-pane-default ct-car-options-menu">
+    <div class="ct-car-options-menu__item" (click)="retakeTag()" role="button" tabindex="0">
+      <label for="tagPicture" class="ct-car-options-menu__upload-label"> Retake </label>
+    </div>
+    <div class="ct-car-options-menu__item" role="button" tabindex="0" for="tagPicture">
+      <label for="tagPicture" class="ct-car-options-menu__upload-label"> Re-upload </label>
+    </div>
+    <div class="ct-car-options-menu__item" (click)="editTag()" role="button" tabindex="1">Edit</div>
+  </div>
+</ng-template>
+
+<ng-template #vinOptionsMenu>
+  <div class="cdk-overlay-pane-default ct-car-options-menu">
+    <div class="ct-car-options-menu__item" (click)="retakeVin()" role="button" tabindex="0">
+      <label for="vinPicture" class="ct-car-options-menu__upload-label"> Retake </label>
+    </div>
+    <div class="ct-car-options-menu__item" role="button" tabindex="0" for="vinPicture">
+      <label for="vinPicture" class="ct-car-options-menu__upload-label"> Re-upload </label>
+    </div>
+    <div class="ct-car-options-menu__item" (click)="editVin()" role="button" tabindex="1">Edit</div>
+  </div>
+</ng-template>
+
+<input
+  hidden
+  type="file"
+  id="vinPicture"
+  name="vinPicture"
+  accept="image/*"
+  capture="environment"
+  (change)="onFileSelected($event, 'vin')"
+/>
+
+<input
+  hidden
+  type="file"
+  id="tagPicture"
+  name="tagPicture"
+  accept="image/*"
+  capture="environment"
+  (change)="onFileSelected($event, 'tag')"
+/>

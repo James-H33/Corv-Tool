@@ -1,7 +1,10 @@
-import { Directive } from '@angular/core';
+/* eslint-disable @angular-eslint/no-input-rename */
+import { Directive, input } from '@angular/core';
 
 @Directive({
-  selector: 'button[ctButton]',
+  selector: '[ctButton]',
   standalone: true,
 })
-export class ButtonDirective {}
+export class ButtonDirective {
+  buttonVariant = input('', { alias: 'ctButtonVariant' });
+}

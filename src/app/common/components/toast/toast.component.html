@@ -1,0 +1,39 @@
+<div class="ct-toasts-container"
+  [style.display]="toasts().length > 0 ? 'flex' : 'none'"
+  [style.--ct-toast-count]="toasts().length"
+>
+  @for (control of toasts(); track control.id) {
+    <div
+      class="ct-toast"
+      [class]="{
+        'ct-toast--success': control.toast.type === 'success',
+        'ct-toast--error': control.toast.type === 'error',
+        'ct-toast--info': control.toast.type === 'info',
+      }"
+      (mouseenter)="pauseDismissTimer(control.id)"
+      (mouseleave)="resumeDismissTimer(control.id)"
+    >
+      <div class="ct-toast__title">
+        @if (control.toast.type === 'success') {
+          Success
+        } @else if (control.toast.type === 'error') {
+          Error
+        } @else {
+          Info
+        }
+
+        <div
+          class="ct-toast__close"
+          (click)="dismiss(control.id)"
+          role="button"
+          aria-label="Close"
+          tabindex="0"
+        >
+          &times;
+        </div>
+      </div>
+
+      <div class="ct-toast__message">{{ control.toast.message }}</div>
+    </div>
+  }
+</div>

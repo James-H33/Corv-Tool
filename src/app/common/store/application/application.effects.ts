@@ -7,59 +7,64 @@
 // import { map, switchMap, tap } from 'rxjs';
 // import { ApplicationActions } from './application.actions';
 
-// export const getWorkspaceData$ = createEffect(
-//   (actions$ = inject(Actions), appService = inject(ApplicationService)) => {
-//     return actions$.pipe(
-//       ofType(ApplicationActions.init),
-//       map(() => {
-//         const workspaceId = appService.getWorkspaceIdFromStorage();
-//         const authToken = appService.getAuthTokenFromStorage();
+import { inject } from '@angular/core';
+import { ApplicationService } from '@common/services/application.service';
+import { LoginService } from '@common/services/login.service';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { map, switchMap, tap } from 'rxjs';
+import { ApplicationActions } from './application.actions';
+import { Router } from '@angular/router';
 
-//         return ApplicationActions.initSuccess({
-//           workspaceId: workspaceId ?? '',
-//           authToken: authToken ?? '',
-//         });
-//       }),
-//     );
-//   },
-//   { functional: true },
-// );
+export const getWorkspaceData$ = createEffect(
+  (actions$ = inject(Actions), appService = inject(ApplicationService)) => {
+    return actions$.pipe(
+      ofType(ApplicationActions.init),
+      map(() => {
+        const authToken = appService.getAuthTokenFromStorage();
 
-// export const login$ = createEffect(
-//   (
-//     actions$ = inject(Actions),
-//     loginService = inject(LoginService),
-//     appService = inject(ApplicationService),
-//   ) => {
-//     return actions$.pipe(
-//       ofType(ApplicationActions.login),
-//       switchMap((action) => {
-//         return loginService.login({ username: action.username, password: action.password }).pipe(
-//           map((response: any) => {
-//             const workspaceId = response.workspaceId;
-//             const authToken = response.authToken;
+        return ApplicationActions.initSuccess({
+          authToken: authToken ?? '',
+        });
+      }),
+    );
+  },
+  { functional: true },
+);
 
-//             appService.setCredentials(workspaceId, authToken);
-//             return ApplicationActions.loginSuccess({ workspaceId, authToken });
-//           }),
-//         );
-//       }),
-//     );
-//   },
-//   { functional: true },
-// );
+export const login$ = createEffect(
+  (
+    actions$ = inject(Actions),
+    loginService = inject(LoginService),
+    appService = inject(ApplicationService),
+  ) => {
+    return actions$.pipe(
+      ofType(ApplicationActions.login),
+      switchMap((action) => {
+        return loginService.login({ username: action.username, password: action.password }).pipe(
+          map((response: any) => {
+            const authToken = response.authToken;
 
-// export const redirectAfterLogin$ = createEffect(
-//   (actions$ = inject(Actions), router = inject(Router)) => {
-//     return actions$.pipe(
-//       ofType(ApplicationActions.loginSuccess),
-//       tap((action) => {
-//         router.navigate([`${action.workspaceId}/v/timelines`]);
-//       }),
-//     );
-//   },
-//   { functional: true, dispatch: false },
-// );
+            appService.setCredentials(authToken);
+            return ApplicationActions.loginSuccess({ authToken });
+          }),
+        );
+      }),
+    );
+  },
+  { functional: true },
+);
+
+export const redirectAfterLogin$ = createEffect(
+  (actions$ = inject(Actions), router = inject(Router)) => {
+    return actions$.pipe(
+      ofType(ApplicationActions.loginSuccess),
+      tap(() => {
+        router.navigate([`v/cars`]);
+      }),
+    );
+  },
+  { functional: true, dispatch: false },
+);
 
 // export const initializeWebsockets$ = createEffect(
 //   (actions$ = inject(Actions), socketService = inject(SocketService)) => {

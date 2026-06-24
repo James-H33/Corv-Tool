@@ -1,10 +1,22 @@
 import { createSelector } from '@ngrx/store';
 import { applicationFeature } from './application.reducer';
 
-export const { selectWorkspaceId, selectAuthToken } = applicationFeature;
+export const { selectAuthToken } = applicationFeature;
 
 export const selectAppCredentials = createSelector(
-  selectWorkspaceId,
   selectAuthToken,
-  (workspaceId, authToken) => ({ workspaceId, authToken }),
+  (authToken) => {
+    if (authToken) {
+      const decodedToken = atob(authToken);
+      const [username, userId] = decodedToken.split(':');
+
+      return {
+        username,
+        userId,
+      }
+    } else {
+      return null;
+    }
+  },
 );
+

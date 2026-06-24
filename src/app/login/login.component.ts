@@ -11,7 +11,7 @@ interface LoginForm {
 }
 
 @Component({
-  selector: 'nl-login',
+  selector: 'ct-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   imports: [ButtonModule, InputModule, FormField],

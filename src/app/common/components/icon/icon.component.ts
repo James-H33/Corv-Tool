@@ -19,6 +19,7 @@ export enum Icon {
   Camera = 'camera',
   Gallery = 'gallery',
   BackArrow = 'back-arrow',
+  Plus = 'plus',
 }
 
 @Component({

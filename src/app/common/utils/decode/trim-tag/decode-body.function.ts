@@ -1,5 +1,5 @@
 import { CarTagData } from '@common/types/car.interface';
-import { stripLetters } from '../strip-letter.function';
+import { stripLetters } from '../../strip-letter.function';
 import { MANUFACTURING_PLANTS } from '@common/types/manufacturers.type';
 
 // Output: A = A.O. SMITH, S = ST. LOUIS, blank or unknown = S
