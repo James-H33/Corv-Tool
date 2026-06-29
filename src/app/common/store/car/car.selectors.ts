@@ -25,16 +25,3 @@ export const selectCarsMap = createSelector(
     return carsMap;
   }
 );
-
-
-// export const selectCarByIdWithDefinitions = createSelector(
-//   selectCars,
-//   (cars: Car[]) => (id: string) => {
-//     const car = cars.find(car => car.id === id);
-
-//     // Apply data transformations or enrichments here if needed
-
-
-//     return car;
-//   }
-// )

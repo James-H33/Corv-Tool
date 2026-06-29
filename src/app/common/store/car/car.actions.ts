@@ -22,7 +22,7 @@ export const CarActions = createActionGroup({
     updateCar: props<{ id: string; data: Partial<Car> }>(),
     updateCarSuccess: props<{ cars: Car[] }>(),
 
-    uploadCarImageForAIDataExtraction: props<{ id: string; file: File; for: FormTypes }>(),
+    uploadCarImageForAIDataExtraction: props<{ id: string; file: File; for: FormTypes, retryCount?: number }>(),
     uploadCarImageForAIDataExtractionSuccess: props<{
       id: string;
       data: ExtractedCarImageData;
@@ -34,7 +34,5 @@ export const CarActions = createActionGroup({
 
     addCars: props<{ cars: Car[] }>(),
     addCarsSuccess: props<{ cars: Car[] }>(),
-
-    // loadCarsFailure: props<{ error: any }>(),
   },
 });

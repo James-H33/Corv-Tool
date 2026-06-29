@@ -19,17 +19,6 @@ export function decodeVin(vin: string, year: string): Record<string, Info> {
     return vinData;
   }
 
-  /**
-   * 1963 Ranges
-   30837S100001
-   30837S121513
-   30867S100001
-   30867S121513
-
-   // 1964+
-   194675S119989
-   */
-
   let make = vin.substring(0, 1);
   let series = vin.substring(1, 3);
   let bodyStyle = vin.substring(3, 5);

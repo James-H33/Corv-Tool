@@ -5,7 +5,7 @@ import { FileService } from '@common/services/api/file.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatLatestFrom } from '@ngrx/operators';
 import { Store } from '@ngrx/store';
-import { EMPTY, of } from 'rxjs';
+import { EMPTY, of, timer } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { CarActions } from './car.actions';
 import { selectCars } from './car.selectors';
@@ -15,10 +15,12 @@ export const loadCars$ = createEffect(
     return actions$.pipe(
       ofType(CarActions.loadCars),
       switchMap(() => {
-        return carService.geAllCars().pipe(map((cars) => CarActions.loadCarsSuccess({ cars })));
-      }),
-      catchError(() => {
-        return EMPTY;
+        return carService.geAllCars().pipe(
+          map((cars) => CarActions.loadCarsSuccess({ cars })),
+          catchError(() => {
+            return EMPTY;
+          }),
+        );
       }),
     );
   },
@@ -107,7 +109,6 @@ export const deleteCar$ = createEffect(
       ofType(CarActions.deleteCar),
       concatLatestFrom(() => store.select(selectCars)),
       switchMap(([{ id }, cars]) => {
-        // Will be API call in real implementation
         const updatedCars = cars.filter((car) => car.id !== id);
         return carService
           .deleteCar(id)
@@ -148,8 +149,8 @@ export const uploadCarImageForAIDataExtraction$ = createEffect(
   (actions$ = inject(Actions), fileService = inject(FileService)) => {
     return actions$.pipe(
       ofType(CarActions.uploadCarImageForAIDataExtraction),
-      switchMap(({ id, file, for: forField }) => {
-        return fileService.extractDataFromImage(id, file, forField).pipe(
+      switchMap(({ id, file, for: forField, retryCount = 0 }) => {
+        return fileService.extractDataFromImage(file, forField).pipe(
           map((data) =>
             CarActions.uploadCarImageForAIDataExtractionSuccess({
               id,
@@ -157,12 +158,25 @@ export const uploadCarImageForAIDataExtraction$ = createEffect(
               for: forField,
             }),
           ),
-        );
-      }),
-      catchError(() => {
-        return of(
-          CarActions.uploadCarImageForAIDataExtractionFailure({
-            error: 'Failed to extract data from image. Please try again.',
+          catchError(() => {
+            if (retryCount !== undefined && retryCount < 3) {
+              return timer(500).pipe(
+                map(() =>
+                  CarActions.uploadCarImageForAIDataExtraction({
+                    id,
+                    file,
+                    for: forField,
+                    retryCount: retryCount + 1,
+                  }),
+                ),
+              );
+            }
+
+            return of(
+              CarActions.uploadCarImageForAIDataExtractionFailure({
+                error: 'Failed to extract data from image. Please try again.',
+              }),
+            );
           }),
         );
       }),

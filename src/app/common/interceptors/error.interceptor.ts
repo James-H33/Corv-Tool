@@ -2,26 +2,38 @@ import { HttpInterceptorFn, HttpErrorResponse } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 import { inject } from '@angular/core';
 import { ToastService } from '@common/services/toast.service';
+import { ErrorCodes, ErrorCodesReason } from '@common/types/error-codes';
+
+interface ErrorPayload {
+  errorCode: keyof typeof ErrorCodesReason;
+  statusCode: number;
+  success: boolean;
+  message: string;
+}
+
+interface HttpErrorResponseWithCode extends HttpErrorResponse {
+  error: ErrorPayload;
+}
 
 export const apiErrorInterceptor: HttpInterceptorFn = (req, next) => {
   const toastService = inject(ToastService);
 
   return next(req).pipe(
-    catchError((error: HttpErrorResponse) => {
+    catchError((error: HttpErrorResponseWithCode) => {
       let errorMessage = 'An unknown error occurred!';
+      const errorCode = error?.error?.errorCode;
 
       if (error.error instanceof ErrorEvent) {
-        // Client-side or network error
         errorMessage = `Client Error: ${error.error.message}`;
+      } else if (errorCode) {
+        errorMessage = getErrorCodeReason(errorCode);
       } else {
-        // Backend API error
         switch (error.status) {
           case 400:
             errorMessage = error.error?.message || 'Bad Request.';
             break;
           case 401:
             errorMessage = 'Unauthorized. Please log in again.';
-            // Add redirection logic here if needed
             break;
           case 403:
             errorMessage = 'Forbidden. You do not have permission.';
@@ -35,15 +47,30 @@ export const apiErrorInterceptor: HttpInterceptorFn = (req, next) => {
         }
       }
 
-      // Display user-friendly notification
       toastService.showToast({
         message: errorMessage,
         duration: 3000,
         type: 'error',
       });
 
-      // Pass the error along to the calling service if they want to handle it locally
       return throwError(() => error);
     }),
   );
 };
+
+function getErrorCodeReason(code: keyof typeof ErrorCodesReason): string {
+  switch (code) {
+    case ErrorCodes.INVALID_USERNAME_OR_PASSWORD:
+      return ErrorCodesReason[code];
+    case ErrorCodes.USER_NOT_FOUND:
+      return ErrorCodesReason[code];
+    case ErrorCodes.DATABASE_CONNECTION_ERROR:
+      return ErrorCodesReason[code];
+    case ErrorCodes.CAR_NOT_FOUND:
+      return ErrorCodesReason[code];
+    case ErrorCodes.GEMINI_API_ERROR_SERVICE_UNAVAILABLE:
+      return ErrorCodesReason[code];
+    default:
+      return ErrorCodesReason[999];
+  }
+}

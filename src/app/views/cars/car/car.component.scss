@@ -101,6 +101,12 @@
   border-radius: 10px;
 }
 
+.ct-car-item__error {
+  color: var(--ct-text-color-error);
+  font-size: 13px;
+  margin-block: 6px;
+}
+
 .ct-car-item__no-image {
   height: 150px;
   display: flex;

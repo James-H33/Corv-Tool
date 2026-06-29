@@ -31,7 +31,8 @@
 }
 
 .ct-car-card {
-  display: flex;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
   gap: 8px;
   padding: 16px;
   border: 1px solid var(--ct-border-default);
@@ -45,6 +46,10 @@
   &__title {
     font-size: 18px;
     font-weight: 500;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-wrap: nowrap;
+    white-space: nowrap;
   }
 
   &__subtitle {
@@ -52,9 +57,8 @@
     color: var(--ct-text-color-secondary);
   }
 
-  &__left,
-  &__right {
-    flex: 1;
+  &__left {
+    overflow: hidden;
   }
 
   &__right {

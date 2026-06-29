@@ -15,11 +15,11 @@ describe('Decode Function', () => {
 
       const result = trimTagDecoder(tagData, '1963');
 
-      expect(result.body.description).toBe(Plants.STLOUIS);
-      expect(result.trim.description).toBe('Red Vinyl');
-      expect(result.style.description).toBe(BodyStyles.COUPE);
-      expect(result.paint.description).toBe('Ermine White');
-      expect(result.dateCode.description).toBe('April, 4th Week');
+      expect(result['body'].description).toBe(Plants.STLOUIS);
+      expect(result['trim'].description).toBe('Red Vinyl');
+      expect(result['style'].description).toBe(BodyStyles.COUPE);
+      expect(result['paint'].description).toBe('Ermine White');
+      expect(result['dateCode'].description).toBe('April, 4th Week');
     });
 
     it('Decodes tag data for a 1963 car: 2', () => {
@@ -33,11 +33,11 @@ describe('Decode Function', () => {
 
       const result = trimTagDecoder(tagData, '1963');
 
-      expect(result.body.description).toBe(Plants.STLOUIS);
-      expect(result.trim.description).toBe('Black Vinyl');
-      expect(result.style.description).toBe(BodyStyles.CONVERTIBLE);
-      expect(result.paint.description).toBe('Tuxedo Black');
-      expect(result.dateCode.description).toBe('May, 3rd Week');
+      expect(result['body'].description).toBe(Plants.STLOUIS);
+      expect(result['trim'].description).toBe('Black Vinyl');
+      expect(result['style'].description).toBe(BodyStyles.CONVERTIBLE);
+      expect(result['paint'].description).toBe('Tuxedo Black');
+      expect(result['dateCode'].description).toBe('May, 3rd Week');
     });
   });
 
@@ -53,11 +53,11 @@ describe('Decode Function', () => {
 
       const result = trimTagDecoder(tagData, '1964');
 
-      expect(result.body.description).toBe(Plants.STLOUIS);
-      expect(result.trim.description).toBe('Saddle Vinyl');
-      expect(result.style.description).toBe(BodyStyles.COUPE);
-      expect(result.paint.description).toBe('Saddle Tan');
-      expect(result.dateCode.description).toBe('September 20');
+      expect(result['body'].description).toBe(Plants.STLOUIS);
+      expect(result['trim'].description).toBe('Saddle Vinyl');
+      expect(result['style'].description).toBe(BodyStyles.COUPE);
+      expect(result['paint'].description).toBe('Saddle Tan');
+      expect(result['dateCode'].description).toBe('September 20');
     });
 
     it('Decodes tag data for a 1964 car: 2', () => {
@@ -71,11 +71,11 @@ describe('Decode Function', () => {
 
       const result = trimTagDecoder(tagData, '1964');
 
-      expect(result.body.description).toBe(Plants.STLOUIS);
-      expect(result.trim.description).toBe('Blue Vinyl');
-      expect(result.style.description).toBe(BodyStyles.CONVERTIBLE);
-      expect(result.paint.description).toBe('Daytona Blue');
-      expect(result.dateCode.description).toBe('June 17');
+      expect(result['body'].description).toBe(Plants.STLOUIS);
+      expect(result['trim'].description).toBe('Blue Vinyl');
+      expect(result['style'].description).toBe(BodyStyles.CONVERTIBLE);
+      expect(result['paint'].description).toBe('Daytona Blue');
+      expect(result['dateCode'].description).toBe('June 17');
     });
 
     it('Decodes tag data for a 1964 car: 3', () => {
@@ -89,11 +89,11 @@ describe('Decode Function', () => {
 
       const result = trimTagDecoder(tagData, '1964');
 
-      expect(result.body.description).toBe(Plants.AOSMITH);
-      expect(result.trim.description).toBe('Red Vinyl');
-      expect(result.style.description).toBe(BodyStyles.CONVERTIBLE);
-      expect(result.paint.description).toBe('Satin Silver');
-      expect(result.dateCode.description).toBe('April 27');
+      expect(result['body'].description).toBe(Plants.AOSMITH);
+      expect(result['trim'].description).toBe('Red Vinyl');
+      expect(result['style'].description).toBe(BodyStyles.CONVERTIBLE);
+      expect(result['paint'].description).toBe('Satin Silver');
+      expect(result['dateCode'].description).toBe('April 27');
     });
 
     it('Decodes tag data for a 1964 car: 4', () => {
@@ -107,11 +107,11 @@ describe('Decode Function', () => {
 
       const result = trimTagDecoder(tagData, '1964');
 
-      expect(result.body.description).toBe(Plants.AOSMITH);
-      expect(result.trim.description).toBe('White Vinyl, Black Dash');
-      expect(result.style.description).toBe(BodyStyles.COUPE);
-      expect(result.paint.description).toBe('Satin Silver');
-      expect(result.dateCode.description).toBe('January 28');
+      expect(result['body'].description).toBe(Plants.AOSMITH);
+      expect(result['trim'].description).toBe('White Vinyl, Black Dash');
+      expect(result['style'].description).toBe(BodyStyles.COUPE);
+      expect(result['paint'].description).toBe('Satin Silver');
+      expect(result['dateCode'].description).toBe('January 28');
     });
   });
 
@@ -127,11 +127,11 @@ describe('Decode Function', () => {
 
       const result = trimTagDecoder(tagData, '1965');
 
-      expect(result.body.description).toBe(Plants.STLOUIS);
-      expect(result.trim.description).toBe('White/Black Vinyl');
-      expect(result.style.description).toBe(BodyStyles.CONVERTIBLE);
-      expect(result.paint.description).toBe('Milano Maroon');
-      expect(result.dateCode.description).toBe('February 11');
+      expect(result['body'].description).toBe(Plants.STLOUIS);
+      expect(result['trim'].description).toBe('White/Black Vinyl');
+      expect(result['style'].description).toBe(BodyStyles.CONVERTIBLE);
+      expect(result['paint'].description).toBe('Milano Maroon');
+      expect(result['dateCode'].description).toBe('February 11');
     });
 
     it('Decodes tag data for a 1965 car: 2', () => {
@@ -145,11 +145,11 @@ describe('Decode Function', () => {
 
       const result = trimTagDecoder(tagData, '1965');
 
-      expect(result.body.description).toBe(Plants.STLOUIS);
-      expect(result.trim.description).toBe('Saddle Vinyl');
-      expect(result.style.description).toBe(BodyStyles.COUPE);
-      expect(result.paint.description).toBe('Glen Green');
-      expect(result.dateCode.description).toBe('June 4');
+      expect(result['body'].description).toBe(Plants.STLOUIS);
+      expect(result['trim'].description).toBe('Saddle Vinyl');
+      expect(result['style'].description).toBe(BodyStyles.COUPE);
+      expect(result['paint'].description).toBe('Glen Green');
+      expect(result['dateCode'].description).toBe('June 4');
     });
 
     it('Decodes tag data for a 1965 car: 3', () => {
@@ -163,11 +163,11 @@ describe('Decode Function', () => {
 
       const result = trimTagDecoder(tagData, '1965');
 
-      expect(result.body.description).toBe(Plants.AOSMITH);
-      expect(result.trim.description).toBe('White/Blue Vinyl');
-      expect(result.style.description).toBe(BodyStyles.CONVERTIBLE);
-      expect(result.paint.description).toBe('Nassau Blue');
-      expect(result.dateCode.description).toBe('February 22');
+      expect(result['body'].description).toBe(Plants.AOSMITH);
+      expect(result['trim'].description).toBe('White/Blue Vinyl');
+      expect(result['style'].description).toBe(BodyStyles.CONVERTIBLE);
+      expect(result['paint'].description).toBe('Nassau Blue');
+      expect(result['dateCode'].description).toBe('February 22');
     });
 
     it('Decodes tag data for a 1965 car: 4', () => {
@@ -181,11 +181,11 @@ describe('Decode Function', () => {
 
       const result = trimTagDecoder(tagData, '1965');
 
-      expect(result.body.description).toBe(Plants.AOSMITH);
-      expect(result.trim.description).toBe('Black Vinyl');
-      expect(result.style.description).toBe(BodyStyles.COUPE);
-      expect(result.paint.description).toBe('Nassau Blue');
-      expect(result.dateCode.description).toBe('December 3');
+      expect(result['body'].description).toBe(Plants.AOSMITH);
+      expect(result['trim'].description).toBe('Black Vinyl');
+      expect(result['style'].description).toBe(BodyStyles.COUPE);
+      expect(result['paint'].description).toBe('Nassau Blue');
+      expect(result['dateCode'].description).toBe('December 3');
     });
   });
 
@@ -201,11 +201,11 @@ describe('Decode Function', () => {
 
       const result = trimTagDecoder(tagData, '1966');
 
-      expect(result.body.description).toBe(Plants.STLOUIS);
-      expect(result.trim.description).toBe('White/Blue Vinyl');
-      expect(result.style.description).toBe(BodyStyles.CONVERTIBLE);
-      expect(result.paint.description).toBe('Ermine White');
-      expect(result.dateCode.description).toBe('October 11');
+      expect(result['body'].description).toBe(Plants.STLOUIS);
+      expect(result['trim'].description).toBe('White/Blue Vinyl');
+      expect(result['style'].description).toBe(BodyStyles.CONVERTIBLE);
+      expect(result['paint'].description).toBe('Ermine White');
+      expect(result['dateCode'].description).toBe('October 11');
     });
 
     it('Decodes tag data for a 1966 car: 2', () => {
@@ -219,11 +219,11 @@ describe('Decode Function', () => {
 
       const result = trimTagDecoder(tagData, '1966');
 
-      expect(result.body.description).toBe(Plants.STLOUIS);
-      expect(result.trim.description).toBe('Black Vinyl');
-      expect(result.style.description).toBe(BodyStyles.COUPE);
-      expect(result.paint.description).toBe('Tuxedo Black');
-      expect(result.dateCode.description).toBe('July 25');
+      expect(result['body'].description).toBe(Plants.STLOUIS);
+      expect(result['trim'].description).toBe('Black Vinyl');
+      expect(result['style'].description).toBe(BodyStyles.COUPE);
+      expect(result['paint'].description).toBe('Tuxedo Black');
+      expect(result['dateCode'].description).toBe('July 25');
     });
 
     it('Decodes tag data for a 1966 car: 3', () => {
@@ -237,11 +237,11 @@ describe('Decode Function', () => {
 
       const result = trimTagDecoder(tagData, '1966');
 
-      expect(result.body.description).toBe(Plants.AOSMITH);
-      expect(result.trim.description).toBe('Dark Blue Vinyl');
-      expect(result.style.description).toBe(BodyStyles.CONVERTIBLE);
-      expect(result.paint.description).toBe('Trophy Blue');
-      expect(result.dateCode.description).toBe('June 6');
+      expect(result['body'].description).toBe(Plants.AOSMITH);
+      expect(result['trim'].description).toBe('Dark Blue Vinyl');
+      expect(result['style'].description).toBe(BodyStyles.CONVERTIBLE);
+      expect(result['paint'].description).toBe('Trophy Blue');
+      expect(result['dateCode'].description).toBe('June 6');
     });
 
     it('Decodes tag data for a 1966 car: 4', () => {
@@ -255,11 +255,11 @@ describe('Decode Function', () => {
 
       const result = trimTagDecoder(tagData, '1966');
 
-      expect(result.body.description).toBe(Plants.AOSMITH);
-      expect(result.trim.description).toBe('Bright Blue Vinyl');
-      expect(result.style.description).toBe(BodyStyles.COUPE);
-      expect(result.paint.description).toBe('Laguna Blue');
-      expect(result.dateCode.description).toBe('January 6');
+      expect(result['body'].description).toBe(Plants.AOSMITH);
+      expect(result['trim'].description).toBe('Bright Blue Vinyl');
+      expect(result['style'].description).toBe(BodyStyles.COUPE);
+      expect(result['paint'].description).toBe('Laguna Blue');
+      expect(result['dateCode'].description).toBe('January 6');
     });
   });
 
@@ -275,11 +275,11 @@ describe('Decode Function', () => {
 
       const result = trimTagDecoder(tagData, '1967');
 
-      expect(result.body.description).toBe(Plants.STLOUIS);
-      expect(result.trim.description).toBe('Black Vinyl');
-      expect(result.style.description).toBe(BodyStyles.CONVERTIBLE);
-      expect(result.paint.description).toBe('Marlboro Maroon');
-      expect(result.dateCode.description).toBe('June 20');
+      expect(result['body'].description).toBe(Plants.STLOUIS);
+      expect(result['trim'].description).toBe('Black Vinyl');
+      expect(result['style'].description).toBe(BodyStyles.CONVERTIBLE);
+      expect(result['paint'].description).toBe('Marlboro Maroon');
+      expect(result['dateCode'].description).toBe('June 20');
     });
 
     it('Decodes tag data for a 1967 car: 2', () => {
@@ -293,11 +293,11 @@ describe('Decode Function', () => {
 
       const result = trimTagDecoder(tagData, '1967');
 
-      expect(result.body.description).toBe(Plants.STLOUIS);
-      expect(result.trim.description).toBe('Black Vinyl');
-      expect(result.style.description).toBe(BodyStyles.COUPE);
-      expect(result.paint.description).toBe('Marlboro Maroon');
-      expect(result.dateCode.description).toBe('February 1');
+      expect(result['body'].description).toBe(Plants.STLOUIS);
+      expect(result['trim'].description).toBe('Black Vinyl');
+      expect(result['style'].description).toBe(BodyStyles.COUPE);
+      expect(result['paint'].description).toBe('Marlboro Maroon');
+      expect(result['dateCode'].description).toBe('February 1');
     });
 
     it('Decodes tag data for a 1967 car: 3', () => {
@@ -311,11 +311,11 @@ describe('Decode Function', () => {
 
       const result = trimTagDecoder(tagData, '1967');
 
-      expect(result.body.description).toBe(Plants.AOSMITH);
-      expect(result.trim.description).toBe('Black Vinyl');
-      expect(result.style.description).toBe(BodyStyles.CONVERTIBLE);
-      expect(result.paint.description).toBe('Sunfire Yellow');
-      expect(result.dateCode.description).toBe('January 26');
+      expect(result['body'].description).toBe(Plants.AOSMITH);
+      expect(result['trim'].description).toBe('Black Vinyl');
+      expect(result['style'].description).toBe(BodyStyles.CONVERTIBLE);
+      expect(result['paint'].description).toBe('Sunfire Yellow');
+      expect(result['dateCode'].description).toBe('January 26');
     });
 
     it('Decodes tag data for a 1967 car: 4', () => {
@@ -329,11 +329,11 @@ describe('Decode Function', () => {
 
       const result = trimTagDecoder(tagData, '1967');
 
-      expect(result.body.description).toBe(Plants.AOSMITH);
-      expect(result.trim.description).toBe('Red Vinyl');
-      expect(result.style.description).toBe(BodyStyles.COUPE);
-      expect(result.paint.description).toBe('Rally Red');
-      expect(result.dateCode.description).toBe('August 24');
+      expect(result['body'].description).toBe(Plants.AOSMITH);
+      expect(result['trim'].description).toBe('Red Vinyl');
+      expect(result['style'].description).toBe(BodyStyles.COUPE);
+      expect(result['paint'].description).toBe('Rally Red');
+      expect(result['dateCode'].description).toBe('August 24');
     });
   });
 });

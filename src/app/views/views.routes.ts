@@ -9,8 +9,4 @@ export const viewsRoutes = [
     path: 'cars',
     loadChildren: () => import('./cars/cars.routes').then((m) => m.carsRoutes),
   },
-  // {
-  //   path: 'admin',
-  //   loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule),
-  // }
 ];

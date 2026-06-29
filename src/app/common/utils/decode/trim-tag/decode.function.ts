@@ -1,5 +1,3 @@
-// import { Car } from '@common/types/car.interface';
-
 import { CarTagData } from "@common/types/car.interface";
 import { decodeBody } from "./decode-body.function";
 import { decodeDateCode } from "./decode-date.function";

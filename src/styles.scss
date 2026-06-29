@@ -3,7 +3,20 @@
 
 @include cdk.overlay();
 
-*, p, h1, h2, h3, h4, h5, h6, ul, ol, li, a, span, div {
+*,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+ol,
+li,
+a,
+span,
+div {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -25,27 +38,27 @@ button {
   // Text Colors
   --ct-text-color-default: #002055;
   --ct-text-color-on-primary: #fff;
-  --ct-text-color-secondary: #868D95;
-  --ct-text-color-placeholder: #848A94;
-  --ct-text-color-disabled: #848A94;
+  --ct-text-color-secondary: #868d95;
+  --ct-text-color-placeholder: #848a94;
+  --ct-text-color-disabled: #848a94;
   --ct-text-color-error: rgba(255, 77, 79, 1);
   --ct-text-color-danger: rgba(255, 77, 79, 1);
 
   // Background Colors
   --ct-background-main: #ffffff;
-  --ct-background-secondary: #868D95;
-  --ct-background-tertiary: #848A94;
+  --ct-background-secondary: #868d95;
+  --ct-background-tertiary: #848a94;
 
   // Global
   --ct-nav-height: 56px;
 
   // Borders
   --ct-border-default: #e2e5fa;
-  --ct-border-focused: #756EF3;
+  --ct-border-focused: #756ef3;
 }
 
 body {
-  font-family: 'Circular-Std';
+  font-family: 'Google Sans Flex', sans-serif;
   font-optical-sizing: auto;
   overflow-x: hidden;
   background: var(--ct-background-main);

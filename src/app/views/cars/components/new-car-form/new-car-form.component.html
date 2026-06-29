@@ -17,7 +17,15 @@
       <div class="ct-new-car-form__content">
         <div class="ct-new-car-form__group">
           <label for="name">Name:</label>
-          <input id="name" ctInput ctAutoFocus type="text" placeholder="Defaults to: Date/Time - Selected Year" />
+          <input
+            id="name"
+            ctInput
+            ctAutoFocus
+            type="text"
+            placeholder="Defaults to: Date/Time - Selected Year"
+            [value]="name()"
+            (input)="name.set($event.target.value)"
+          />
         </div>
 
         <div class="ct-new-car-form__group">
@@ -75,12 +83,7 @@
           Cancel
         </button>
 
-        <button
-          ctButton
-          ctButtonVariant="primary"
-          ctButtonSize="medium"
-          (click)="useManualEntry()"
-        >
+        <button ctButton ctButtonVariant="primary" ctButtonSize="medium" (click)="useManualEntry()">
           Manual Entry
         </button>
       </div>

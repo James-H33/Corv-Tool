@@ -1,7 +1,15 @@
 import { Component, computed, effect, inject, OnDestroy, signal, viewChild } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FieldTree, form, FormField, required } from '@angular/forms/signals';
+import {
+  FieldTree,
+  form,
+  FormField,
+  required,
+  validate,
+  ValidationResult
+} from '@angular/forms/signals';
+
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { Icon, IconComponent } from '@common/components/icon/icon.component';
 import { AutoFocusDirective } from '@common/directives/auto-focus/auto-focus.directive';
@@ -17,6 +25,7 @@ import { CarTagData } from '@common/types/car.interface';
 import { FormTypes } from '@common/types/form-types.enum';
 import { trimTagDecoder } from '@common/utils/decode/trim-tag/decode.function';
 import { decodeVin } from '@common/utils/decode/vin/decode.function';
+import { validateVin } from '@common/utils/decode/vin/validate-vin.function';
 import { Store } from '@ngrx/store';
 import { filter } from 'rxjs/operators';
 
@@ -69,7 +78,18 @@ export class CarComponent implements OnDestroy {
   nameModel = signal('');
 
   vinForm = form(this.vinModel, (schemaPath) => {
-    required(schemaPath.vin);
+    required(schemaPath.vin, { message: 'VIN is required' });
+    validate(schemaPath.vin, (value): ValidationResult => {
+      const car = this.car();
+
+      if (!car) {
+        return { kind: 'carNotFound', message: 'Car not found' };
+      }
+
+      const { isValid, invalidReason } = validateVin(value.value(), car.year!);
+
+      return isValid ? null : { kind: 'invalidVin', message: invalidReason};
+    });
   });
 
   trimForm = form(this.trimModel, (schemaPath) => {
@@ -161,7 +181,8 @@ export class CarComponent implements OnDestroy {
     }
 
     const activeForm = this.activeForm();
-    const url = activeForm === FormTypes.TrimTag && extractedImageUrl ? extractedImageUrl : car.tagImageUrl;
+    const url =
+      activeForm === FormTypes.TrimTag && extractedImageUrl ? extractedImageUrl : car.tagImageUrl;
 
     return url ? `${baseUrl}${url}` : null;
   });
@@ -177,7 +198,8 @@ export class CarComponent implements OnDestroy {
     }
 
     const activeForm = this.activeForm();
-    const url = activeForm === FormTypes.Vin && extractedImageUrl ? extractedImageUrl : car.vinImageUrl;
+    const url =
+      activeForm === FormTypes.Vin && extractedImageUrl ? extractedImageUrl : car.vinImageUrl;
 
     return url ? `${baseUrl}${url}` : null;
   });
@@ -285,7 +307,11 @@ export class CarComponent implements OnDestroy {
     this.closeDropdownBasedOnContext();
   }
 
-  upload(): void {
+  uploadTag(): void {
+    this.closeDropdownBasedOnContext();
+  }
+
+  uploadVin(): void {
     this.closeDropdownBasedOnContext();
   }
 
@@ -399,10 +425,7 @@ export class CarComponent implements OnDestroy {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
 
-    console.log('File selected:', context);
-
     if (!file) {
-      console.log('No file selected');
       return;
     }
 

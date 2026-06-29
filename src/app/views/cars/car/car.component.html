@@ -41,14 +41,14 @@
             [style.backgroundImage]="'url(' + vinImageUrl() + ')'"
           ></div>
         } @else {
-          <div class="ct-car-item__no-image" (click)="retakeVin()" role="button" tabindex="0">
+          <div class="ct-car-item__no-image" (click)="uploadVin()" role="button" tabindex="0">
             <label for="vinPicture" class="ct-car-options-menu__upload-label">
               Click here to add Vin Image
             </label>
           </div>
         }
       } @else {
-        <div class="ct-car-item__no-image" (click)="retakeVin()" role="button" tabindex="0">
+        <div class="ct-car-item__no-image">
           <span class="ct-car-item__extracting-text shimmer-text">Processing Image...</span>
         </div>
       }
@@ -88,12 +88,18 @@
       }
 
       @if (activeForm() === 'vin') {
+        @if (vinForm().dirty() && vinForm.vin().errors()) {
+          @for (error of vinForm.vin().errors(); track error.kind) {
+            <div class="ct-car-item__error">*{{ error.message }}</div>
+          }
+        }
+
         <div class="ct-car-item__edit-actions">
           <button
             ctButton
             ctButtonVariant="primary"
             (click)="saveVinEdits()"
-            [disabled]="!vinForm().dirty()"
+            [disabled]="!vinForm().dirty() || vinForm.vin().errors().length"
           >
             Save
           </button>
@@ -105,9 +111,9 @@
         <div class="ct-car-item__details">
           @for (field of vinDisplayFields; track field.label; let i = $index) {
             <div class="ct-car-item__detail">
-              <span class="ct-car-item__detail-label"
-                >{{ field.label }}: {{ vinData()?.[field.value]?.value }}</span
-              >
+              <span class="ct-car-item__detail-label">
+                {{ field.label }}: {{ vinData()?.[field.value]?.value }}
+              </span>
               <span class="ct-car-item__detail-value">{{
                 vinData()?.[field.value]?.description
               }}</span>
@@ -127,14 +133,14 @@
             [style.backgroundImage]="'url(' + tagImageUrl() + ')'"
           ></div>
         } @else {
-          <div class="ct-car-item__no-image" (click)="retakeTag()" role="button" tabindex="0">
+          <div class="ct-car-item__no-image" (click)="uploadTag()" role="button" tabindex="0">
             <label for="tagPicture" class="ct-car-options-menu__upload-label">
               Click here to add Trim Tag Image
             </label>
           </div>
         }
       } @else {
-        <div class="ct-car-item__no-image" (click)="retakeTag()" role="button" tabindex="0">
+        <div class="ct-car-item__no-image">
           <span class="ct-car-item__extracting-text shimmer-text">Processing Image...</span>
         </div>
       }
@@ -213,9 +219,6 @@
 
 <ng-template #tagOptionsMenu>
   <div class="cdk-overlay-pane-default ct-car-options-menu">
-    <div class="ct-car-options-menu__item" (click)="retakeTag()" role="button" tabindex="0">
-      <label for="tagPicture" class="ct-car-options-menu__upload-label"> Retake </label>
-    </div>
     <div class="ct-car-options-menu__item" role="button" tabindex="0" for="tagPicture">
       <label for="tagPicture" class="ct-car-options-menu__upload-label"> Re-upload </label>
     </div>
@@ -225,9 +228,6 @@
 
 <ng-template #vinOptionsMenu>
   <div class="cdk-overlay-pane-default ct-car-options-menu">
-    <div class="ct-car-options-menu__item" (click)="retakeVin()" role="button" tabindex="0">
-      <label for="vinPicture" class="ct-car-options-menu__upload-label"> Retake </label>
-    </div>
     <div class="ct-car-options-menu__item" role="button" tabindex="0" for="vinPicture">
       <label for="vinPicture" class="ct-car-options-menu__upload-label"> Re-upload </label>
     </div>

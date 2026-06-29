@@ -3,7 +3,7 @@ import { ApplicationActions } from '@common/store/application/application.action
 import { Store } from '@ngrx/store';
 
 @Component({
-  selector: 'nl-logout',
+  selector: 'ct-logout',
   templateUrl: './logout.component.html',
   styleUrls: ['./logout.component.scss'],
 })

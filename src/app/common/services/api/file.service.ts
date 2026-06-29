@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { ApplicationService } from '@common/services/application.service';
 import { ExtractedCarImageData } from '@common/types/extracted-car-image-data.interface';
 import { FormTypes } from '@common/types/form-types.enum';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,17 +14,12 @@ export class FileService {
   baseUrl = this.appService.getBaseApiUrl();
   apiUrl = `${this.baseUrl}/file`;
 
-  extractDataFromImage(id: string, file: File, forField: FormTypes): Observable<ExtractedCarImageData> {
+  extractDataFromImage(file: File, forField: FormTypes): Observable<ExtractedCarImageData> {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('type', forField);
 
     return this.http
-      .post<ExtractedCarImageData>(`${this.apiUrl}/extract`, formData)
-      .pipe(
-        tap((response) =>
-          console.log(`Received extracted data for car id ${id} and field ${forField}:`, response),
-        ),
-      );
+      .post<ExtractedCarImageData>(`${this.apiUrl}/extract`, formData);
   }
 }
