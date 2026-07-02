@@ -1,0 +1,82 @@
+<div class="ct-signup">
+	<div class="ct-signup-form">
+		<div class="ct-signup-form__row">
+			<h1>Create Account</h1>
+			<p>Sign up to start using Corv Tool.</p>
+		</div>
+
+		<div class="ct-signup-form__row">
+			<label for="email">Email:</label>
+			<input
+				ctInput
+				id="email"
+				placeholder="email"
+				[formField]="form.email"
+				(keydown.enter)="signup()"
+				type="email"
+			/>
+		</div>
+
+		<div class="ct-signup-form__row">
+			<label for="password">Password:</label>
+			<input
+				ctInput
+				id="password"
+				placeholder="password"
+				[formField]="form.password"
+				(keydown.enter)="signup()"
+				type="password"
+			/>
+		</div>
+
+		<div class="ct-signup-form__row">
+			<label for="confirmPassword">Confirm Password:</label>
+			<input
+				ctInput
+				id="confirmPassword"
+				placeholder="confirm password"
+				[formField]="form.confirmPassword"
+				(keydown.enter)="signup()"
+				type="password"
+			/>
+		</div>
+
+		@if (errorMessage()) {
+			<div class="ct-signup-form__row ct-signup-form__row--error">
+				{{ errorMessage() }}
+			</div>
+		}
+
+    @if (showPasswordDoesNotMatchError()) {
+      <div class="ct-signup-form__row ct-signup-form__row--error">
+        Passwords do not match.
+      </div>
+    }
+
+    @if (showPasswordNotLongEnoughError()) {
+      <div class="ct-signup-form__row ct-signup-form__row--error">
+        Password must be at least 8 characters long.
+      </div>
+    }
+
+    @if (showEmailInvalidError()) {
+      <div class="ct-signup-form__row ct-signup-form__row--error">
+        Email must be a valid email address.
+      </div>
+    }
+
+		<div class="ct-signup-form__row ct-signup-form__row--actions">
+			<a ctButton ctButtonVariant="secondary" routerLink="/login">Back to Login</a>
+
+			<button
+				ctButton
+				ctButtonVariant="primary"
+				(click)="signup()"
+				(keydown.enter)="signup()"
+				[disabled]="!canSubmit()"
+			>
+				Sign Up
+			</button>
+		</div>
+	</div>
+</div>

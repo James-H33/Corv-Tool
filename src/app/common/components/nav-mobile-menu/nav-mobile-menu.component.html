@@ -1,0 +1,23 @@
+<div class="ct-nav-mobile-menu" [class.open]="isMenuOpen()">
+  <div
+    class="ct-nav-mobile-menu__close"
+    (click)="closeMenu()"
+    role="button"
+    aria-label="Close mobile menu"
+    tabindex="0"
+  >
+    <button ctButtonIcon ctButtonVariant="outline" (click)="closeMenu()">
+      <ct-icon [icon]="backArrowIcon" size="24"></ct-icon>
+    </button>
+  </div>
+
+  <div class="ct-nav-mobile-menu-content">
+    <div class="ct-nav-mobile-menu-content__item">
+      <a [routerLink]="['/v/cars']" (click)="closeMenu()">Home</a>
+    </div>
+
+    <div class="ct-nav-mobile-menu-content__item">
+      <a [routerLink]="['/logout']" (click)="logout()">Logout</a>
+    </div>
+  </div>
+</div>

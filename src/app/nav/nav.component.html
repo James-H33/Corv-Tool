@@ -5,7 +5,15 @@
     class="ct-nav-logo"
   />
 
-  <div class="ct-nav-mobile-menu__toggle">
-    <ct-icon icon="category" size="24"></ct-icon>
-  </div>
+  @if (isLoggedIn()) {
+    <div
+      class="ct-nav-mobile-menu__toggle"
+      (click)="openMenu()"
+      role="button"
+      aria-label="Open mobile menu"
+      tabindex="0"
+    >
+      <ct-icon icon="category" size="24"></ct-icon>
+    </div>
+  }
 </nav>

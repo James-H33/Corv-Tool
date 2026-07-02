@@ -41,6 +41,9 @@ export const apiErrorInterceptor: HttpInterceptorFn = (req, next) => {
           case 404:
             errorMessage = 'Requested resource not found.';
             break;
+          case 429:
+            errorMessage = 'Too many requests. Please try again later.';
+            break;
           case 500:
             errorMessage = 'Internal Server Error. Please try again later.';
             break;
@@ -60,7 +63,7 @@ export const apiErrorInterceptor: HttpInterceptorFn = (req, next) => {
 
 function getErrorCodeReason(code: keyof typeof ErrorCodesReason): string {
   switch (code) {
-    case ErrorCodes.INVALID_USERNAME_OR_PASSWORD:
+    case ErrorCodes.INVALID_EMAIL_OR_PASSWORD:
       return ErrorCodesReason[code];
     case ErrorCodes.USER_NOT_FOUND:
       return ErrorCodesReason[code];

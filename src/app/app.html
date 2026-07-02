@@ -1,4 +1,13 @@
-<ct-nav></ct-nav>
+<ct-nav
+  (menuOpened)="openMenu()"
+  [isLoggedIn]="isLoggedIn()"
+></ct-nav>
+
+<ct-nav-mobile-menu
+  [isMenuOpen]="isMobileMenuOpen()"
+  (menuClosed)="closeMenu()"
+  (loggedOut)="logout()"
+></ct-nav-mobile-menu>
 
 <div class="main">
   <router-outlet></router-outlet>

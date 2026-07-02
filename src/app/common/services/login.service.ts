@@ -12,7 +12,7 @@ export class LoginService {
   router = inject(Router);
   baseUrl = this.applicationService.getBaseApiUrl();
 
-  login(credentials: { username: string; password: string }) {
+  login(credentials: { email: string; password: string }) {
     return this.http.post(`${this.baseUrl}/auth/login`, credentials);
   }
 }
