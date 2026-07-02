@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { IconComponent } from '@common/components/icon/icon.component';
 
 @Component({
@@ -8,4 +8,11 @@ import { IconComponent } from '@common/components/icon/icon.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [IconComponent, IconComponent],
 })
-export class NavComponent {}
+export class NavComponent {
+  isLoggedIn = input<boolean>();
+  menuOpened = output();
+
+  openMenu(): void {
+    this.menuOpened.emit();
+  }
+}

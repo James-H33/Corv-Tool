@@ -1,0 +1,52 @@
+.ct-signup {
+	display: flex;
+	justify-content: center;
+	min-height: calc(100vh - 80px);
+	padding-top: 12vh;
+}
+
+.ct-signup-form {
+	width: 100%;
+	max-width: 460px;
+	padding-inline: 20px;
+	margin: 0 auto;
+
+	h1 {
+		margin: 0 0 8px;
+		font-size: 28px;
+	}
+
+	p {
+		margin: 0;
+		color: #6a7381;
+	}
+
+	label {
+		display: block;
+		margin-bottom: 8px;
+		font-weight: 600;
+	}
+}
+
+.ct-signup-form__row {
+	margin-bottom: 20px;
+
+	&--error {
+		color: red;
+    font-size: 13px;
+    margin-bottom: 8px;
+	}
+
+	&--actions {
+		display: flex;
+		justify-content: flex-end;
+		gap: 8px;
+		button,
+		a {
+			&[ctButtonVariant="primary"],
+			&[ctButtonVariant="secondary"] {
+				padding: 6px 16px;
+			}
+		}
+	}
+}

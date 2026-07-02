@@ -1,10 +1,10 @@
 import { inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { ApplicationService } from '@common/services/application.service';
 import { LoginService } from '@common/services/login.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, switchMap, tap } from 'rxjs';
 import { ApplicationActions } from './application.actions';
-import { Router } from '@angular/router';
 
 export const getWorkspaceData$ = createEffect(
   (actions$ = inject(Actions), appService = inject(ApplicationService)) => {
@@ -31,7 +31,7 @@ export const login$ = createEffect(
     return actions$.pipe(
       ofType(ApplicationActions.login),
       switchMap((action) => {
-        return loginService.login({ username: action.username, password: action.password }).pipe(
+        return loginService.login({ email: action.email, password: action.password }).pipe(
           map((response: any) => {
             const authToken = response.authToken;
 

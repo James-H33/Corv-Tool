@@ -1,13 +1,20 @@
 <div class="ct-login">
   <div class="ct-login-form">
     <div class="ct-login-form__row">
-      <label for="username">Username:</label>
+      <h2>Login to Your Account</h2>
+    </div>
+
+    <div class="ct-login-form__row">
+      <label for="email">Email:</label>
       <input
         ctInput
-        id="username"
-        placeholder="username or email"
-        [formField]="form.username"
+        id="email"
+        placeholder="email"
+        [formField]="form.email"
         (keydown.enter)="login()"
+        (focus)="emailFoucused.set(true)"
+        (blur)="emailFoucused.set(false)"
+        [class.error]="showEmailInvalidError()"
         type="text"
       />
     </div>
@@ -19,7 +26,10 @@
         id="password"
         placeholder="password"
         [formField]="form.password"
+        [class.error]="showPasswordNotLongEnoughError()"
         (keydown.enter)="login()"
+        (focus)="passwordFoucused.set(true)"
+        (blur)="passwordFoucused.set(false)"
         type="password"
       />
     </div>
@@ -30,13 +40,25 @@
       </div>
     }
 
+    @if (showEmailInvalidError()) {
+      <div class="ct-login-form__row ct-login-form__row--error">
+        Email must be a valid email address.
+      </div>
+    }
+
+    @if (showPasswordNotLongEnoughError()) {
+      <div class="ct-login-form__row ct-login-form__row--error">
+        Password must be at least 8 characters long.
+      </div>
+    }
+
     <div class="ct-login-form__row ct-login-form__row--actions">
       <button
         ctButton
         ctButtonVariant="primary"
         (click)="login()"
         (keydown.enter)="login()"
-        [disabled]="!form().valid()"
+        [disabled]="!canSubmit()"
       >
         Login
       </button>

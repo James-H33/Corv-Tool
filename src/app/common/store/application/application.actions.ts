@@ -5,8 +5,10 @@ export const ApplicationActions = createActionGroup({
   events: {
     init: emptyProps(),
     initSuccess: props<{ authToken: string }>(),
-    login: props<{ username: string; password: string }>(),
+    login: props<{ email: string; password: string }>(),
     loginSuccess: props<{ authToken: string }>(),
     logout: emptyProps(),
+    openMobileMenu: emptyProps(),
+    closeMobileMenu: emptyProps(),
   },
 });
