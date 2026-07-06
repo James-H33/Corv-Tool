@@ -32,6 +32,8 @@ export const CarActions = createActionGroup({
 
     setActiveForm: props<{ formType: FormTypes | null }>(),
 
+    clearFormState: emptyProps(),
+
     addCars: props<{ cars: Car[] }>(),
     addCarsSuccess: props<{ cars: Car[] }>(),
   },

@@ -3,7 +3,7 @@ import { FormTypes } from '@common/types/form-types.enum';
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { CarActions } from './car.actions';
 
-interface ExtractedData {
+export interface ExtractedData {
   data: CarTagData | string;
   imageId: string;
 }
@@ -82,5 +82,11 @@ export const carFeature = createFeature({
       activeForm: formType,
     })),
 
+    on(CarActions.clearFormState, (state) => ({
+      ...state,
+      extractedData: null,
+      activeForm: null,
+      extractingDataFor: null,
+    }))
   ),
 });
