@@ -14,7 +14,6 @@ export class NewCarFormComponent {
   name = signal('');
   year = signal('');
   dialogRef = inject(DialogRef);
-  sliderPosition = signal(0);
 
   create = output<AddCar>();
 

@@ -8,10 +8,9 @@
 }
 
 .ct-new-car-form {
+  padding-block: 16px;
   display: flex;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
+  flex-direction: column;
 }
 
 .ct-new-car-form__header {
@@ -25,18 +24,6 @@
   font-weight: 500;
   color: var(--ct-text-secondary);
   cursor: pointer;
-}
-
-.ct-new-car-form__slider {
-  --ct-new-car-form-slider-postion: 0;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  grid-template-columns: 330px 330px;
-  gap: 24px;
-  padding: 2px;
-  transition: 300ms ease;
-  transform: translateX(calc(-355px * var(--ct-new-car-form-slider-postion)));
 }
 
 .ct-new-car-form__title {

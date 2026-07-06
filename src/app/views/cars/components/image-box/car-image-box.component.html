@@ -1,0 +1,31 @@
+@if (!isLoading()) {
+  @if (imageUrl()) {
+    @if (isUsingSketchView()) {
+      <div class="ct-car-item__sketch">
+        @if (type() === 'vin') {
+          <ct-vin-sketch [car]="car()"></ct-vin-sketch>
+        } @else {
+          <ct-trim-tag-sketch [car]="car()"></ct-trim-tag-sketch>
+        }
+      </div>
+    } @else {
+      <div
+        class="ct-car-item__image-container"
+        [style.backgroundImage]="'url(' + imageUrl() + ')'"
+      ></div>
+    }
+  } @else {
+    <div class="ct-car-item__no-image" (click)="upload()" role="button" tabindex="0">
+      <label
+        [for]="type() === 'vin' ? 'vinPicture' : 'tagPicture'"
+        class="ct-car-options-menu__upload-label"
+      >
+        Click here to add {{ type() === 'vin' ? 'Vin' : 'Tag' }} Image
+      </label>
+    </div>
+  }
+} @else {
+  <div class="ct-car-item__no-image">
+    <span class="ct-car-item__extracting-text shimmer-text">Processing Image...</span>
+  </div>
+}

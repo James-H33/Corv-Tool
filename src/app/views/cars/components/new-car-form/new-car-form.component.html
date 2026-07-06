@@ -10,83 +10,50 @@
 </div>
 
 <div class="ct-new-car-form">
-  <div class="ct-new-car-form__slider" [style.--ct-new-car-form-slider-postion]="sliderPosition()">
-    <div class="ct-new-car-form__step-1">
-      <div class="ct-new-car-form__title">Add New Car</div>
+  <div class="ct-new-car-form__title">Add New Car</div>
 
-      <div class="ct-new-car-form__content">
-        <div class="ct-new-car-form__group">
-          <label for="name">Name:</label>
-          <input
-            id="name"
-            ctInput
-            ctAutoFocus
-            type="text"
-            placeholder="Defaults to: Date/Time - Selected Year"
-            [value]="name()"
-            (input)="name.set($event.target.value)"
-          />
-        </div>
-
-        <div class="ct-new-car-form__group">
-          <label for="name">Select Year:</label>
-          <div class="ct-new-car-form__year-options">
-            @for (option of myOptions(); track option.value) {
-              <button
-                ctButton
-                [attr.ctButtonVariant]="year() === option.value ? 'primary' : 'outline'"
-                (click)="selectYear(option.value)"
-              >
-                {{ option.label }}
-              </button>
-            }
-          </div>
-        </div>
-      </div>
-
-      <div class="ct-new-car-form__actions">
-        <button ctButton ctButtonVariant="outline" ctButtonSize="medium" (click)="cancel()">
-          Cancel
-        </button>
-        <button
-          ctButton
-          ctButtonVariant="primary"
-          ctButtonSize="medium"
-          [disabled]="!year()"
-          (click)="sliderPosition.set(sliderPosition() + 1)"
-        >
-          Next
-        </button>
-      </div>
+  <div class="ct-new-car-form__content">
+    <div class="ct-new-car-form__group">
+      <label for="name">Name:</label>
+      <input
+        id="name"
+        ctInput
+        ctAutoFocus
+        type="text"
+        placeholder="Defaults to: Date/Time - Selected Year"
+        [value]="name()"
+        (input)="name.set($event.target.value)"
+      />
     </div>
 
-    <div class="ct-new-car-form__step-2">
-      <div class="ct-new-car-form__title">Start with:</div>
-
-      <div class="ct-new-car-form__content">
-        <div class="ct-new-car-form__group">
-          <label for="name">Take picture of the following to get started.</label>
-          <div class="ct-new-car-form__year-options">
-            <button ctButton ctButtonVariant="outline" (click)="useVin()">Vin</button>
-            <button ctButton ctButtonVariant="outline" (click)="useTrimTag()">Trim Tag</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="ct-new-car-form__actions">
-        <button
-          ctButton
-          ctButtonVariant="outline"
-          ctButtonSize="medium"
-          (click)="sliderPosition.set(sliderPosition() - 1)"
-        >
-          Cancel
-        </button>
-
-        <button ctButton ctButtonVariant="primary" ctButtonSize="medium" (click)="useManualEntry()">
-          Manual Entry
-        </button>
+    <div class="ct-new-car-form__group">
+      <label for="name">Select Year:</label>
+      <div class="ct-new-car-form__year-options">
+        @for (option of myOptions(); track option.value) {
+          <button
+            ctButton
+            [attr.ctButtonVariant]="year() === option.value ? 'primary' : 'outline'"
+            (click)="selectYear(option.value)"
+          >
+            {{ option.label }}
+          </button>
+        }
       </div>
     </div>
+  </div>
+
+  <div class="ct-new-car-form__actions">
+    <button ctButton ctButtonVariant="outline" ctButtonSize="medium" (click)="cancel()">
+      Cancel
+    </button>
+    <button
+      ctButton
+      ctButtonVariant="primary"
+      ctButtonSize="medium"
+      [disabled]="!year()"
+      (click)="useManualEntry()"
+    >
+      Create
+    </button>
   </div>
 </div>

@@ -1,5 +1,5 @@
 import { Car } from '@common/types/car.interface';
-import { carFeature } from './car.reducer';
+import { carFeature, ExtractedData } from './car.reducer';
 import { createSelector } from '@ngrx/store';
 
 export const {
@@ -25,3 +25,23 @@ export const selectCarsMap = createSelector(
     return carsMap;
   }
 );
+
+export const selectExtractedDataByType = (type: 'vin' | 'tag') => createSelector(
+  selectExtractedData,
+  selectActiveForm,
+  (extractedData: ExtractedData | null, activeForm: string | null) => {
+    if (!activeForm) {
+      return null;
+    }
+
+    if (type === 'vin' && activeForm === 'vin') {
+      return extractedData;
+    }
+
+    if (type === 'tag' && activeForm === 'tag') {
+      return extractedData;
+    }
+
+    return null;
+  }
+)

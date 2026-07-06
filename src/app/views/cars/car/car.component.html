@@ -34,30 +34,32 @@
 
   <div class="ct-car-body">
     <div class="ct-car-item">
-      @if (!isExtractingDataForVin()) {
-        @if (vinImageUrl()) {
-          <div
-            class="ct-car-item__image-container"
-            [style.backgroundImage]="'url(' + vinImageUrl() + ')'"
-          ></div>
-        } @else {
-          <div class="ct-car-item__no-image" (click)="uploadVin()" role="button" tabindex="0">
-            <label for="vinPicture" class="ct-car-options-menu__upload-label">
-              Click here to add Vin Image
-            </label>
-          </div>
-        }
-      } @else {
-        <div class="ct-car-item__no-image">
-          <span class="ct-car-item__extracting-text shimmer-text">Processing Image...</span>
-        </div>
-      }
+      <ct-car-image-box
+        [car]="car()"
+        type="vin"
+        [extractedData]="extractedVinData()"
+        [isUsingSketchView]="isUsingVinSketchView()"
+        [isLoading]="isExtractingDataForVin()"
+        (uploading)="uploadVin()"
+      ></ct-car-image-box>
 
       <div class="ct-car-item__action">
-        @if (vinImageUrl()) {
+        @if (hasVinImage()) {
           <div class="ct-car-item__action-left">
-            <button ctButtonIcon ctButtonVariant="primary">Actual</button>
-            <button ctButtonIcon ctButtonVariant="outline">Sketch</button>
+            <button
+              ctButtonIcon
+              [attr.ctButtonVariant]="isUsingVinSketchView() ? 'outline' : 'primary'"
+              (click)="useActualView('vin')"
+            >
+              Actual
+            </button>
+            <button
+              ctButtonIcon
+              [attr.ctButtonVariant]="isUsingVinSketchView() ? 'primary' : 'outline'"
+              (click)="useSketchView('vin')"
+            >
+              Sketch
+            </button>
           </div>
         }
 
@@ -107,15 +109,15 @@
         </div>
       }
 
-      @if (vinData()) {
+      @if (decodedVinData()) {
         <div class="ct-car-item__details">
           @for (field of vinDisplayFields; track field.label; let i = $index) {
             <div class="ct-car-item__detail">
               <span class="ct-car-item__detail-label">
-                {{ field.label }}: {{ vinData()?.[field.value]?.value }}
+                {{ field.label }}: {{ decodedVinData()?.[field.value]?.value }}
               </span>
               <span class="ct-car-item__detail-value">{{
-                vinData()?.[field.value]?.description
+                decodedVinData()?.[field.value]?.description
               }}</span>
             </div>
           }
@@ -126,30 +128,30 @@
     </div>
 
     <div class="ct-car-item">
-      @if (!isExtractingDataForTag()) {
-        @if (tagImageUrl()) {
-          <div
-            class="ct-car-item__image-container"
-            [style.backgroundImage]="'url(' + tagImageUrl() + ')'"
-          ></div>
-        } @else {
-          <div class="ct-car-item__no-image" (click)="uploadTag()" role="button" tabindex="0">
-            <label for="tagPicture" class="ct-car-options-menu__upload-label">
-              Click here to add Trim Tag Image
-            </label>
-          </div>
-        }
-      } @else {
-        <div class="ct-car-item__no-image">
-          <span class="ct-car-item__extracting-text shimmer-text">Processing Image...</span>
-        </div>
-      }
+      <ct-car-image-box
+        [car]="car()"
+        type="tag"
+        [extractedData]="extractedTagData()"
+        [isUsingSketchView]="isUsingTagSketchView()"
+        [isLoading]="isExtractingDataForTag()"
+        (uploading)="uploadTag()"
+      ></ct-car-image-box>
 
       <div class="ct-car-item__action">
-        @if (tagImageUrl()) {
+        @if (hasTagImage()) {
           <div class="ct-car-item__action-left">
-            <button ctButtonIcon ctButtonVariant="primary">Actual</button>
-            <button ctButtonIcon ctButtonVariant="outline">Sketch</button>
+            <button
+              ctButtonIcon
+              [attr.ctButtonVariant]="isUsingTagSketchView() ? 'outline' : 'primary'"
+              (click)="useActualView('tag')">
+              Actual
+            </button>
+            <button
+              ctButtonIcon
+              [attr.ctButtonVariant]="isUsingTagSketchView() ? 'primary' : 'outline'"
+              (click)="useSketchView('tag')">
+              Sketch
+            </button>
           </div>
         }
 
@@ -185,10 +187,10 @@
             } @else {
               <div class="ct-car-item__detail">
                 <span class="ct-car-item__detail-label"
-                  >{{ field.label }}: {{ trimTagData()?.[field.value]?.value }}</span
+                  >{{ field.label }}: {{ decodedTagData()?.[field.value]?.value }}</span
                 >
                 <span class="ct-car-item__detail-value">{{
-                  trimTagData()?.[field.value]?.description
+                  decodedTagData()?.[field.value]?.description
                 }}</span>
               </div>
             }

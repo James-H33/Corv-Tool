@@ -7,7 +7,7 @@ import {
   FormField,
   required,
   validate,
-  ValidationResult
+  ValidationResult,
 } from '@angular/forms/signals';
 
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
@@ -20,6 +20,7 @@ import {
   selectActiveForm,
   selectCarById,
   selectExtractedData,
+  selectExtractedDataByType,
 } from '@common/store/car/car.selectors';
 import { CarTagData } from '@common/types/car.interface';
 import { FormTypes } from '@common/types/form-types.enum';
@@ -28,6 +29,7 @@ import { decodeVin } from '@common/utils/decode/vin/decode.function';
 import { validateVin } from '@common/utils/decode/vin/validate-vin.function';
 import { Store } from '@ngrx/store';
 import { filter } from 'rxjs/operators';
+import { CarImageBoxComponent } from '../components/image-box/car-image-box.component';
 
 @Component({
   selector: 'ct-car',
@@ -41,6 +43,7 @@ import { filter } from 'rxjs/operators';
     ReactiveFormsModule,
     FormField,
     AutoFocusDirective,
+    CarImageBoxComponent,
   ],
 })
 export class CarComponent implements OnDestroy {
@@ -55,7 +58,12 @@ export class CarComponent implements OnDestroy {
 
   activeForm = this.store.selectSignal(selectActiveForm);
   extractedData = this.store.selectSignal(selectExtractedData);
+
+  extractedVinData = this.store.selectSignal(selectExtractedDataByType('vin'));
+  extractedTagData = this.store.selectSignal(selectExtractedDataByType('tag'));
+
   extractingDataFor = this.store.selectSignal((state) => state.car.extractingDataFor);
+
   isExtractingDataForTag = computed(() => this.extractingDataFor() === FormTypes.TrimTag);
   isExtractingDataForVin = computed(() => this.extractingDataFor() === FormTypes.Vin);
 
@@ -88,7 +96,7 @@ export class CarComponent implements OnDestroy {
 
       const { isValid, invalidReason } = validateVin(value.value(), car.year!);
 
-      return isValid ? null : { kind: 'invalidVin', message: invalidReason};
+      return isValid ? null : { kind: 'invalidVin', message: invalidReason };
     });
   });
 
@@ -125,6 +133,9 @@ export class CarComponent implements OnDestroy {
     { label: 'Production Sequence', value: 'productionSequence' },
   ];
 
+  isUsingVinSketchView = signal(false);
+  isUsingTagSketchView = signal(false);
+
   car = computed(() => {
     const id = this.carIdFromRoute();
 
@@ -135,7 +146,7 @@ export class CarComponent implements OnDestroy {
     return this.store.selectSignal(selectCarById(id))();
   });
 
-  trimTagData = computed(() => {
+  decodedTagData = computed(() => {
     const car = this.car();
 
     if (!car) {
@@ -145,7 +156,7 @@ export class CarComponent implements OnDestroy {
     return trimTagDecoder(car.tagData, car.year);
   });
 
-  vinData = computed(() => {
+  decodedVinData = computed(() => {
     const car = this.car();
 
     if (!car) {
@@ -168,40 +179,28 @@ export class CarComponent implements OnDestroy {
     return endSegment.split('?')[0] || null;
   });
 
-  imageBaseUrl = 'http://localhost:3000/static-images/';
-
-  tagImageUrl = computed(() => {
+  hasVinImage = computed(() => {
     const car = this.car();
-    const baseUrl = this.imageBaseUrl;
     const extractedData = this.extractedData();
     const extractedImageUrl = extractedData?.imageId;
 
     if (!car) {
-      return null;
+      return false;
     }
 
-    const activeForm = this.activeForm();
-    const url =
-      activeForm === FormTypes.TrimTag && extractedImageUrl ? extractedImageUrl : car.tagImageUrl;
-
-    return url ? `${baseUrl}${url}` : null;
+    return !!car.vinImageUrl || !!extractedImageUrl;
   });
 
-  vinImageUrl = computed(() => {
+  hasTagImage = computed(() => {
     const car = this.car();
-    const baseUrl = this.imageBaseUrl;
     const extractedData = this.extractedData();
     const extractedImageUrl = extractedData?.imageId;
 
     if (!car) {
-      return null;
+      return false;
     }
 
-    const activeForm = this.activeForm();
-    const url =
-      activeForm === FormTypes.Vin && extractedImageUrl ? extractedImageUrl : car.vinImageUrl;
-
-    return url ? `${baseUrl}${url}` : null;
+    return !!car.tagImageUrl || !!extractedImageUrl;
   });
 
   tagData = computed(() => {
@@ -256,7 +255,7 @@ export class CarComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.store.dispatch(CarActions.setActiveForm({ formType: null }));
+    this.store.dispatch(CarActions.clearFormState());
   }
 
   onDropdownOpened(context: string): void {
@@ -265,7 +264,7 @@ export class CarComponent implements OnDestroy {
   }
 
   resetForms(): void {
-    this.store.dispatch(CarActions.setActiveForm({ formType: null }));
+    this.store.dispatch(CarActions.clearFormState());
     this.trimForm().reset();
     this.vinForm().reset();
   }
@@ -276,13 +275,11 @@ export class CarComponent implements OnDestroy {
   }
 
   cancelEditName(): void {
-    this.store.dispatch(CarActions.setActiveForm({ formType: null }));
+    this.store.dispatch(CarActions.clearFormState());
     this.nameModel.set('');
   }
 
   saveName(): void {
-    this.store.dispatch(CarActions.setActiveForm({ formType: null }));
-
     const carId = this.car()?.id;
 
     if (!carId) {
@@ -297,6 +294,7 @@ export class CarComponent implements OnDestroy {
         },
       }),
     );
+    this.store.dispatch(CarActions.clearFormState());
   }
 
   retakeTag(): void {
@@ -319,6 +317,7 @@ export class CarComponent implements OnDestroy {
     this.closeDropdownBasedOnContext();
     const context = this.activeDropdownContext();
     this.store.dispatch(CarActions.setActiveForm({ formType: FormTypes.TrimTag }));
+
 
     if (context === FormTypes.TrimTag) {
       const data = this.car()?.tagData;
@@ -362,8 +361,6 @@ export class CarComponent implements OnDestroy {
   }
 
   saveTrimTagEdits(): void {
-    this.store.dispatch(CarActions.setActiveForm({ formType: null }));
-
     let currentTagImage = this.car()?.tagImageUrl;
     const carId = this.car()?.id;
 
@@ -375,8 +372,10 @@ export class CarComponent implements OnDestroy {
       dateCode: this.trimModel().dateCode,
     };
 
-    if (this.extractedData()?.imageId) {
-      currentTagImage = this.extractedData()?.imageId;
+    const extractedData = this.extractedData();
+
+    if (extractedData?.imageId) {
+      currentTagImage = extractedData.imageId;
     }
 
     this.store.dispatch(
@@ -388,21 +387,23 @@ export class CarComponent implements OnDestroy {
         },
       }),
     );
+
+    this.store.dispatch(CarActions.clearFormState());
   }
 
   cancelTrimTagEdits(): void {
     this.trimForm().reset();
-    this.store.dispatch(CarActions.setActiveForm({ formType: null }));
+    this.store.dispatch(CarActions.clearFormState());
   }
 
   saveVinEdits(): void {
-    this.store.dispatch(CarActions.setActiveForm({ formType: null }));
+    const extractedData = this.extractedData();
 
     let currentVinImage = this.car()?.vinImageUrl;
     const carId = this.car()?.id;
 
-    if (this.extractedData()?.imageId) {
-      currentVinImage = this.extractedData()?.imageId;
+    if (extractedData?.imageId) {
+      currentVinImage = extractedData.imageId;
     }
 
     this.store.dispatch(
@@ -414,11 +415,13 @@ export class CarComponent implements OnDestroy {
         },
       }),
     );
+
+    this.store.dispatch(CarActions.clearFormState());
   }
 
   cancelVinEdits(): void {
     this.vinForm().reset();
-    this.store.dispatch(CarActions.setActiveForm({ formType: null }));
+    this.store.dispatch(CarActions.clearFormState());
   }
 
   onFileSelected(event: Event, context: 'vin' | 'tag'): void {
@@ -444,5 +447,21 @@ export class CarComponent implements OnDestroy {
     );
 
     input.value = '';
+  }
+
+  useActualView(type: 'vin' | 'tag'): void {
+    if (type === 'vin') {
+      this.isUsingVinSketchView.set(false);
+    } else if (type === 'tag') {
+      this.isUsingTagSketchView.set(false);
+    }
+  }
+
+  useSketchView(type: 'vin' | 'tag'): void {
+    if (type === 'vin') {
+      this.isUsingVinSketchView.set(true);
+    } else if (type === 'tag') {
+      this.isUsingTagSketchView.set(true);
+    }
   }
 }
