@@ -9,7 +9,7 @@
       <input
         ctInput
         id="email"
-        placeholder="email"
+        placeholder="Email"
         [formField]="form.email"
         (keydown.enter)="login()"
         (focus)="emailFoucused.set(true)"
@@ -21,17 +21,28 @@
 
     <div class="ct-login-form__row">
       <label for="password">Password:</label>
-      <input
-        ctInput
-        id="password"
-        placeholder="password"
-        [formField]="form.password"
-        [class.error]="showPasswordNotLongEnoughError()"
-        (keydown.enter)="login()"
-        (focus)="passwordFoucused.set(true)"
-        (blur)="passwordFoucused.set(false)"
-        type="password"
-      />
+      <div class="ct-login-form__password-wrapper">
+        <input
+          ctInput
+          id="password"
+          placeholder="Password"
+          [formField]="form.password"
+          [class.error]="showPasswordNotLongEnoughError()"
+          (keydown.enter)="login()"
+          (focus)="passwordFoucused.set(true)"
+          (blur)="passwordFoucused.set(false)"
+          type="{{ showPassword() ? 'text' : 'password' }}"
+        />
+
+        <span
+          class="ct-login-form__show-password"
+          (click)="toggleShowPassword()"
+          role="button"
+          tabindex="0"
+        >
+          <ct-icon [icon]="showPassword() ? 'eye-off' : 'eye'" size="20"></ct-icon>
+        </span>
+      </div>
     </div>
 
     @if (errorMessage()) {
@@ -53,6 +64,7 @@
     }
 
     <div class="ct-login-form__row ct-login-form__row--actions">
+      <a [routerLink]="['/signup']" class="ct-login-form__signup-link">Sign up</a>
       <button
         ctButton
         ctButtonVariant="primary"

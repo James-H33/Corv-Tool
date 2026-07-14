@@ -6,10 +6,10 @@ span {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  --ct-icon-size: 16px;
+  font-size: var(--ct-icon-size);
 }
 
 svg, .ct-svg {
   color: inherit;
-  width: 1em;
-  height: 1em;
 }

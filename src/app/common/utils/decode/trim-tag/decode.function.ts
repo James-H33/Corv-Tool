@@ -18,7 +18,7 @@ export function trimTagDecoder(
     dateCode: { value: tagData.dateCode, description: 'Unknown Date Code' },
   };
 
-  const bodyDescription = decodeBody(tagData);
+  const bodyDescription = decodeBody(tagData, year);
   const trimDescription = decodeTrim(tagData, year);
   const styleDescription = decodeStyle(tagData.style);
   const paintDescription = decodePaintCode(tagData, year);

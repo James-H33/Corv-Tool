@@ -28,7 +28,7 @@
                 tabindex="0"
                 (click)="openOptionsMenu($event)"
               >
-                <ct-icon [icon]="ellipsesMenuIcon" size="24"></ct-icon>
+                <ct-icon [icon]="ellipsesMenuIcon" size="16"></ct-icon>
               </div>
             </div>
           </div>
@@ -36,7 +36,6 @@
 
         <ng-template #optionsMenu>
           <div class="cdk-overlay-pane-default ct-car-list-options-menu">
-            <div class="ct-car-list-options-menu__item" role="button" tabindex="0">Edit</div>
             <div
               class="ct-car-list-options-menu__item ct-car-list-options-menu__item--danger"
               (click)="onDeleteCar(car.id)"
@@ -56,7 +55,7 @@
 
 <div class="ct-camera-view">
   <div class="ct-camera-view__col">
-    <ct-icon [icon]="galleryIcon" size="28"></ct-icon>
+    <ct-icon [icon]="galleryIcon" size="18"></ct-icon>
     <span class="ct-camera-view__label">Gallery</span>
   </div>
 
@@ -69,13 +68,13 @@
       (click)="openDialog()"
     >
       <label class="ct-camera-view__label" for="picture">
-        <ct-icon icon="plus" size="32"></ct-icon>
+        <ct-icon icon="plus" size="24"></ct-icon>
       </label>
     </button>
   </div>
 
   <div class="ct-camera-view__col">
-    <ct-icon [icon]="galleryIcon" size="28"></ct-icon>
+    <ct-icon [icon]="galleryIcon" size="18"></ct-icon>
     <span class="ct-camera-view__label">Clear</span>
   </div>
 </div>

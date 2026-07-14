@@ -1,5 +1,7 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { email, form, FormField, minLength, required } from '@angular/forms/signals';
+import { RouterLink } from '@angular/router';
+import { IconComponent } from '@common/components/icon/icon.component';
 import { ButtonModule } from '@common/directives/button/button.module';
 import { InputModule } from '@common/directives/input/input.module';
 import { emailRegex } from '@common/regex/email.regex';
@@ -15,7 +17,7 @@ interface LoginForm {
   selector: 'ct-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  imports: [ButtonModule, InputModule, FormField],
+  imports: [ButtonModule, InputModule, FormField, RouterLink, IconComponent],
 })
 export class LoginComponent {
   store = inject(Store);
@@ -35,6 +37,8 @@ export class LoginComponent {
     minLength(schemaPath.password, 8, { message: 'Password must be at least 8 characters long' });
   });
 
+  showPassword = signal(false);
+
   emailTouchedAndHadInputAtleastOnce = signal(false);
   emailFoucused = signal(false);
 
@@ -45,7 +49,6 @@ export class LoginComponent {
     const { email } = this.form().value();
     const fieldChanged = this.emailTouchedAndHadInputAtleastOnce();
     const fieldFocused = this.emailFoucused();
-
 
     return email && !emailRegex.test(email) && fieldChanged && !fieldFocused;
   });
@@ -59,7 +62,9 @@ export class LoginComponent {
   });
 
   canSubmit = computed(() => {
-    return this.form().valid() && !this.showEmailInvalidError() && !this.showPasswordNotLongEnoughError();
+    return (
+      this.form().valid() && !this.showEmailInvalidError() && !this.showPasswordNotLongEnoughError()
+    );
   });
 
   constructor() {
@@ -97,5 +102,9 @@ export class LoginComponent {
     }
 
     this.store.dispatch(ApplicationActions.login(credentials));
+  }
+
+  toggleShowPassword(): void {
+    this.showPassword.set(!this.showPassword());
   }
 }

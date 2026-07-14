@@ -1,11 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { NavMobileMenuComponent } from '@common/components/nav-mobile-menu/nav-mobile-menu.component';
 import { ToastComponent } from '@common/components/toast/toast.component';
 import { ApplicationActions } from '@common/store/application/application.actions';
+import { selectIsLoggedIn, selectIsMobileMenuOpen } from '@common/store/application/application.selectors';
 import { Store } from '@ngrx/store';
 import { NavComponent } from './nav/nav.component';
-import { NavMobileMenuComponent } from '@common/components/nav-mobile-menu/nav-mobile-menu.component';
-import { selectIsLoggedIn, selectIsMobileMenuOpen } from '@common/store/application/application.selectors';
 
 @Component({
   selector: 'ct-root',
@@ -14,14 +14,10 @@ import { selectIsLoggedIn, selectIsMobileMenuOpen } from '@common/store/applicat
   standalone: true,
   imports: [RouterOutlet, NavComponent, ToastComponent, NavMobileMenuComponent],
 })
-export class App implements OnInit {
+export class App {
   store = inject(Store);
   isMobileMenuOpen = this.store.selectSignal(selectIsMobileMenuOpen);
   isLoggedIn = this.store.selectSignal(selectIsLoggedIn);
-
-  ngOnInit(): void {
-    this.store.dispatch(ApplicationActions.init());
-  }
 
   openMenu(): void {
     this.store.dispatch(ApplicationActions.openMobileMenu());

@@ -1,4 +1,10 @@
 <div class="ct-vin-sketch">
   <span class="ct-vin-sketch__top">CHEVROLET</span>
-  <div class="ct-vin-sketch__number">{{car()?.vin}}</div>
+  <div class="ct-vin-sketch__content">
+    @for(part of vinParts(); track part) {
+      <div class="ct-vin-sketch__part">
+        {{ part }}
+      </div>
+    }
+  </div>
 </div>

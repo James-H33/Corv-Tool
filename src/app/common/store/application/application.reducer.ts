@@ -16,14 +16,15 @@ export const applicationFeature = createFeature({
   reducer: createReducer<ApplicationState>(
     initialApplicationState,
 
-    on(ApplicationActions.initSuccess, (state, { authToken }) => {
+    on(ApplicationActions.loginSuccess, (state, { authToken }) => {
       return {
         ...state,
+        loginError: null,
         authToken,
       };
     }),
 
-    on(ApplicationActions.loginSuccess, (state, { authToken }) => {
+    on(ApplicationActions.signupSuccess, (state, { authToken }) => {
       return {
         ...state,
         loginError: null,

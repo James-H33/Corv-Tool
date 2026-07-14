@@ -5,6 +5,8 @@ export const ErrorCodes = {
   CAR_NOT_FOUND: '004',
   GEMINI_API_ERROR_SERVICE_UNAVAILABLE: '005',
   UNKNOWN_ERROR: '999',
+  INVALID_REFRESH_TOKEN: '006',
+  ACCESS_TOKEN_EXPIRED: '007',
 };
 
 export const ErrorCodesReason = {
@@ -13,5 +15,7 @@ export const ErrorCodesReason = {
   '003': 'Database connection error',
   '004': 'Car not found',
   '005': 'Gemini API service unavailable',
+  '006': 'Invalid refresh token',
+  '007': 'Access token expired',
   '999': 'Unknown error',
 };

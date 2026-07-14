@@ -2,7 +2,7 @@
   <div class="ct-car-nav">
     <button ctButtonIcon ctButtonVariant="outline">
       <a [routerLink]="['/v/cars']" class="ct-car-nav__link">
-        <ct-icon [icon]="backArrowIcon" size="20"></ct-icon>
+        <ct-icon [icon]="backArrowIcon" size="16"></ct-icon>
       </a>
     </button>
   </div>
@@ -67,14 +67,14 @@
           @if (car()?.vin) {
             <button
               #vinDropdown
-              ctButton
+              ctButtonIcon
               ctButtonVariant="outline"
               ctDropdown
               [ctDropdownTemplate]="vinOptionsMenu"
               ctDropdownTriggerType="click"
               (ctDropdownOpened)="onDropdownOpened('vin')"
             >
-              ...
+              <ct-icon [icon]="ellipsesMenuIcon" size="14"></ct-icon>
             </button>
           }
         </div>
@@ -95,6 +95,8 @@
             <div class="ct-car-item__error">*{{ error.message }}</div>
           }
         }
+
+        <div>Verify input before submitting.</div>
 
         <div class="ct-car-item__edit-actions">
           <button
@@ -159,14 +161,14 @@
           @if (car()?.tagData) {
             <button
               #trimTagDropdown
-              ctButton
+              ctButtonIcon
               ctButtonVariant="outline"
               ctDropdown
               [ctDropdownTemplate]="tagOptionsMenu"
               ctDropdownTriggerType="click"
               (ctDropdownOpened)="onDropdownOpened('tag')"
             >
-              ...
+              <ct-icon [icon]="ellipsesMenuIcon" size="14"></ct-icon>
             </button>
           }
         </div>
@@ -197,6 +199,8 @@
           }
 
           @if (activeForm() === 'tag') {
+            <div>Verify all inputs before submitting.</div>
+
             <div class="ct-car-item__edit-actions">
               <button
                 ctButton

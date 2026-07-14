@@ -15,12 +15,23 @@
     font-size: 13px;
     font-weight: bold;
     position: absolute;
-    top: 3px;
+    top: 5px;
     opacity: 0.5;
   }
 
   &__number {
     font-size: 18px;
     letter-spacing: 8px;
+  }
+
+  &__content {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  &__part {
+    font-size: 18px;
+    letter-spacing: 1px;
   }
 }
