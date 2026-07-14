@@ -51,6 +51,8 @@ export class CarComponent implements OnDestroy {
   router = inject(Router);
   backArrowIcon = Icon.BackArrow;
 
+  ellipsesMenuIcon = Icon.EllipsesMenu;
+
   vinDropdownRef = viewChild('vinDropdown', { read: DropdownDirective });
   trimTagDropdownRef = viewChild('trimTagDropdown', { read: DropdownDirective });
 

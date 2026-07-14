@@ -30,11 +30,26 @@
   &--actions {
     display: flex;
     justify-content: flex-end;
-    gap: 8px;
+    align-items: center;
+    gap: 12px;
     button {
       &[ctButtonVariant="primary"] {
         padding: 6px 16px;
       }
     }
   }
+}
+
+.ct-login-form__password-wrapper {
+  position: relative;
+}
+
+.ct-login-form__show-password {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
 }

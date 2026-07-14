@@ -1,8 +1,10 @@
-import { HttpInterceptorFn, HttpErrorResponse } from '@angular/common/http';
-import { catchError, throwError } from 'rxjs';
+import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '@common/services/auth.service';
 import { ToastService } from '@common/services/toast.service';
 import { ErrorCodes, ErrorCodesReason } from '@common/types/error-codes';
+import { catchError, throwError } from 'rxjs';
 
 interface ErrorPayload {
   errorCode: keyof typeof ErrorCodesReason;
@@ -17,6 +19,8 @@ interface HttpErrorResponseWithCode extends HttpErrorResponse {
 
 export const apiErrorInterceptor: HttpInterceptorFn = (req, next) => {
   const toastService = inject(ToastService);
+  const router = inject(Router);
+  const authService = inject(AuthService);
 
   return next(req).pipe(
     catchError((error: HttpErrorResponseWithCode) => {
@@ -27,14 +31,23 @@ export const apiErrorInterceptor: HttpInterceptorFn = (req, next) => {
         errorMessage = `Client Error: ${error.error.message}`;
       } else if (errorCode) {
         errorMessage = getErrorCodeReason(errorCode);
+
+        if (errorCode === ErrorCodes.ACCESS_TOKEN_EXPIRED) {
+          return authService.handleTokenExpiredError(req, next);
+        }
+
+        if (errorCode === ErrorCodes.INVALID_REFRESH_TOKEN) {
+          router.navigate(['/login']);
+
+          return throwError(() => new Error('Invalid refresh token. Please log in again.'));
+        }
       } else {
         switch (error.status) {
           case 400:
             errorMessage = error.error?.message || 'Bad Request.';
             break;
           case 401:
-            errorMessage = 'Unauthorized. Please log in again.';
-            break;
+            return authService.handleTokenExpiredError(req, next);
           case 403:
             errorMessage = 'Forbidden. You do not have permission.';
             break;
@@ -62,18 +75,5 @@ export const apiErrorInterceptor: HttpInterceptorFn = (req, next) => {
 };
 
 function getErrorCodeReason(code: keyof typeof ErrorCodesReason): string {
-  switch (code) {
-    case ErrorCodes.INVALID_EMAIL_OR_PASSWORD:
-      return ErrorCodesReason[code];
-    case ErrorCodes.USER_NOT_FOUND:
-      return ErrorCodesReason[code];
-    case ErrorCodes.DATABASE_CONNECTION_ERROR:
-      return ErrorCodesReason[code];
-    case ErrorCodes.CAR_NOT_FOUND:
-      return ErrorCodesReason[code];
-    case ErrorCodes.GEMINI_API_ERROR_SERVICE_UNAVAILABLE:
-      return ErrorCodesReason[code];
-    default:
-      return ErrorCodesReason[999];
-  }
+  return ErrorCodesReason[code] ?? 'An unknown error occurred!';
 }

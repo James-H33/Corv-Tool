@@ -20,6 +20,8 @@ export enum Icon {
   Gallery = 'gallery',
   BackArrow = 'back-arrow',
   Plus = 'plus',
+  Eye = 'eye',
+  EyeSlash = 'eye-off',
 }
 
 @Component({
@@ -30,6 +32,7 @@ export enum Icon {
 export class IconComponent {
   icon = input<Icon | string | undefined>();
   svgContent = signal<SafeHtml | null>(null);
+  size = input<number | string | undefined>(16);
 
   iconUrl = computed(() => {
     if (!this.icon()) {

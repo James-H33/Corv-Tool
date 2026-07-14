@@ -6,6 +6,8 @@ import { email, form, minLength, required } from '@angular/forms/signals';
 import { FormField } from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
 import { emailRegex } from '@common/regex/email.regex';
+import { ApplicationActions } from '@common/store/application/application.actions';
+import { Store } from '@ngrx/store';
 
 interface SignupForm {
   email: string;
@@ -21,6 +23,7 @@ interface SignupForm {
 })
 export class SignupComponent {
   toastService = inject(ToastService);
+  store = inject(Store);
 
   model = signal<SignupForm>({
     email: '',
@@ -29,6 +32,12 @@ export class SignupComponent {
   });
 
   errorMessage = signal<string>('');
+
+  emailTouchedAndHadInputAtleastOnce = signal(false);
+  emailFoucused = signal(false);
+
+  passwordTouchedAndHadInputAtleastOnce = signal(false);
+  passwordFoucused = signal(false);
 
   form = form<SignupForm>(this.model, (schema) => {
     required(schema.email, { message: 'Email is required' });
@@ -51,16 +60,45 @@ export class SignupComponent {
 
   showPasswordNotLongEnoughError = computed(() => {
     const { password } = this.form().value();
-    return password && password.length < 8;
+    const fieldFocused = this.passwordFoucused();
+
+    return password && password.length < 8 && !fieldFocused;
   });
 
   showEmailInvalidError = computed(() => {
     const { email } = this.form().value();
-    return email && !emailRegex.test(email);
+    const fieldFocused = this.emailFoucused();
+
+    return email && !emailRegex.test(email) && !fieldFocused;
   });
 
+  setEmailFieldTouchedEffect = () => {
+    const { email } = this.form().value();
+    const fieldTouched = this.form.email().touched();
+
+    if (email && fieldTouched) {
+      this.emailTouchedAndHadInputAtleastOnce.set(true);
+    }
+  };
+
+  setPasswordFieldTouchedEffect = () => {
+    const { password } = this.form().value();
+    const fieldTouched = this.form.password().touched();
+
+    if (password && fieldTouched) {
+      this.passwordTouchedAndHadInputAtleastOnce.set(true);
+    }
+  };
+
+  resetErrorsOnInputChangeEffect = () => {
+    this.form().value();
+    this.errorMessage.set('');
+  };
+
   constructor() {
-    effect(this.resetErrorsOnInputChange.bind(this));
+    effect(this.resetErrorsOnInputChangeEffect);
+    effect(this.setEmailFieldTouchedEffect);
+    effect(this.setPasswordFieldTouchedEffect);
   }
 
   signup(): void {
@@ -76,16 +114,7 @@ export class SignupComponent {
       return;
     }
 
-    this.toastService.showToast({
-      message: 'Signup form submitted. Signup API wiring is not implemented yet.',
-      duration: 4000,
-      type: 'info',
-    });
-  }
-
-  private resetErrorsOnInputChange(): void {
-    this.form().value();
-    this.errorMessage.set('');
+    this.store.dispatch(ApplicationActions.signup(signupForm.value()));
   }
 
   private passwordsMatch(): boolean {
