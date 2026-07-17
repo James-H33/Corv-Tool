@@ -3,12 +3,15 @@ import { getPlantCode } from '../../strip-plant-code.function';
 import { stripLetters } from '../../strip-letter.function';
 import { stripDigits } from '../../strip-digits.function';
 
-export function decodePaintCode(carTagData: CarTagData, year: string): string {
+export function decodePaintCode(
+  carTagData: CarTagData,
+  year: string,
+): { value: string; error: boolean } {
   const paintCode = stripPaintCode(carTagData);
   const plantCode = getPlantCode(carTagData.body);
 
   if (!paintCode) {
-    return 'Unknown Paint Code';
+    return { value: 'Unknown Paint Code', error: true };
   }
 
   const paintMap1963: Record<string, string> = {
@@ -44,14 +47,14 @@ export function decodePaintCode(carTagData: CarTagData, year: string): string {
 
   const paintMap1965: Record<string, Record<string, string>> = {
     A: {
-      'AA': 'Tuxedo Black',
-      'CC': 'Ermine White',
-      'FF': 'Nassau Blue',
-      'GG': 'Glen Green',
-      'MM': 'Milano Maroon',
-      'UU': 'Rally Red',
-      'XX': 'Goldwood Yellow',
-      'QQ': 'Silver Pearl',
+      AA: 'Tuxedo Black',
+      CC: 'Ermine White',
+      FF: 'Nassau Blue',
+      GG: 'Glen Green',
+      MM: 'Milano Maroon',
+      UU: 'Rally Red',
+      XX: 'Goldwood Yellow',
+      QQ: 'Silver Pearl',
     },
     S: {
       '900AA': 'Tuxedo Black',
@@ -138,10 +141,12 @@ export function decodePaintCode(carTagData: CarTagData, year: string): string {
       result = paintMap1967[plantCode]?.[paintCode];
       break;
     default:
-      result = 'Unsupported Year';
+      return { value: 'Unsupported Year', error: true };
   }
 
-  return result ?? 'Unknown Paint Code';
+  return result
+    ? { value: result, error: false }
+    : { value: 'Error: Unknown Paint Code -- Check Inputs', error: true };
 }
 
 function stripPaintCode(carTagData: CarTagData): string {

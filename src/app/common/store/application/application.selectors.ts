@@ -5,16 +5,30 @@ export const { selectAuthToken, selectIsMobileMenuOpen } = applicationFeature;
 
 export const selectAppCredentials = createSelector(selectAuthToken, (authToken) => {
   if (authToken) {
-    const decodedToken = atob(authToken);
-    const [username, userId] = decodedToken.split(':');
+    const userInfoSection = authToken.split('.')[1];
+    const json = atob(userInfoSection);
+    const decodedToken = JSON.parse(json);
 
     return {
-      username,
-      userId,
+      userId: decodedToken.userId,
+      email: decodedToken.email,
     };
   } else {
     return null;
   }
+});
+
+export const selectUserName = createSelector(selectAppCredentials, (credentials) => {
+  if (credentials) {
+    const email = credentials.email;
+    const atIndex = email.indexOf('@');
+
+    if (atIndex !== -1) {
+      return email.substring(0, atIndex);
+    }
+  }
+
+  return null;
 });
 
 export const selectIsLoggedIn = createSelector(selectAuthToken, (authToken) => {

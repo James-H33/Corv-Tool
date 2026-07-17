@@ -83,6 +83,10 @@
       padding: 12px;
       border-radius: 10px;
       background-color: #f2f5f8;
+
+      &.has-error {
+        color: var(--ct-text-color-error);
+      }
     }
   }
 }
@@ -92,6 +96,11 @@
   font-size: 20px;
   margin-block: 8px;
   margin-top: 16px;
+}
+
+.ct-car-item__verify {
+  font-size: 14px;
+  margin-block: 8px;
 }
 
 .ct-car-item__error {

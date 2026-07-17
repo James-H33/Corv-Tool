@@ -1,17 +1,13 @@
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '@common/services/api/user.service';
-import { ApplicationService } from '@common/services/application.service';
 import { AuthService } from '@common/services/auth.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, switchMap, tap } from 'rxjs';
 import { ApplicationActions } from './application.actions';
 
 export const login$ = createEffect(
-  (
-    actions$ = inject(Actions),
-    authService = inject(AuthService),
-  ) => {
+  (actions$ = inject(Actions), authService = inject(AuthService)) => {
     return actions$.pipe(
       ofType(ApplicationActions.login),
       switchMap((action) => {
@@ -29,10 +25,7 @@ export const login$ = createEffect(
 );
 
 export const signup$ = createEffect(
-  (
-    actions$ = inject(Actions),
-    userService = inject(UserService),
-  ) => {
+  (actions$ = inject(Actions), userService = inject(UserService)) => {
     return actions$.pipe(
       ofType(ApplicationActions.signup),
       switchMap((action) => {
@@ -61,16 +54,30 @@ export const redirectAfterLogin$ = createEffect(
   { functional: true, dispatch: false },
 );
 
+export const forgotPassword$ = createEffect(
+  (actions$ = inject(Actions), authService = inject(AuthService), router = inject(Router)) => {
+    return actions$.pipe(
+      ofType(ApplicationActions.forgotPassword),
+      switchMap((action) => {
+        return authService.forgotPassword(action.email).pipe(
+          map(() => {
+            return ApplicationActions.forgotPasswordSuccess();
+          }),
+          tap(() => {
+            router.navigate(['/reset-link-sent']);
+          }),
+        );
+      }),
+    );
+  },
+  { functional: true },
+);
+
 export const logout$ = createEffect(
-  (
-    actions$ = inject(Actions),
-    appService = inject(ApplicationService),
-    router = inject(Router),
-  ) => {
+  (actions$ = inject(Actions), router = inject(Router)) => {
     return actions$.pipe(
       ofType(ApplicationActions.logout),
       tap(() => {
-        appService.logout();
         router.navigate(['/login']);
       }),
     );

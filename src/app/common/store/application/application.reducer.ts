@@ -52,5 +52,19 @@ export const applicationFeature = createFeature({
         isMobileMenuOpen: false,
       };
     }),
+
+    on(ApplicationActions.setAuthToken, (state, { authToken }) => {
+      return {
+        ...state,
+        authToken,
+      };
+    }),
+
+    on(ApplicationActions.forgotPasswordSuccess, (state) => {
+      return {
+        ...state,
+        wasPasswordResetLinkSent: true,
+      }
+    }),
   ),
 });

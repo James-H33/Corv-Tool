@@ -22,29 +22,52 @@
 
     <div class="ct-signup-form__row">
       <label for="password">Password:</label>
-      <input
-        ctInput
-        id="password"
-        placeholder="password"
-        [formField]="form.password"
-        (keydown.enter)="signup()"
-        (focus)="passwordFoucused.set(true)"
-        (blur)="passwordFoucused.set(false)"
-        [class.error]="showPasswordNotLongEnoughError()"
-        type="password"
-      />
+
+      <div class="ct-signup-form__password-wrapper">
+        <input
+          ctInput
+          id="password"
+          placeholder="password"
+          [formField]="form.password"
+          (keydown.enter)="signup()"
+          (focus)="passwordFoucused.set(true)"
+          (blur)="passwordFoucused.set(false)"
+          [class.error]="showPasswordNotLongEnoughError()"
+          [type]="showPassword() ? 'text' : 'password'"
+        />
+
+        <span
+          class="ct-signup-form__show-password"
+          (click)="toggleShowPassword()"
+          role="button"
+          tabindex="0"
+        >
+          <ct-icon [icon]="showPassword() ? 'eye-off' : 'eye'" size="20"></ct-icon>
+        </span>
+      </div>
     </div>
 
     <div class="ct-signup-form__row">
       <label for="confirmPassword">Confirm Password:</label>
-      <input
-        ctInput
-        id="confirmPassword"
-        placeholder="confirm password"
-        [formField]="form.confirmPassword"
-        (keydown.enter)="signup()"
-        type="password"
-      />
+      <div class="ct-signup-form__password-wrapper">
+        <input
+          ctInput
+          id="confirmPassword"
+          placeholder="confirm password"
+          [formField]="form.confirmPassword"
+          (keydown.enter)="signup()"
+          [type]="showPassword() ? 'text' : 'password'"
+        />
+
+        <span
+          class="ct-signup-form__show-password"
+          (click)="toggleShowPassword()"
+          role="button"
+          tabindex="0"
+        >
+          <ct-icon [icon]="showPassword() ? 'eye-off' : 'eye'" size="20"></ct-icon>
+        </span>
+      </div>
     </div>
 
     @if (errorMessage()) {

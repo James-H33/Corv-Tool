@@ -1,47 +1,49 @@
-import { CarTagData } from "@common/types/car.interface";
-import { decodeBody } from "./decode-body.function";
-import { decodeDateCode } from "./decode-date.function";
-import { decodePaintCode } from "./decode-paint.function";
-import { decodeStyle } from "./decode-style.function";
-import { decodeTrim } from "./decode-trim.function";
-import { Info } from "@common/types/info.interface";
+import { CarTagData } from '@common/types/car.interface';
+import { decodeBody } from './decode-body.function';
+import { decodeDateCode } from './decode-date.function';
+import { decodePaintCode } from './decode-paint.function';
+import { decodeStyle } from './decode-style.function';
+import { decodeTrim } from './decode-trim.function';
+import { Info } from '@common/types/info.interface';
 
-export function trimTagDecoder(
-  tagData: CarTagData,
-  year: string,
-): Record<string, Info> {
+export function trimTagDecoder(tagData: CarTagData, year: string): Record<string, Info> {
   const result = {
-    body: { value: tagData.body, description: 'Unknown Body' },
-    trim: { value: tagData.trim, description: 'Unknown Trim' },
-    style: { value: tagData.style, description: 'Unknown Style' },
-    paint: { value: tagData.paint, description: 'Unknown Paint' },
-    dateCode: { value: tagData.dateCode, description: 'Unknown Date Code' },
+    body: { value: tagData.body, description: 'Unknown Body', error: false },
+    trim: { value: tagData.trim, description: 'Unknown Trim', error: false },
+    style: { value: tagData.style, description: 'Unknown Style', error: false },
+    paint: { value: tagData.paint, description: 'Unknown Paint', error: false },
+    dateCode: { value: tagData.dateCode, description: 'Unknown Date Code', error: false },
   };
 
-  const bodyDescription = decodeBody(tagData, year);
-  const trimDescription = decodeTrim(tagData, year);
-  const styleDescription = decodeStyle(tagData.style);
-  const paintDescription = decodePaintCode(tagData, year);
-  const dateCodeDescription = decodeDateCode(tagData, tagData.dateCode, year);
+  const bodyResult = decodeBody(tagData, year);
+  const trimResult = decodeTrim(tagData, year);
+  const styleResult = decodeStyle(tagData.style);
+  const paintResult = decodePaintCode(tagData, year);
+  const dateCodeResult = decodeDateCode(tagData, tagData.dateCode, year);
 
-  if (bodyDescription) {
-    result.body.description = bodyDescription;
+  if (bodyResult) {
+    result.body.description = bodyResult.value;
+    result.body.error = bodyResult.error;
   }
 
-  if (trimDescription) {
-    result.trim.description = trimDescription;
+  if (trimResult) {
+    result.trim.description = trimResult.value;
+    result.trim.error = trimResult.error;
   }
 
-  if (styleDescription) {
-    result.style.description = styleDescription;
+  if (styleResult) {
+    result.style.description = styleResult.value;
+    result.style.error = styleResult.error;
   }
 
-  if (paintDescription) {
-    result.paint.description = paintDescription;
+  if (paintResult) {
+    result.paint.description = paintResult.value;
+    result.paint.error = paintResult.error;
   }
 
-  if (dateCodeDescription) {
-    result.dateCode.description = dateCodeDescription;
+  if (dateCodeResult) {
+    result.dateCode.description = dateCodeResult.value;
+    result.dateCode.error = dateCodeResult.error;
   }
 
   return result;

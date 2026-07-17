@@ -1,5 +1,5 @@
 export interface Info {
   value: string;
   description: string;
-  error?: string;
+  error?: boolean;
 }

@@ -50,3 +50,18 @@
 		}
 	}
 }
+
+.ct-signup-form__password-wrapper {
+	position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.ct-signup-form__show-password {
+	position: absolute;
+	right: 12px;
+	top: 50%;
+	transform: translateY(-50%);
+  padding-top: 2px;
+	cursor: pointer;
+}

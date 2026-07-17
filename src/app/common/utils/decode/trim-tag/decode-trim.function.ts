@@ -3,11 +3,14 @@ import { regExp63, regExp64, regExp65, regExp66, regExp67 } from '@common/types/
 import { stripLetters } from '../../strip-letter.function';
 import { stripDigits } from '../../strip-digits.function';
 
-export function decodeTrim(tagData: CarTagData, year: string): string {
+export function decodeTrim(
+  tagData: CarTagData,
+  year: string,
+): { value: string; error: boolean } | null {
   let trimCode = tagData.trim.trim().toUpperCase();
 
   if (!trimCode) {
-    return 'Unknown Trim';
+    return { value: 'Unknown Trim', error: true };
   }
 
   let regExpArray: [RegExp, string][] = [];
@@ -36,11 +39,11 @@ export function decodeTrim(tagData: CarTagData, year: string): string {
 
   for (const [regex, description] of regExpArray) {
     if (regex.test(trimCode)) {
-      return description;
+      return { value: description, error: false };
     }
   }
 
-  return 'Unknown Trim';
+  return { value: 'Unknown Trim', error: true };
 }
 
 export function parse64TrimCode(trimCode: string): string {

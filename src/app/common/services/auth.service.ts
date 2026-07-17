@@ -3,7 +3,16 @@ import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { addTokenHeader } from '@common/interceptors/auth.interceptor';
 import { ApplicationService } from '@common/services/application.service';
-import { BehaviorSubject, catchError, filter, Subject, switchMap, take, takeUntil, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  filter,
+  Subject,
+  switchMap,
+  take,
+  takeUntil,
+  throwError,
+} from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
@@ -41,6 +50,14 @@ export class AuthService {
     }>(`${this.baseUrl}/auth/refresh`, { withCredentials: true });
   }
 
+  forgotPassword(email: string): Observable<void> {
+    return this.http.post<void>(
+      `${this.baseUrl}/auth/forgot-password`,
+      { email },
+      { withCredentials: true },
+    );
+  }
+
   handleTokenExpiredError(request: HttpRequest<any>, next: HttpHandlerFn) {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
@@ -61,7 +78,7 @@ export class AuthService {
           // If Refresh fails we cancel all pending requests that are waiting for a new token
           this.refreshErrorSubject.next(err);
           return throwError(() => err);
-        })
+        }),
       );
     } else {
       // If a refresh is already in progress, wait for the new token to arrive, then retry
