@@ -5,8 +5,14 @@ import { MANUFACTURING_PLANTS } from '@common/types/manufacturers.type';
 import { PlantCode } from '@common/types/plant-code.enum';
 import { getPlantCode } from '../../strip-plant-code.function';
 
-export function decodeDateCode(tagData: CarTagData, dateCode: string, year: string): string {
-  if (dateCode.length < 2) return 'Invalid Date Code';
+export function decodeDateCode(
+  tagData: CarTagData,
+  dateCode: string,
+  year: string,
+): { value: string; error: boolean } {
+  if (dateCode.length < 2) {
+    return { value: 'Invalid Date Code', error: true };
+  }
 
   function decodeDateCodeFor1963(dateCode: string): string {
     const monthLetter = stripLetters(dateCode).toUpperCase();
@@ -177,18 +183,27 @@ export function decodeDateCode(tagData: CarTagData, dateCode: string, year: stri
     return dayDigits ? `${month} ${dayDigits}` : month;
   }
 
+  let result = '';
+
   switch (year) {
     case '1963':
-      return decodeDateCodeFor1963(dateCode);
+      result = decodeDateCodeFor1963(dateCode);
+      break;
     case '1964':
-      return decodeDateCodeFor1964(dateCode, tagData);
+      result = decodeDateCodeFor1964(dateCode, tagData);
+      break;
     case '1965':
-      return decodeDateCodeFor1965(dateCode);
+      result = decodeDateCodeFor1965(dateCode);
+      break;
     case '1966':
-      return decodeDateCodeFor1966(dateCode, tagData);
+      result = decodeDateCodeFor1966(dateCode, tagData);
+      break;
     case '1967':
-      return decodeDateCodeFor1967(dateCode);
+      result = decodeDateCodeFor1967(dateCode);
+      break;
     default:
-      return 'Unsupported Year';
+      return { value: 'Unsupported Year', error: true };
   }
+
+  return { value: result, error: false };
 }

@@ -8,6 +8,7 @@ import { RouterLink } from '@angular/router';
 import { emailRegex } from '@common/regex/email.regex';
 import { ApplicationActions } from '@common/store/application/application.actions';
 import { Store } from '@ngrx/store';
+import { IconComponent } from "@common/components/icon/icon.component";
 
 interface SignupForm {
   email: string;
@@ -19,7 +20,7 @@ interface SignupForm {
   selector: 'ct-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
-  imports: [ButtonModule, InputModule, FormField, RouterLink],
+  imports: [ButtonModule, InputModule, FormField, RouterLink, IconComponent],
 })
 export class SignupComponent {
   toastService = inject(ToastService);
@@ -32,6 +33,8 @@ export class SignupComponent {
   });
 
   errorMessage = signal<string>('');
+
+  showPassword = signal(false);
 
   emailTouchedAndHadInputAtleastOnce = signal(false);
   emailFoucused = signal(false);
@@ -115,6 +118,10 @@ export class SignupComponent {
     }
 
     this.store.dispatch(ApplicationActions.signup(signupForm.value()));
+  }
+
+  toggleShowPassword(): void {
+    this.showPassword.set(!this.showPassword());
   }
 
   private passwordsMatch(): boolean {

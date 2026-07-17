@@ -27,6 +27,11 @@
     margin-bottom: 8px;
   }
 
+  &--forgot-password {
+    font-size: 14px;
+    color: var(--ct-text-color-secondary);
+  }
+
   &--actions {
     display: flex;
     justify-content: flex-end;

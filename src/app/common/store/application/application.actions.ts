@@ -11,5 +11,7 @@ export const ApplicationActions = createActionGroup({
     openMobileMenu: emptyProps(),
     closeMobileMenu: emptyProps(),
     setAuthToken: props<{ authToken: string }>(),
+    forgotPassword: props<{ email: string }>(),
+    forgotPasswordSuccess: emptyProps(),
   },
 });

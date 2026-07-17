@@ -3,7 +3,10 @@ import { RouterOutlet } from '@angular/router';
 import { NavMobileMenuComponent } from '@common/components/nav-mobile-menu/nav-mobile-menu.component';
 import { ToastComponent } from '@common/components/toast/toast.component';
 import { ApplicationActions } from '@common/store/application/application.actions';
-import { selectIsLoggedIn, selectIsMobileMenuOpen } from '@common/store/application/application.selectors';
+import {
+  selectIsLoggedIn,
+  selectIsMobileMenuOpen
+} from '@common/store/application/application.selectors';
 import { Store } from '@ngrx/store';
 import { NavComponent } from './nav/nav.component';
 

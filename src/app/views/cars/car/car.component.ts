@@ -135,6 +135,16 @@ export class CarComponent implements OnDestroy {
     { label: 'Production Sequence', value: 'productionSequence' },
   ];
 
+  trimTagsDecodeHasErrors = computed(() => {
+    const decodedTagData = this.decodedTagData();
+
+    if (!decodedTagData) {
+      return false;
+    }
+
+    return Object.values(decodedTagData).some((info) => info.error);
+  });
+
   isUsingVinSketchView = signal(false);
   isUsingTagSketchView = signal(false);
 
@@ -151,7 +161,7 @@ export class CarComponent implements OnDestroy {
   decodedTagData = computed(() => {
     const car = this.car();
 
-    if (!car) {
+    if (!car || !car.tagData || !car.year) {
       return null;
     }
 
@@ -319,7 +329,6 @@ export class CarComponent implements OnDestroy {
     this.closeDropdownBasedOnContext();
     const context = this.activeDropdownContext();
     this.store.dispatch(CarActions.setActiveForm({ formType: FormTypes.TrimTag }));
-
 
     if (context === FormTypes.TrimTag) {
       const data = this.car()?.tagData;

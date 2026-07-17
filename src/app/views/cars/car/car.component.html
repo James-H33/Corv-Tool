@@ -96,7 +96,7 @@
           }
         }
 
-        <div>Verify input before submitting.</div>
+        <div class="ct-car-item__verify">*Verify input before submitting.</div>
 
         <div class="ct-car-item__edit-actions">
           <button
@@ -145,13 +145,15 @@
             <button
               ctButtonIcon
               [attr.ctButtonVariant]="isUsingTagSketchView() ? 'outline' : 'primary'"
-              (click)="useActualView('tag')">
+              (click)="useActualView('tag')"
+            >
               Actual
             </button>
             <button
               ctButtonIcon
               [attr.ctButtonVariant]="isUsingTagSketchView() ? 'primary' : 'outline'"
-              (click)="useSketchView('tag')">
+              (click)="useSketchView('tag')"
+            >
               Sketch
             </button>
           </div>
@@ -191,15 +193,23 @@
                 <span class="ct-car-item__detail-label"
                   >{{ field.label }}: {{ decodedTagData()?.[field.value]?.value }}</span
                 >
-                <span class="ct-car-item__detail-value">{{
-                  decodedTagData()?.[field.value]?.description
-                }}</span>
+                <span
+                  class="ct-car-item__detail-value"
+                  [class.has-error]="decodedTagData()?.[field.value]?.error"
+                  >{{ decodedTagData()?.[field.value]?.description }}</span
+                >
               </div>
             }
           }
 
+          @if (trimTagsDecodeHasErrors() && !activeForm()) {
+            <div class="ct-car-item__error">
+              *One or more trim tag fields could not be decoded. Some Fields such as "Body" can affect the decoding of other fields. Please check all inputs and try again.
+            </div>
+          }
+
           @if (activeForm() === 'tag') {
-            <div>Verify all inputs before submitting.</div>
+            <div class="ct-car-item__verify">*Verify all inputs before submitting.</div>
 
             <div class="ct-car-item__edit-actions">
               <button
