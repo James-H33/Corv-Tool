@@ -58,6 +58,14 @@ export class AuthService {
     );
   }
 
+  resetPassword(token: string, newPassword: string): Observable<void> {
+    return this.http.post<void>(
+      `${this.baseUrl}/auth/reset-password`,
+      { token, newPassword },
+      { withCredentials: true },
+    );
+  }
+
   handleTokenExpiredError(request: HttpRequest<any>, next: HttpHandlerFn) {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
@@ -91,7 +99,13 @@ export class AuthService {
     }
   }
 
-  logout(): void {
-    this.appService.logout();
+  async logout(userId: string): Promise<void> {
+    await this.http.post(
+      `${this.baseUrl}/auth/logout`,
+      {
+        userId,
+      },
+      { withCredentials: true },
+    );
   }
 }

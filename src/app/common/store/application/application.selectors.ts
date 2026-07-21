@@ -1,7 +1,12 @@
 import { createSelector } from '@ngrx/store';
 import { applicationFeature } from './application.reducer';
 
-export const { selectAuthToken, selectIsMobileMenuOpen } = applicationFeature;
+export const {
+  selectAuthToken,
+  selectIsMobileMenuOpen,
+  selectPasswordResetInProgress,
+  selectForgotPasswordInProgress,
+} = applicationFeature;
 
 export const selectAppCredentials = createSelector(selectAuthToken, (authToken) => {
   if (authToken) {

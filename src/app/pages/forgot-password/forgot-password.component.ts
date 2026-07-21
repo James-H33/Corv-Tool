@@ -3,6 +3,9 @@ import { email, form, FormField, required } from '@angular/forms/signals';
 import { ButtonModule } from '@common/directives/button/button.module';
 import { ApplicationActions } from '@common/store/application/application.actions';
 import { Store } from '@ngrx/store';
+import {
+  selectForgotPasswordInProgress,
+} from '@common/store/application/application.selectors';
 
 @Component({
   selector: 'ct-forgot-password',
@@ -12,6 +15,8 @@ import { Store } from '@ngrx/store';
 })
 export class ForgotPasswordComponent {
   store = inject(Store);
+
+  forgotPasswordInProgress = this.store.selectSignal(selectForgotPasswordInProgress);
 
   errorMessage = signal<string>('');
 

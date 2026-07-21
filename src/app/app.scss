@@ -1,5 +1,7 @@
 .main {
-  height: calc(100vh - (var(--ct-nav-height) * 2));
+  max-width: 1200px;
+  margin: 0 auto;
+  height: calc(100vh - var(--ct-main-content-indent));
   overflow-x: hidden;
   margin-top: 30px;
 }

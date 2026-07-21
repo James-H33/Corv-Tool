@@ -1,0 +1,60 @@
+.ct-login {
+  display: flex;
+  justify-content: center;
+  height: calc(100vh - var(--ct-main-content-indent));
+  padding-top: 20vh;
+}
+
+.ct-login-form {
+  width: 100%;
+  max-width: 400px;
+  padding-inline: 20px;
+  margin: 0 auto;
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+}
+
+.ct-login-form__row {
+  margin-bottom: 20px;
+
+  &--error {
+    color: red;
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+
+  &--forgot-password {
+    font-size: 14px;
+    color: var(--ct-text-color-secondary);
+  }
+
+  &--actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    button {
+      &[ctButtonVariant="primary"] {
+        padding: 6px 16px;
+      }
+    }
+  }
+}
+
+.ct-login-form__password-wrapper {
+  position: relative;
+}
+
+.ct-login-form__show-password {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}

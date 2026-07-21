@@ -3,8 +3,11 @@ import { Router } from '@angular/router';
 import { UserService } from '@common/services/api/user.service';
 import { AuthService } from '@common/services/auth.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { concatLatestFrom } from '@ngrx/operators';
+import { Store } from '@ngrx/store';
 import { map, switchMap, tap } from 'rxjs';
 import { ApplicationActions } from './application.actions';
+import { selectAppCredentials } from './application.selectors';
 
 export const login$ = createEffect(
   (actions$ = inject(Actions), authService = inject(AuthService)) => {
@@ -73,10 +76,40 @@ export const forgotPassword$ = createEffect(
   { functional: true },
 );
 
+export const resetPassword$ = createEffect(
+  (actions$ = inject(Actions), authService = inject(AuthService), router = inject(Router)) => {
+    return actions$.pipe(
+      ofType(ApplicationActions.resetPassword),
+      switchMap((action) => {
+        return authService.resetPassword(action.token, action.newPassword).pipe(
+          map(() => {
+            return ApplicationActions.resetPasswordSuccess();
+          }),
+          tap(() => {
+            router.navigate(['/password-reset-success']);
+          }),
+        );
+      }),
+    );
+  },
+  { functional: true },
+);
+
 export const logout$ = createEffect(
-  (actions$ = inject(Actions), router = inject(Router)) => {
+  (
+    actions$ = inject(Actions),
+    store = inject(Store),
+    authService = inject(AuthService),
+    router = inject(Router),
+  ) => {
     return actions$.pipe(
       ofType(ApplicationActions.logout),
+      concatLatestFrom(() =>
+        store.select(selectAppCredentials).pipe(map((credentials) => credentials?.userId))
+      ),
+      switchMap(([, userId]) => {
+        return authService.logout(userId);
+      }),
       tap(() => {
         router.navigate(['/login']);
       }),

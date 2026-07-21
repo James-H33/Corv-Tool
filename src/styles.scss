@@ -29,8 +29,6 @@ button {
 }
 
 :root {
-  --ct-main-content-indent: 101px;
-
   // Colors
   --ct-color-primary: #064e88;
   --ct-color-primary-hover: #064e88;
@@ -51,6 +49,8 @@ button {
 
   // Global
   --ct-nav-height: 56px;
+  --ct-main-padding: 30px;
+  --ct-main-content-indent: calc(var(--ct-nav-height) + var(--ct-main-padding));
 
   // Borders
   --ct-border-default: #e2e5fa;

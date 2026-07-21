@@ -1,19 +1,23 @@
 <nav class="ct-nav-container">
-  <img
-    src="assets/images/mid-year-factory-logo.png"
-    alt="Mid Year Factory Logo"
-    class="ct-nav-logo"
-  />
+  <div class="ct-nav-container__content">
+    <a routerLink="/" class="ct-nav-logo-link" aria-label="Home">
+      <img
+        src="assets/images/mid-year-factory-logo.png"
+        alt="Mid Year Factory Logo"
+        class="ct-nav-logo"
+      />
+    </a>
 
-  @if (isLoggedIn()) {
-    <div
-      class="ct-nav-mobile-menu__toggle"
-      (click)="openMenu()"
-      role="button"
-      aria-label="Open mobile menu"
-      tabindex="0"
-    >
-      <ct-icon icon="category" size="16"></ct-icon>
-    </div>
-  }
+    @if (isLoggedIn()) {
+      <div
+        class="ct-nav-mobile-menu__toggle"
+        (click)="openMenu()"
+        role="button"
+        aria-label="Open mobile menu"
+        tabindex="0"
+      >
+        <ct-icon icon="category" size="16"></ct-icon>
+      </div>
+    }
+  </div>
 </nav>

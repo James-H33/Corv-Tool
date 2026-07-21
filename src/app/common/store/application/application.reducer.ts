@@ -4,11 +4,15 @@ import { ApplicationActions } from './application.actions';
 interface ApplicationState {
   authToken: string | null;
   isMobileMenuOpen: boolean;
+  passwordResetInProgress: boolean;
+  forgotPasswordInProgress: boolean;
 }
 
 export const initialApplicationState: ApplicationState = {
   authToken: null,
   isMobileMenuOpen: false,
+  passwordResetInProgress: false,
+  forgotPasswordInProgress: false,
 };
 
 export const applicationFeature = createFeature({
@@ -60,11 +64,32 @@ export const applicationFeature = createFeature({
       };
     }),
 
+    on(ApplicationActions.forgotPassword, (state) => {
+      return {
+        ...state,
+        forgotPasswordInProgress: true,
+      };
+    }),
+
     on(ApplicationActions.forgotPasswordSuccess, (state) => {
       return {
         ...state,
-        wasPasswordResetLinkSent: true,
-      }
+        forgotPasswordInProgress: false,
+      };
+    }),
+
+    on(ApplicationActions.resetPassword, (state) => {
+      return {
+        ...state,
+        passwordResetInProgress: true,
+      };
+    }),
+
+    on(ApplicationActions.resetPasswordSuccess, (state) => {
+      return {
+        ...state,
+        passwordResetInProgress: false,
+      };
     }),
   ),
 });
