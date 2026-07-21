@@ -1,3 +1,4 @@
+import { RouterLink } from '@angular/router';
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { IconComponent } from '@common/components/icon/icon.component';
 
@@ -6,7 +7,7 @@ import { IconComponent } from '@common/components/icon/icon.component';
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IconComponent, IconComponent],
+  imports: [IconComponent, IconComponent, RouterLink],
 })
 export class NavComponent {
   isLoggedIn = input<boolean>();

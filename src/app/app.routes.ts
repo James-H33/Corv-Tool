@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './pages/login/login.component';
 import { LogoutComponent } from './logout/logout.component';
-import { SignupComponent } from './signup/signup.component';
+import { SignupComponent } from './pages/signup/signup.component';
 
 export const routes: Routes = [
   {
@@ -19,20 +19,30 @@ export const routes: Routes = [
   {
     path: 'forgot-password',
     loadComponent: () =>
-      import('./forgot-password/forgot-password.component').then((m) => m.ForgotPasswordComponent),
+      import('./pages/forgot-password/forgot-password.component').then(
+        (m) => m.ForgotPasswordComponent,
+      ),
   },
   {
     path: 'reset-link-sent',
     loadComponent: () =>
-      import('./reset-password-link-sent/reset-password-link-sent.component').then(
+      import('./pages/reset-password-link-sent/reset-password-link-sent.component').then(
         (m) => m.ResetPasswordLinkSentComponent,
       ),
   },
-
+  {
+    path: 'password-reset-success',
+    loadComponent: () =>
+      import('./pages/password-reset-success/password-reset-success.component').then(
+        (m) => m.PasswordResetSuccessComponent,
+      ),
+  },
   {
     path: 'reset-password',
     loadComponent: () =>
-      import('./reset-password/reset-password.component').then((m) => m.ResetPasswordComponent),
+      import('./pages/reset-password/reset-password.component').then(
+        (m) => m.ResetPasswordComponent,
+      ),
   },
   {
     path: 'v',

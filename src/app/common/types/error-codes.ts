@@ -7,6 +7,7 @@ export const ErrorCodes = {
   UNKNOWN_ERROR: '999',
   INVALID_REFRESH_TOKEN: '006',
   ACCESS_TOKEN_EXPIRED: '007',
+  INVALID_RESET_PASSWORD_TOKEN: '008',
 };
 
 export const ErrorCodesReason = {
@@ -17,5 +18,6 @@ export const ErrorCodesReason = {
   '005': 'Gemini API service unavailable',
   '006': 'Invalid refresh token',
   '007': 'Access token expired',
+  '008': 'Invalid reset password token',
   '999': 'Unknown error',
 };
