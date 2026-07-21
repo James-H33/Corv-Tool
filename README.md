@@ -1,6 +1,9 @@
 # CorvTool
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.8.
+Application that used to decode and validate Mid Year Corvette Vin and Trim tags. 
+- Uses GEMINI AI to read images and return data in readable format
+- Uses Angular and Ngrx for statement management
+- Uses NestJs as the backend language handling all service calls
 
 ## Development server
 
