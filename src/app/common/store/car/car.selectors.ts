@@ -6,7 +6,29 @@ export const {
   selectCars,
   selectExtractedData,
   selectActiveForm,
+  selectIsLoadingCars,
+  selectSearchText,
  } = carFeature;
+
+export const selectFilteredCars = createSelector(
+  selectCars,
+  selectSearchText,
+  (cars, searchText) => {
+    if (!searchText) {
+      return cars;
+    }
+
+    const text = searchText.toLowerCase();
+
+    return cars.filter((car) => {
+      return (
+        car.name.toLowerCase().includes(text) ||
+        car.vin.toLowerCase().includes(text) ||
+        car.year.toLowerCase().includes(text)
+      );
+    });
+  }
+);
 
 export const selectCarById = (id: string) => createSelector(
   selectCars,

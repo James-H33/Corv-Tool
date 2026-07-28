@@ -13,6 +13,8 @@ interface CarState {
   extractedData: ExtractedData | null;
   activeForm: FormTypes | null;
   extractingDataFor: FormTypes | null;
+  isLoadingCars: boolean;
+  searchText: string;
 }
 
 export const initialCarState: CarState = {
@@ -20,6 +22,8 @@ export const initialCarState: CarState = {
   extractedData: null,
   activeForm: null,
   extractingDataFor: null,
+  isLoadingCars: false,
+  searchText: '',
 };
 
 export const carFeature = createFeature({
@@ -27,9 +31,15 @@ export const carFeature = createFeature({
   reducer: createReducer<CarState>(
     initialCarState,
 
+    on(CarActions.loadCars, (state) => ({
+      ...state,
+      isLoadingCars: true,
+    })),
+
     on(CarActions.loadCarsSuccess, (state, { cars }) => ({
       ...state,
       cars,
+      isLoadingCars: false,
     })),
 
     on(CarActions.loadCarByIdSuccess, (state, { cars }) => ({
@@ -76,7 +86,6 @@ export const carFeature = createFeature({
       extractingDataFor: null,
     })),
 
-
     on(CarActions.setActiveForm, (state, { formType }) => ({
       ...state,
       activeForm: formType,
@@ -87,6 +96,11 @@ export const carFeature = createFeature({
       extractedData: null,
       activeForm: null,
       extractingDataFor: null,
-    }))
+    })),
+
+    on(CarActions.setSearchText, (state, { text }) => ({
+      ...state,
+      searchText: text,
+    })),
   ),
 });

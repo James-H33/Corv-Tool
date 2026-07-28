@@ -119,9 +119,9 @@ export class CarComponent implements OnDestroy {
   };
 
   trimTagDisplayFields = [
-    { label: 'Body', value: 'body' },
-    { label: 'Trim', value: 'trim' },
     { label: 'Style', value: 'style' },
+    { label: 'Trim', value: 'trim' },
+    { label: 'Body', value: 'body' },
     { label: 'Paint', value: 'paint' },
     { label: 'Date', value: 'dateCode' },
   ];
@@ -307,14 +307,6 @@ export class CarComponent implements OnDestroy {
       }),
     );
     this.store.dispatch(CarActions.clearFormState());
-  }
-
-  retakeTag(): void {
-    this.closeDropdownBasedOnContext();
-  }
-
-  retakeVin(): void {
-    this.closeDropdownBasedOnContext();
   }
 
   uploadTag(): void {

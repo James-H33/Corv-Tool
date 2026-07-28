@@ -2,12 +2,22 @@
   <div class="ct-car-list-header">
     <div class="ct-car-list-header__title">Your Cars</div>
     <div class="ct-car-list-header__filters">
-      <input ctInput type="text" placeholder="Search cars..." />
+      <input
+        ctInput
+        type="text"
+        placeholder="Search cars..."
+        [value]="textSearch()"
+        (input)="textSearch.set($event.target.value)"
+      />
     </div>
   </div>
 
   <div class="ct-car-list-body">
-    @if (cars().length > 0) {
+    <div class="ct-car-list__add-new">
+      <button ctButton ctButtonVariant="primary" (click)="openDialog()">Add New Car</button>
+    </div>
+
+    @if (cars().length > 0 && !isLoadingCars()) {
       @for (car of cars(); track $index) {
         <a [routerLink]="['/v/cars', car.id]" class="ct-car-card__link">
           <div class="ct-car-card">
@@ -47,34 +57,16 @@
           </div>
         </ng-template>
       }
-    } @else {
+    }
+
+    @if (isLoadingCars()) {
+      <ct-skeleton-loader [height]="74" [borderRadius]="8"></ct-skeleton-loader>
+      <ct-skeleton-loader [height]="74" [borderRadius]="8"></ct-skeleton-loader>
+      <ct-skeleton-loader [height]="74" [borderRadius]="8"></ct-skeleton-loader>
+    }
+
+    @if (!isLoadingCars() && cars().length === 0) {
       <div>No cars available.</div>
     }
-  </div>
-</div>
-
-<div class="ct-camera-view">
-  <div class="ct-camera-view__col">
-    <ct-icon [icon]="galleryIcon" size="18"></ct-icon>
-    <span class="ct-camera-view__label">Gallery</span>
-  </div>
-
-  <div class="ct-camera-view__col">
-    <button
-      class="ct-camera-view__button"
-      ctButtonIcon
-      ctButtonVariant="primary"
-      ctButtonIconRounded
-      (click)="openDialog()"
-    >
-      <label class="ct-camera-view__label" for="picture">
-        <ct-icon icon="plus" size="24"></ct-icon>
-      </label>
-    </button>
-  </div>
-
-  <div class="ct-camera-view__col">
-    <ct-icon [icon]="galleryIcon" size="18"></ct-icon>
-    <span class="ct-camera-view__label">Clear</span>
   </div>
 </div>
