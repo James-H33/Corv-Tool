@@ -22,6 +22,8 @@ export const CarActions = createActionGroup({
     updateCar: props<{ id: string; data: Partial<Car> }>(),
     updateCarSuccess: props<{ cars: Car[] }>(),
 
+    setSearchText: props<{ text: string }>(),
+
     uploadCarImageForAIDataExtraction: props<{ id: string; file: File; for: FormTypes, retryCount?: number }>(),
     uploadCarImageForAIDataExtractionSuccess: props<{
       id: string;

@@ -1,0 +1,17 @@
+@mixin shimmer-text {
+  font-weight: 600;
+  background: linear-gradient(90deg, #e5e7eb, var(--ct-color-primary), #e5e7eb);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: Shimmer 2s infinite linear;
+}
+
+@keyframes Shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
