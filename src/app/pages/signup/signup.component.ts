@@ -117,7 +117,12 @@ export class SignupComponent {
       return;
     }
 
-    this.store.dispatch(ApplicationActions.signup(signupForm.value()));
+    const newUser = {
+      email: signupForm.value().email.toLowerCase(),
+      password: signupForm.value().password,
+    };
+
+    this.store.dispatch(ApplicationActions.signup(newUser));
   }
 
   toggleShowPassword(): void {

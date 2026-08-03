@@ -7,6 +7,7 @@ export const ApplicationActions = createActionGroup({
     loginSuccess: props<{ authToken: string }>(),
 
     logout: emptyProps(),
+    logoutSuccess: emptyProps(),
 
     signup: props<{ email: string; password: string }>(),
     signupSuccess: props<{ authToken: string }>(),
@@ -21,5 +22,8 @@ export const ApplicationActions = createActionGroup({
 
     resetPassword: props<{ token: string; newPassword: string }>(),
     resetPasswordSuccess: emptyProps(),
+
+    verifyUser: props<{ token: string }>(),
+    verifyUserSuccess: emptyProps(),
   },
 });

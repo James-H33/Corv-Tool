@@ -95,13 +95,17 @@ export class LoginComponent {
   login(): void {
     const form = this.form();
     const credentials = form.value();
+    const { email, password } = credentials;
 
     if (!form.valid()) {
       this.errorMessage.set('Please fill in all required fields correctly.');
       return;
     }
 
-    this.store.dispatch(ApplicationActions.login(credentials));
+    this.store.dispatch(ApplicationActions.login({
+      email: email.toLowerCase(),
+      password,
+    }));
   }
 
   toggleShowPassword(): void {

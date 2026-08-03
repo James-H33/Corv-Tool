@@ -2,6 +2,7 @@ import { Component, computed, input, output } from '@angular/core';
 import { Car } from '@common/types/car.interface';
 import { TrimTagSketchComponent } from '../trim-tag-sketch/trim-tag-sketch.component';
 import { VinSketchComponent } from "../vin-sketch/vin-sketch.component";
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'ct-car-image-box',
@@ -19,7 +20,7 @@ export class CarImageBoxComponent {
 
   uploading = output();
 
-  imageBaseUrl = 'http://localhost:3000/static-images/';
+  imageBaseUrl = environment.imageBaseUrl;
 
   imageUrlBasedOnType = computed(() => {
     const car = this.car();

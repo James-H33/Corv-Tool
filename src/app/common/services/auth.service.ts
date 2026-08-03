@@ -66,6 +66,13 @@ export class AuthService {
     );
   }
 
+  verifyUser(token: string): Observable<void> {
+    return this.http.post<void>(
+      `${this.baseUrl}/auth/verify-user`,
+      { token },
+    );
+  }
+
   handleTokenExpiredError(request: HttpRequest<any>, next: HttpHandlerFn) {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
@@ -99,8 +106,8 @@ export class AuthService {
     }
   }
 
-  async logout(userId: string): Promise<void> {
-    await this.http.post(
+  logout(userId: string): Observable<void> {
+    return this.http.post<void>(
       `${this.baseUrl}/auth/logout`,
       {
         userId,

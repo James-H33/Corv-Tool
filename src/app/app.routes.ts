@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { SignupComponent } from './pages/signup/signup.component';
+import { VerifyUserComponent } from './pages/verify-user/verify-user.component';
 
 export const routes: Routes = [
   {
@@ -15,6 +16,10 @@ export const routes: Routes = [
   {
     path: 'signup',
     component: SignupComponent,
+  },
+  {
+    path: 'verify',
+    component: VerifyUserComponent,
   },
   {
     path: 'forgot-password',

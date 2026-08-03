@@ -16,7 +16,7 @@ export class UserService {
     password: string;
   }): Observable<{ authToken: string; refreshToken: string }> {
     return this.http.post<{ authToken: string; refreshToken: string }>(
-      `${this.baseUrl}/auth/register`,
+      `${this.baseUrl}/users/register`,
       payload,
       { withCredentials: true },
     );
