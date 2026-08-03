@@ -3,6 +3,8 @@ import { ApplicationActions } from '@common/store/application/application.action
 import { selectAuthToken } from '@common/store/application/application.selectors';
 import { Store } from '@ngrx/store';
 
+import { environment } from 'src/environments/environment';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -14,7 +16,7 @@ export class ApplicationService {
   public authToken$ = this.store.select(selectAuthToken);
 
   getBaseApiUrl(): string {
-    return 'http://localhost:3000';
+    return environment.baseAPIUrl;
   }
 
   getAuthToken(): string | null {

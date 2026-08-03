@@ -36,7 +36,7 @@ export const applicationFeature = createFeature({
       };
     }),
 
-    on(ApplicationActions.logout, (state) => {
+    on(ApplicationActions.logoutSuccess, (state) => {
       return {
         ...state,
         authToken: null,

@@ -14,7 +14,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { Icon, IconComponent } from '@common/components/icon/icon.component';
 import { SkeletonLoaderComponent } from '@common/components/skeleton/skeleton-loader.component';
-import { ButtonIconDirective } from '@common/directives/button-icon/button-icon.directives';
 import { DropdownDirective } from '@common/directives/dropdown/dropdown.directive';
 import { InputModule } from '@common/directives/input/input.module';
 import { CarActions } from '@common/store/car/car.actions';
@@ -32,7 +31,6 @@ import { NewCarFormComponent } from '../components/new-car-form/new-car-form.com
     RouterLink,
     IconComponent,
     SkeletonLoaderComponent,
-    ButtonIconDirective,
     DialogModule,
     DropdownDirective,
   ],

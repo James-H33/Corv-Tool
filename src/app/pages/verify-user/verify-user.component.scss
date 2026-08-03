@@ -1,0 +1,19 @@
+.ct-verify-user {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  height: calc(100vh - var(--ct-main-content-indent));
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+.ct-verify-user__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateY(-50%);
+
+  p {
+    padding-inline: 20px;
+  }
+}

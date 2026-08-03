@@ -32,6 +32,5 @@ export class App {
 
   logout(): void {
     this.closeMenu();
-    this.store.dispatch(ApplicationActions.logout());
   }
 }

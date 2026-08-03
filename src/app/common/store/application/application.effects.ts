@@ -15,7 +15,7 @@ export const login$ = createEffect(
       ofType(ApplicationActions.login),
       switchMap((action) => {
         return authService.login({ email: action.email, password: action.password }).pipe(
-          map((response: { authToken: string; refreshToken: string }) => {
+          map((response: { authToken: string; }) => {
             const authToken = response.authToken;
 
             return ApplicationActions.loginSuccess({ authToken });
@@ -33,7 +33,7 @@ export const signup$ = createEffect(
       ofType(ApplicationActions.signup),
       switchMap((action) => {
         return userService.create({ email: action.email, password: action.password }).pipe(
-          map((response: { authToken: string; refreshToken: string }) => {
+          map((response: { authToken: string; }) => {
             const authToken = response.authToken;
 
             return ApplicationActions.signupSuccess({ authToken });
@@ -108,7 +108,11 @@ export const logout$ = createEffect(
         store.select(selectAppCredentials).pipe(map((credentials) => credentials?.userId))
       ),
       switchMap(([, userId]) => {
-        return authService.logout(userId);
+        return authService.logout(userId).pipe(
+          map(() => {
+            return ApplicationActions.logoutSuccess();
+          }),
+        );
       }),
       tap(() => {
         router.navigate(['/login']);
@@ -116,4 +120,27 @@ export const logout$ = createEffect(
     );
   },
   { functional: true, dispatch: false },
+);
+
+export const verifyUser$ = createEffect(
+  (
+    actions$ = inject(Actions),
+    authService = inject(AuthService),
+    router = inject(Router),
+  ) => {
+    return actions$.pipe(
+      ofType(ApplicationActions.verifyUser),
+      switchMap((action) => {
+        return authService.verifyUser(action.token).pipe(
+          map(() => {
+            return ApplicationActions.verifyUserSuccess();
+          }),
+          tap(() => {
+            router.navigate(['/login']);
+          }),
+        );
+      }),
+    );
+  },
+  { functional: true },
 );
