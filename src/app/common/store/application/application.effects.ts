@@ -33,10 +33,8 @@ export const signup$ = createEffect(
       ofType(ApplicationActions.signup),
       switchMap((action) => {
         return userService.create({ email: action.email, password: action.password }).pipe(
-          map((response: { authToken: string; }) => {
-            const authToken = response.authToken;
-
-            return ApplicationActions.signupSuccess({ authToken });
+          map(() => {
+            return ApplicationActions.signupSuccess();
           }),
         );
       }),
@@ -45,10 +43,22 @@ export const signup$ = createEffect(
   { functional: true },
 );
 
+export const redirectAfterSignup$ = createEffect(
+  (actions$ = inject(Actions), router = inject(Router)) => {
+    return actions$.pipe(
+      ofType(ApplicationActions.signupSuccess),
+      tap(() => {
+        router.navigate([`signup-success`]);
+      }),
+    );
+  },
+  { functional: true, dispatch: false },
+);
+
 export const redirectAfterLogin$ = createEffect(
   (actions$ = inject(Actions), router = inject(Router)) => {
     return actions$.pipe(
-      ofType(ApplicationActions.loginSuccess, ApplicationActions.signupSuccess),
+      ofType(ApplicationActions.loginSuccess),
       tap(() => {
         router.navigate([`v/cars`]);
       }),

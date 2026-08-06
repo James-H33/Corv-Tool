@@ -10,7 +10,7 @@ export const ApplicationActions = createActionGroup({
     logoutSuccess: emptyProps(),
 
     signup: props<{ email: string; password: string }>(),
-    signupSuccess: props<{ authToken: string }>(),
+    signupSuccess: emptyProps(),
 
     openMobileMenu: emptyProps(),
     closeMobileMenu: emptyProps(),

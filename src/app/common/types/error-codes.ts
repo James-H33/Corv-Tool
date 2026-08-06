@@ -8,6 +8,9 @@ export const ErrorCodes = {
   INVALID_REFRESH_TOKEN: '006',
   ACCESS_TOKEN_EXPIRED: '007',
   INVALID_RESET_PASSWORD_TOKEN: '008',
+  USER_ALREADY_EXISTS: '009',
+  INVALID_CREATION_TOKEN: '010',
+  USER_NOT_VERIFIED: '011',
 };
 
 export const ErrorCodesReason = {
@@ -20,4 +23,7 @@ export const ErrorCodesReason = {
   '007': 'Access token expired',
   '008': 'Invalid reset password token',
   '999': 'Unknown error',
+  '009': 'User already exists',
+  '010': 'Invalid creation token',
+  '011': 'User not verified',
 };

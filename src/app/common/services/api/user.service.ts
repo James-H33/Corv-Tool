@@ -14,8 +14,8 @@ export class UserService {
   create(payload: {
     email: string;
     password: string;
-  }): Observable<{ authToken: string; refreshToken: string }> {
-    return this.http.post<{ authToken: string; refreshToken: string }>(
+  }): Observable<void> {
+    return this.http.post<void>(
       `${this.baseUrl}/users/register`,
       payload,
       { withCredentials: true },
