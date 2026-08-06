@@ -28,11 +28,10 @@ export const applicationFeature = createFeature({
       };
     }),
 
-    on(ApplicationActions.signupSuccess, (state, { authToken }) => {
+    on(ApplicationActions.signupSuccess, (state) => {
       return {
         ...state,
         loginError: null,
-        authToken,
       };
     }),
 

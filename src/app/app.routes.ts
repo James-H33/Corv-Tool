@@ -50,6 +50,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'signup-success',
+    loadComponent: () =>
+      import('./pages/signup-success/signup-success.component').then(
+        (m) => m.SignupSuccessComponent,
+      ),
+  },
+  {
     path: 'v',
     loadChildren: () => import('./views/views.routes').then((m) => m.viewsRoutes),
   },
