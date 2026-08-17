@@ -1,0 +1,92 @@
+<ct-car-image-box
+  [car]="car()"
+  type="vin"
+  [extractedData]="extractedVinData()"
+  [isUsingSketchView]="isUsingSketchView()"
+  [isLoading]="isExtracting()"
+  (uploading)="closeDropdown()"
+></ct-car-image-box>
+
+<div class="ct-car-item__action">
+  @if (hasImage()) {
+    <div class="ct-car-item__action-left">
+      <ct-image-box-controls
+        [isUsingSketchView]="isUsingSketchView()"
+        (viewTypeChange)="onViewTypeChange($event)"
+      ></ct-image-box-controls>
+    </div>
+  }
+
+  <div class="ct-car-item__action-right">
+    @if (car()?.vin) {
+      <button
+        #vinDropdown
+        ctButtonIcon
+        ctButtonVariant="outline"
+        ctDropdown
+        [ctDropdownTemplate]="vinOptionsMenu"
+        ctDropdownTriggerType="click"
+        (ctDropdownOpened)="onDropdownOpened()"
+      >
+        <ct-icon [icon]="ellipsesMenuIcon" size="14"></ct-icon>
+      </button>
+    }
+  </div>
+</div>
+
+@if (isFormActive()) {
+  <div class="ct-car-item__vin ct-car-item__detail">
+    <span class="ct-car-item__detail-label">Vin:</span>
+    <input ctInput type="text" [formField]="vinForm.vin" ctAutoFocus />
+  </div>
+} @else {
+  <div class="ct-car-item__vin">VIN: {{ car()?.vin }}</div>
+}
+
+@if (isFormActive()) {
+  @if (vinForm().dirty() && vinForm.vin().errors()) {
+    @for (error of vinForm.vin().errors(); track error.kind) {
+      <div class="ct-car-item__error">*{{ error.message }}</div>
+    }
+  }
+
+  <div class="ct-car-item__verify">*Verify input before submitting.</div>
+
+  <div class="ct-car-item__edit-actions">
+    <button
+      ctButton
+      ctButtonVariant="primary"
+      (click)="saveVinEdits()"
+      [disabled]="!vinForm().dirty() || vinForm.vin().errors().length"
+    >
+      Save
+    </button>
+    <button ctButton ctButtonVariant="outline" (click)="cancelVinEdits()">Cancel</button>
+  </div>
+}
+
+@if (decodedVinData()) {
+  <div class="ct-car-item__details">
+    @for (field of vinDisplayFields; track field.label; let i = $index) {
+      <div class="ct-car-item__detail">
+        <span class="ct-car-item__detail-label">
+          {{ field.label }}: {{ decodedVinData()?.[field.value]?.value }}
+        </span>
+        <span class="ct-car-item__detail-value">{{
+          decodedVinData()?.[field.value]?.description
+        }}</span>
+      </div>
+    }
+  </div>
+} @else {
+  <div class="ct-car-item__details">No VIN Data Available Yet.</div>
+}
+
+<ng-template #vinOptionsMenu>
+  <div class="cdk-overlay-pane-default ct-car-options-menu">
+    <div class="ct-car-options-menu__item" role="button" tabindex="0" for="vinPicture">
+      <label for="vinPicture" class="ct-car-options-menu__upload-label"> Re-upload </label>
+    </div>
+    <div class="ct-car-options-menu__item" (click)="editVin()" role="button" tabindex="1">Edit</div>
+  </div>
+</ng-template>
