@@ -1,0 +1,99 @@
+<div class="ct-car-item">
+  <ct-car-image-box
+    [car]="car()"
+    type="tag"
+    [extractedData]="extractedTagData()"
+    [isUsingSketchView]="isUsingSketchView()"
+    [isLoading]="isExtracting()"
+    (uploading)="uploadTag()"
+  ></ct-car-image-box>
+
+  <div class="ct-car-item__action">
+    @if (hasImage()) {
+      <div class="ct-car-item__action-left">
+        <ct-image-box-controls
+          [isUsingSketchView]="isUsingSketchView()"
+          (viewTypeChange)="onViewTypeChange($event)"
+        ></ct-image-box-controls>
+      </div>
+    }
+
+    <div class="ct-car-item__action-right">
+      @if (car()?.tagData) {
+        <button
+          #trimTagDropdown
+          ctButtonIcon
+          ctButtonVariant="outline"
+          ctDropdown
+          [ctDropdownTemplate]="tagOptionsMenu"
+          ctDropdownTriggerType="click"
+          (ctDropdownOpened)="onDropdownOpened()"
+        >
+          <ct-icon [icon]="ellipsesMenuIcon" size="14"></ct-icon>
+        </button>
+      }
+    </div>
+  </div>
+
+  @if (hasTagData()) {
+    <div class="ct-car-item__details">
+      @for (field of trimTagDisplayFields; track field.label; let i = $index) {
+        @if (isFormActive()) {
+          <div class="ct-car-item__detail ct-car-item__detail--editing">
+            <span class="ct-car-item__detail-label">{{ field.label }}:</span>
+            @if (i === 0) {
+              <input ctInput type="text" [formField]="trimFieldsMap[field.value]" ctAutoFocus />
+            } @else {
+              <input ctInput type="text" [formField]="trimFieldsMap[field.value]" />
+            }
+          </div>
+        } @else {
+          <div class="ct-car-item__detail">
+            <span class="ct-car-item__detail-label"
+              >{{ field.label }}: {{ decodedTagData()?.[field.value]?.value }}</span
+            >
+            <span
+              class="ct-car-item__detail-value"
+              [class.has-error]="decodedTagData()?.[field.value]?.error"
+              >{{ decodedTagData()?.[field.value]?.description }}</span
+            >
+          </div>
+        }
+      }
+
+      @if (trimTagsDecodeHasErrors() && !isFormActive()) {
+        <div class="ct-car-item__error">
+          *One or more trim tag fields could not be decoded. Some Fields such as "Body" can affect
+          the decoding of other fields. Please check all inputs and try again.
+        </div>
+      }
+
+      @if (isFormActive()) {
+        <div class="ct-car-item__verify">*Verify all inputs before submitting.</div>
+
+        <div class="ct-car-item__edit-actions">
+          <button
+            ctButton
+            ctButtonVariant="primary"
+            (click)="saveTrimTagEdits()"
+            [disabled]="!trimForm().dirty()"
+          >
+            Save
+          </button>
+          <button ctButton ctButtonVariant="outline" (click)="cancelTrimTagEdits()">Cancel</button>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="ct-car-item__details">No Trim Tag Data Available Yet.</div>
+  }
+</div>
+
+<ng-template #tagOptionsMenu>
+  <div class="cdk-overlay-pane-default ct-car-options-menu">
+    <div class="ct-car-options-menu__item" role="button" tabindex="0" for="tagPicture">
+      <label for="tagPicture" class="ct-car-options-menu__upload-label"> Re-upload </label>
+    </div>
+    <div class="ct-car-options-menu__item" (click)="editTag()" role="button" tabindex="1">Edit</div>
+  </div>
+</ng-template>

@@ -42,24 +42,4 @@ export class NewCarFormComponent {
 
     this.create.emit(newCar);
   }
-
-  useVin(): void {
-    const newCar = {
-      name: this.name(),
-      year: this.year(),
-      type: AddCarActionType.Vin,
-    };
-
-    this.create.emit(newCar);
-  }
-
-  useTrimTag(): void {
-    const newCar = {
-      name: this.name(),
-      year: this.year(),
-      type: AddCarActionType.TrimTag,
-    };
-
-    this.create.emit(newCar);
-  }
 }

@@ -34,223 +34,24 @@
 
   <div class="ct-car-body">
     <div class="ct-car-item">
-      <ct-car-image-box
+      <ct-car-vin
         [car]="car()"
-        type="vin"
-        [extractedData]="extractedVinData()"
-        [isUsingSketchView]="isUsingVinSketchView()"
-        [isLoading]="isExtractingDataForVin()"
-        (uploading)="uploadVin()"
-      ></ct-car-image-box>
-
-      <div class="ct-car-item__action">
-        @if (hasVinImage()) {
-          <div class="ct-car-item__action-left">
-            <button
-              ctButtonIcon
-              [attr.ctButtonVariant]="isUsingVinSketchView() ? 'outline' : 'primary'"
-              (click)="useActualView('vin')"
-            >
-              Actual
-            </button>
-            <button
-              ctButtonIcon
-              [attr.ctButtonVariant]="isUsingVinSketchView() ? 'primary' : 'outline'"
-              (click)="useSketchView('vin')"
-            >
-              Sketch
-            </button>
-          </div>
-        }
-
-        <div class="ct-car-item__action-right">
-          @if (car()?.vin) {
-            <button
-              #vinDropdown
-              ctButtonIcon
-              ctButtonVariant="outline"
-              ctDropdown
-              [ctDropdownTemplate]="vinOptionsMenu"
-              ctDropdownTriggerType="click"
-              (ctDropdownOpened)="onDropdownOpened('vin')"
-            >
-              <ct-icon [icon]="ellipsesMenuIcon" size="14"></ct-icon>
-            </button>
-          }
-        </div>
-      </div>
-
-      @if (activeForm() === 'vin') {
-        <div class="ct-car-item__vin ct-car-item__detail">
-          <span class="ct-car-item__detail-label">Vin:</span>
-          <input ctInput type="text" [formField]="vinForm.vin" ctAutoFocus />
-        </div>
-      } @else {
-        <div class="ct-car-item__vin">VIN: {{ car()?.vin }}</div>
-      }
-
-      @if (activeForm() === 'vin') {
-        @if (vinForm().dirty() && vinForm.vin().errors()) {
-          @for (error of vinForm.vin().errors(); track error.kind) {
-            <div class="ct-car-item__error">*{{ error.message }}</div>
-          }
-        }
-
-        <div class="ct-car-item__verify">*Verify input before submitting.</div>
-
-        <div class="ct-car-item__edit-actions">
-          <button
-            ctButton
-            ctButtonVariant="primary"
-            (click)="saveVinEdits()"
-            [disabled]="!vinForm().dirty() || vinForm.vin().errors().length"
-          >
-            Save
-          </button>
-          <button ctButton ctButtonVariant="outline" (click)="cancelVinEdits()">Cancel</button>
-        </div>
-      }
-
-      @if (decodedVinData()) {
-        <div class="ct-car-item__details">
-          @for (field of vinDisplayFields; track field.label; let i = $index) {
-            <div class="ct-car-item__detail">
-              <span class="ct-car-item__detail-label">
-                {{ field.label }}: {{ decodedVinData()?.[field.value]?.value }}
-              </span>
-              <span class="ct-car-item__detail-value">{{
-                decodedVinData()?.[field.value]?.description
-              }}</span>
-            </div>
-          }
-        </div>
-      } @else {
-        <div class="ct-car-item__details">No VIN Data Available Yet.</div>
-      }
+        [extractedVinData]="extractedVinData()"
+        [isFormActive]="activeForm() === 'vin'"
+        [isExtracting]="isExtractingDataForVin()"
+      ></ct-car-vin>
     </div>
 
     <div class="ct-car-item">
-      <ct-car-image-box
+      <ct-car-tag
         [car]="car()"
-        type="tag"
-        [extractedData]="extractedTagData()"
-        [isUsingSketchView]="isUsingTagSketchView()"
-        [isLoading]="isExtractingDataForTag()"
-        (uploading)="uploadTag()"
-      ></ct-car-image-box>
-
-      <div class="ct-car-item__action">
-        @if (hasTagImage()) {
-          <div class="ct-car-item__action-left">
-            <button
-              ctButtonIcon
-              [attr.ctButtonVariant]="isUsingTagSketchView() ? 'outline' : 'primary'"
-              (click)="useActualView('tag')"
-            >
-              Actual
-            </button>
-            <button
-              ctButtonIcon
-              [attr.ctButtonVariant]="isUsingTagSketchView() ? 'primary' : 'outline'"
-              (click)="useSketchView('tag')"
-            >
-              Sketch
-            </button>
-          </div>
-        }
-
-        <div class="ct-car-item__action-right">
-          @if (car()?.tagData) {
-            <button
-              #trimTagDropdown
-              ctButtonIcon
-              ctButtonVariant="outline"
-              ctDropdown
-              [ctDropdownTemplate]="tagOptionsMenu"
-              ctDropdownTriggerType="click"
-              (ctDropdownOpened)="onDropdownOpened('tag')"
-            >
-              <ct-icon [icon]="ellipsesMenuIcon" size="14"></ct-icon>
-            </button>
-          }
-        </div>
-      </div>
-
-      @if (tagData()) {
-        <div class="ct-car-item__details">
-          @for (field of trimTagDisplayFields; track field.label; let i = $index) {
-            @if (activeForm() === 'tag') {
-              <div class="ct-car-item__detail ct-car-item__detail--editing">
-                <span class="ct-car-item__detail-label">{{ field.label }}:</span>
-                @if (i === 0) {
-                  <input ctInput type="text" [formField]="trimFieldsMap[field.value]" ctAutoFocus />
-                } @else {
-                  <input ctInput type="text" [formField]="trimFieldsMap[field.value]" />
-                }
-              </div>
-            } @else {
-              <div class="ct-car-item__detail">
-                <span class="ct-car-item__detail-label"
-                  >{{ field.label }}: {{ decodedTagData()?.[field.value]?.value }}</span
-                >
-                <span
-                  class="ct-car-item__detail-value"
-                  [class.has-error]="decodedTagData()?.[field.value]?.error"
-                  >{{ decodedTagData()?.[field.value]?.description }}</span
-                >
-              </div>
-            }
-          }
-
-          @if (trimTagsDecodeHasErrors() && !activeForm()) {
-            <div class="ct-car-item__error">
-              *One or more trim tag fields could not be decoded. Some Fields such as "Body" can
-              affect the decoding of other fields. Please check all inputs and try again.
-            </div>
-          }
-
-          @if (activeForm() === 'tag') {
-            <div class="ct-car-item__verify">*Verify all inputs before submitting.</div>
-
-            <div class="ct-car-item__edit-actions">
-              <button
-                ctButton
-                ctButtonVariant="primary"
-                (click)="saveTrimTagEdits()"
-                [disabled]="!trimForm().dirty()"
-              >
-                Save
-              </button>
-              <button ctButton ctButtonVariant="outline" (click)="cancelTrimTagEdits()">
-                Cancel
-              </button>
-            </div>
-          }
-        </div>
-      } @else {
-        <div class="ct-car-item__details">No Trim Tag Data Available Yet.</div>
-      }
+        [extractedTagData]="extractedTagData()"
+        [isFormActive]="activeForm() === 'tag'"
+        [isExtracting]="isExtractingDataForTag()"
+      ></ct-car-tag>
     </div>
   </div>
 </div>
-
-<ng-template #tagOptionsMenu>
-  <div class="cdk-overlay-pane-default ct-car-options-menu">
-    <div class="ct-car-options-menu__item" role="button" tabindex="0" for="tagPicture">
-      <label for="tagPicture" class="ct-car-options-menu__upload-label"> Re-upload </label>
-    </div>
-    <div class="ct-car-options-menu__item" (click)="editTag()" role="button" tabindex="1">Edit</div>
-  </div>
-</ng-template>
-
-<ng-template #vinOptionsMenu>
-  <div class="cdk-overlay-pane-default ct-car-options-menu">
-    <div class="ct-car-options-menu__item" role="button" tabindex="0" for="vinPicture">
-      <label for="vinPicture" class="ct-car-options-menu__upload-label"> Re-upload </label>
-    </div>
-    <div class="ct-car-options-menu__item" (click)="editVin()" role="button" tabindex="1">Edit</div>
-  </div>
-</ng-template>
 
 <input
   hidden

@@ -1,0 +1,95 @@
+.ct-car-item {
+  &__action {
+    display: flex;
+    margin-top: 10px;
+  }
+
+  &__action-left {
+    display: flex;
+    gap: 8px;
+    margin-right: auto;
+  }
+
+  &__action-right {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 25px;
+  }
+
+  &__detail {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 14px;
+    border-radius: 10px;
+
+    &-label {
+      padding-left: 4px;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--ct-text-color-default);
+    }
+
+    &-value {
+      color: var(--ct-text-color-secondary);
+      padding: 12px;
+      border-radius: 10px;
+      background-color: #f2f5f8;
+
+      &.has-error {
+        color: var(--ct-text-color-error);
+      }
+    }
+  }
+}
+
+.ct-car-item__verify {
+  font-size: 14px;
+  margin-block: 8px;
+}
+
+.ct-car-item__error {
+  color: var(--ct-text-color-error);
+  font-size: 13px;
+  margin-block: 6px;
+}
+
+.ct-car-item__edit-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.ct-car-item__detail-label {
+  margin-bottom: 4px;
+}
+
+::ng-deep .ct-car-options-menu {
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px;
+  margin-right: 20px;
+
+  &__item {
+    font-size: 14px;
+    color: var(--ct-text-color-default);
+    padding: 6px 12px;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 6px;
+
+    &:hover,
+    &:focus-within {
+      background-color: #e5edf5;
+    }
+  }
+}

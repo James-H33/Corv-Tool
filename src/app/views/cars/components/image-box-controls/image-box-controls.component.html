@@ -1,0 +1,14 @@
+<button
+  ctButtonIcon
+  [attr.ctButtonVariant]="isUsingSketchView() ? 'outline' : 'primary'"
+  (click)="useActualView()"
+>
+  Actual
+</button>
+<button
+  ctButtonIcon
+  [attr.ctButtonVariant]="isUsingSketchView() ? 'primary' : 'outline'"
+  (click)="useSketchView()"
+>
+  Sketch
+</button>
