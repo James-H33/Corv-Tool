@@ -11,6 +11,7 @@ export const ErrorCodes = {
   USER_ALREADY_EXISTS: '009',
   INVALID_CREATION_TOKEN: '010',
   USER_NOT_VERIFIED: '011',
+  FILE_SIZE_TOO_LARGE: '012',
 };
 
 export const ErrorCodesReason = {
@@ -26,4 +27,5 @@ export const ErrorCodesReason = {
   '009': 'User already exists',
   '010': 'Invalid creation token',
   '011': 'User not verified',
+  '012': 'File too large',
 };

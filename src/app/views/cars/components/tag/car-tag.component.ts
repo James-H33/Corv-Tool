@@ -34,7 +34,7 @@ import { CarImageBoxComponent } from '../image-box/car-image-box.component';
 })
 export class CarTagComponent {
   store = inject(Store);
-  dropdownRef = viewChild<DropdownDirective>('tagDropdown');
+  dropdownRef = viewChild('tagDropdown', { read: DropdownDirective });
   car = input<Car | null | undefined>();
   isFormActive = input(false);
   extractedTagData = input<ExtractedData | null>();

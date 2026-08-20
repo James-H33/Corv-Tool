@@ -158,8 +158,8 @@ export const uploadCarImageForAIDataExtraction$ = createEffect(
               for: forField,
             }),
           ),
-          catchError(() => {
-            if (retryCount !== undefined && retryCount < 3) {
+          catchError(({ error }) => {
+            if (retryCount !== undefined && retryCount < 3 && !error?.errorCode) {
               return timer(500).pipe(
                 map(() =>
                   CarActions.uploadCarImageForAIDataExtraction({
