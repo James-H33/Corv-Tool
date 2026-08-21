@@ -1,0 +1,1 @@
+import{hc as i,jb as a}from"./chunk-I2EOSTRK.js";var n=class t{buttonVariant=i("",{alias:"ctButtonVariant"});static \u0275fac=function(r){return new(r||t)};static \u0275dir=a({type:t,selectors:[["","ctButton",""]],inputs:{buttonVariant:[1,"ctButtonVariant","buttonVariant"]}})};export{n as a};
