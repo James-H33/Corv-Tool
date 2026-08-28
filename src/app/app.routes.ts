@@ -1,7 +1,8 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './pages/login/login.component';
 import { LogoutComponent } from './logout/logout.component';
+import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
+import { VerifyUserSuccessComponent } from './pages/verify-user-success/verify-user-success.component';
 import { VerifyUserComponent } from './pages/verify-user/verify-user.component';
 
 export const routes: Routes = [
@@ -20,6 +21,10 @@ export const routes: Routes = [
   {
     path: 'verify',
     component: VerifyUserComponent,
+  },
+  {
+    path: 'verify-success',
+    component: VerifyUserSuccessComponent,
   },
   {
     path: 'forgot-password',

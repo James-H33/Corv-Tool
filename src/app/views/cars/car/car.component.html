@@ -17,6 +17,7 @@
           placeholder="Car Name"
           [value]="nameModel()"
           (input)="nameModel.set($event.target.value)"
+          (keydown.enter)="saveName()"
           ctAutoFocus
         />
 
