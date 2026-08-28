@@ -1,12 +1,13 @@
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Component, effect, inject, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { form, FormField, minLength, required } from '@angular/forms/signals';
 import { IconComponent } from '@common/components/icon/icon.component';
 import { ApplicationActions } from '@common/store/application/application.actions';
 import { Store } from '@ngrx/store';
 import { selectPasswordResetInProgress } from '@common/store/application/application.selectors';
+import { ToastService } from '@common/services/toast.service';
 
 @Component({
   selector: 'ct-reset-password',
@@ -16,6 +17,8 @@ import { selectPasswordResetInProgress } from '@common/store/application/applica
 })
 export class ResetPasswordComponent {
   route = inject(ActivatedRoute);
+  router = inject(Router);
+  toastService = inject(ToastService);
   store = inject(Store);
 
   passwordResetInProgress = this.store.selectSignal(selectPasswordResetInProgress);
@@ -41,10 +44,20 @@ export class ResetPasswordComponent {
   });
 
   constructor() {
-    effect(() => {
+    const checkResetTokenEffect = effect(() => {
       const resetToken = this.resetToken();
 
-      console.log('ResetToken: ', resetToken);
+      if (!resetToken) {
+        checkResetTokenEffect.destroy();
+
+        this.toastService.showToast({
+          message: 'Invalid password reset link',
+          duration: 5000,
+          type: 'error',
+        });
+
+        this.router.navigate(['/login']);
+      }
     });
 
     effect(() => {

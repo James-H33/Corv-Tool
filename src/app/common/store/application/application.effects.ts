@@ -15,7 +15,7 @@ export const login$ = createEffect(
       ofType(ApplicationActions.login),
       switchMap((action) => {
         return authService.login({ email: action.email, password: action.password }).pipe(
-          map((response: { authToken: string; }) => {
+          map((response: { authToken: string }) => {
             const authToken = response.authToken;
 
             return ApplicationActions.loginSuccess({ authToken });
@@ -115,7 +115,7 @@ export const logout$ = createEffect(
     return actions$.pipe(
       ofType(ApplicationActions.logout),
       concatLatestFrom(() =>
-        store.select(selectAppCredentials).pipe(map((credentials) => credentials?.userId))
+        store.select(selectAppCredentials).pipe(map((credentials) => credentials?.userId)),
       ),
       switchMap(([, userId]) => {
         return authService.logout(userId).pipe(
@@ -133,11 +133,7 @@ export const logout$ = createEffect(
 );
 
 export const verifyUser$ = createEffect(
-  (
-    actions$ = inject(Actions),
-    authService = inject(AuthService),
-    router = inject(Router),
-  ) => {
+  (actions$ = inject(Actions), authService = inject(AuthService), router = inject(Router)) => {
     return actions$.pipe(
       ofType(ApplicationActions.verifyUser),
       switchMap((action) => {
@@ -146,7 +142,7 @@ export const verifyUser$ = createEffect(
             return ApplicationActions.verifyUserSuccess();
           }),
           tap(() => {
-            router.navigate(['/login']);
+            router.navigate(['/verify-success']);
           }),
         );
       }),
