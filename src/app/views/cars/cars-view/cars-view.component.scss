@@ -1,0 +1,101 @@
+:host {
+  position: relative;
+}
+
+.ct-car-list {
+  padding: 20px;
+}
+
+.ct-car-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.ct-car-list-header__title {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.ct-car-list-header__filters {
+  input {
+    width: 200px;
+  }
+}
+
+.ct-car-list-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ct-car-card {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid var(--ct-border-default);
+  border-radius: 8px;
+
+  &__link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  &__title {
+    font-size: 18px;
+    font-weight: 500;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-wrap: nowrap;
+    white-space: nowrap;
+  }
+
+  &__subtitle {
+    font-size: 14px;
+    color: var(--ct-text-color-secondary);
+  }
+
+  &__left {
+    overflow: hidden;
+  }
+
+  &__right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}
+
+.ct-car-list__add-new {
+  display: flex;
+  justify-content: end;
+}
+
+::ng-deep .ct-car-list-options-menu {
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px;
+  margin-right: 15px;
+
+  &__item {
+    font-size: 14px;
+    color: var(--ct-text-color-default);
+    padding: 6px 12px;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 6px;
+
+    &--danger {
+      color: var(--ct-text-color-danger);
+    }
+
+    &:hover, &:focus-within {
+      background-color: #e5edf5;
+    }
+  }
+}

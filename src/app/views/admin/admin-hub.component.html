@@ -1,0 +1,20 @@
+<div class="ct-admin-hub">
+  <h4 class="ct-admin-hub__title">Admin Hub</h4>
+
+  <div class="ct-admin-hub-tabs">
+    <a
+      class="ct-admin-hub-tabs__tab"
+      [routerLink]="['cars']"
+      [class.ct-admin-hub-tabs__tab--active]="activeTab() === 'cars'"
+      >Cars</a
+    >
+    <a
+      class="ct-admin-hub-tabs__tab"
+      [routerLink]="['users']"
+      [class.ct-admin-hub-tabs__tab--active]="activeTab() === 'users'"
+      >Users</a
+    >
+  </div>
+</div>
+
+<router-outlet></router-outlet>

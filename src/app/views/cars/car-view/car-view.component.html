@@ -1,0 +1,11 @@
+<ct-car
+  [car]="car()"
+  [activeForm]="activeForm()"
+  [extractedData]="extractedData()"
+  [extractedVinData]="extractedVinData()"
+  [extractedTagData]="extractedTagData()"
+  [extractingDataFor]="extractingDataFor()"
+  (carUpdated)="onCarUpdated($event)"
+  (uploadingCarImageForExtraction)="onUploadingCarImageForExtraction($event)"
+  (clearFormState)="onClearFormState()"
+></ct-car>

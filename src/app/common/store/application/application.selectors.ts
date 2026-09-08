@@ -17,6 +17,7 @@ export const selectAppCredentials = createSelector(selectAuthToken, (authToken) 
     return {
       userId: decodedToken.userId,
       email: decodedToken.email,
+      role: decodedToken.role,
     };
   } else {
     return null;
@@ -39,3 +40,9 @@ export const selectUserName = createSelector(selectAppCredentials, (credentials)
 export const selectIsLoggedIn = createSelector(selectAuthToken, (authToken) => {
   return !!authToken;
 });
+
+export const selectIsAdmin = createSelector(
+  selectAppCredentials,
+  (credentials) => {
+    return credentials?.role === 'admin';
+  });

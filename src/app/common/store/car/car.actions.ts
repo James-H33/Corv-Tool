@@ -16,6 +16,9 @@ export const CarActions = createActionGroup({
     loadCars: emptyProps(),
     loadCarsSuccess: props<{ cars: Car[] }>(),
 
+    loadCarsForAdmin: emptyProps(),
+    loadCarsForAdminSuccess: props<{ cars: Car[] }>(),
+
     loadCarById: props<{ id: string }>(),
     loadCarByIdSuccess: props<{ cars: Car[] }>(),
 

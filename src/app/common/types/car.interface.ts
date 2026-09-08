@@ -17,6 +17,7 @@ export interface CarVinData {
 
 export interface Car {
   id: string;
+  userId: string;
   name: string;
   vin: string;
   year: string;

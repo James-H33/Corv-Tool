@@ -27,6 +27,23 @@ export const loadCars$ = createEffect(
   { functional: true },
 );
 
+export const loadCarsForAdmin$ = createEffect(
+  (actions$ = inject(Actions), carService = inject(CarService)) => {
+    return actions$.pipe(
+      ofType(CarActions.loadCarsForAdmin),
+      switchMap(() => {
+        return carService.geAllCarsForAdmin().pipe(
+          map((cars) => CarActions.loadCarsSuccess({ cars })),
+          catchError(() => {
+            return EMPTY;
+          }),
+        );
+      }),
+    );
+  },
+  { functional: true },
+);
+
 export const loadCarById$ = createEffect(
   (actions$ = inject(Actions), store = inject(Store), carService = inject(CarService)) => {
     return actions$.pipe(

@@ -20,6 +20,12 @@ export class CarService {
     );
   }
 
+  geAllCarsForAdmin(): Observable<Car[]> {
+    return this.http.get<Car[]>(`${this.apiUrl}/admin/all`).pipe(
+      map((response) => response),
+    );
+  }
+
   getCarById(id: string): Observable<Car> {
     return this.http.get<Car>(`${this.apiUrl}/${id}`).pipe(
       map((response) => response),
