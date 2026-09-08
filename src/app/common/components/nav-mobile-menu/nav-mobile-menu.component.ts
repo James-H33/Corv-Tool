@@ -10,6 +10,7 @@ import { Icon, IconComponent } from '../icon/icon.component';
   imports: [IconComponent, ButtonIconModule, RouterLink],
 })
 export class NavMobileMenuComponent {
+  isAdmin = input<boolean>(false);
   isMenuOpen = input<boolean>();
   loggedOut = output<void>();
   menuClosed = output<void>();

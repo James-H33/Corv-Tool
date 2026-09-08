@@ -1,0 +1,37 @@
+.ct-users-list {
+  padding: 20px;
+}
+
+.ct-users-list__body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ct-users-card {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid var(--ct-border-default);
+  border-radius: 8px;
+}
+
+.ct-users-card__left {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ct-users-card__email {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ct-users-card__role {}
+.ct-users-card__total-cars {}
+
+.ct-users-card__right {}

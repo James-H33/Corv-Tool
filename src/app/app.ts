@@ -4,8 +4,9 @@ import { NavMobileMenuComponent } from '@common/components/nav-mobile-menu/nav-m
 import { ToastComponent } from '@common/components/toast/toast.component';
 import { ApplicationActions } from '@common/store/application/application.actions';
 import {
+  selectIsAdmin,
   selectIsLoggedIn,
-  selectIsMobileMenuOpen
+  selectIsMobileMenuOpen,
 } from '@common/store/application/application.selectors';
 import { Store } from '@ngrx/store';
 import { NavComponent } from './nav/nav.component';
@@ -21,6 +22,7 @@ export class App {
   store = inject(Store);
   isMobileMenuOpen = this.store.selectSignal(selectIsMobileMenuOpen);
   isLoggedIn = this.store.selectSignal(selectIsLoggedIn);
+  isAdmin = this.store.selectSignal(selectIsAdmin);
 
   openMenu(): void {
     this.store.dispatch(ApplicationActions.openMobileMenu());

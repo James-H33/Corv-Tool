@@ -4,10 +4,10 @@ import {
   DestroyRef,
   effect,
   inject,
+  input,
   OnDestroy,
-  OnInit,
+  output,
   signal,
-  Signal,
   viewChildren,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -16,11 +16,10 @@ import { Icon, IconComponent } from '@common/components/icon/icon.component';
 import { SkeletonLoaderComponent } from '@common/components/skeleton/skeleton-loader.component';
 import { DropdownDirective } from '@common/directives/dropdown/dropdown.directive';
 import { InputModule } from '@common/directives/input/input.module';
-import { CarActions } from '@common/store/car/car.actions';
-import { selectFilteredCars, selectIsLoadingCars } from '@common/store/car/car.selectors';
 import { Car } from '@common/types/car.interface';
 import { Store } from '@ngrx/store';
 import { NewCarFormComponent } from '../components/new-car-form/new-car-form.component';
+import { AddCar } from '@common/types/add-car.interface';
 
 @Component({
   selector: 'ct-car-list',
@@ -35,17 +34,25 @@ import { NewCarFormComponent } from '../components/new-car-form/new-car-form.com
     DropdownDirective,
   ],
 })
-export class CarListComponent implements OnInit, OnDestroy {
+export class CarListComponent implements OnDestroy {
   store = inject(Store);
   dialog = inject(Dialog);
+
+  // Inputs
+  title = input<string>('Your Cars');
+  isAdmin = input<boolean>(false);
+  isLoadingCars = input<boolean>(false);
+  cars = input<Car[]>([]);
+
+  // Ouputs
+  searchTermChanged = output<string>();
+  carCreated = output<AddCar>();
+  carDeleted = output<string>();
+
   ellipsesMenuIcon = Icon.EllipsesMenu;
   galleryIcon = Icon.Gallery;
   cameraIcon = Icon.Camera;
   destroyRef = inject(DestroyRef);
-
-  cars: Signal<Car[]> = this.store.selectSignal(selectFilteredCars);
-
-  isLoadingCars = this.store.selectSignal(selectIsLoadingCars);
 
   dropdowns = viewChildren(DropdownDirective);
 
@@ -55,16 +62,12 @@ export class CarListComponent implements OnInit, OnDestroy {
     effect(() => {
       const text = this.textSearch();
 
-      this.store.dispatch(CarActions.setSearchText({ text }));
+      this.searchTermChanged.emit(text);
     });
   }
 
-  ngOnInit(): void {
-    this.store.dispatch(CarActions.loadCars());
-  }
-
   ngOnDestroy(): void {
-    this.store.dispatch(CarActions.setSearchText({ text: '' }));
+    this.searchTermChanged.emit('');
   }
 
   openDialog(): void {
@@ -77,7 +80,7 @@ export class CarListComponent implements OnInit, OnDestroy {
 
     const createSubscription = instance.create.subscribe((newCar) => {
       dialogRef.close();
-      this.store.dispatch(CarActions.createCar({ car: newCar }));
+      this.carCreated.emit(newCar);
     });
 
     dialogRef.closed.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
@@ -97,6 +100,6 @@ export class CarListComponent implements OnInit, OnDestroy {
       dropdown?.close();
     }
 
-    this.store.dispatch(CarActions.deleteCar({ id: carId }));
+    this.carDeleted.emit(carId);
   }
 }

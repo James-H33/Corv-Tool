@@ -1,0 +1,10 @@
+<div class="ct-admin-cars">
+  <ct-car-list
+    title="Your Cars"
+    [cars]="cars()"
+    [isLoadingCars]="isLoadingCars()"
+    (searchTermChanged)="onSearchTermChanged($event)"
+    (carCreated)="onCarCreated($event)"
+    (carDeleted)="onCarDeleted($event)"
+  ></ct-car-list>
+</div>

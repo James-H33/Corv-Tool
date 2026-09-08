@@ -4,6 +4,7 @@
 ></ct-nav>
 
 <ct-nav-mobile-menu
+  [isAdmin]="isAdmin()"
   [isMenuOpen]="isMobileMenuOpen()"
   (menuClosed)="closeMenu()"
   (loggedOut)="logout()"

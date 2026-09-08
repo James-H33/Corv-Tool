@@ -17,6 +17,7 @@
     "baseUrl": "./",
     "paths": {
       "@common/*": ["src/app/common/*"],
+      "@libs/*": ["src/app/libs/*"],
     },
     "noUnusedLocals": true,
     "noUnusedParameters": true,

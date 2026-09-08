@@ -1,0 +1,17 @@
+<div class="ct-users-list">
+  <h2>Users</h2>
+
+  <div class="ct-users-list__body">
+    @for (user of users; track $index) {
+      <div class="ct-users-card">
+        <div class="ct-users-card__left">
+          <div class="ct-users-card__email">Email: {{ user.email }}</div>
+          <div class="ct-users-card__role">Role: {{ user.role }}</div>
+          <div class="ct-users-card__total-cars">Cars: {{ user.totalCars }}</div>
+        </div>
+
+        <div class="ct-users-card__right"></div>
+      </div>
+    }
+  </div>
+</div>
