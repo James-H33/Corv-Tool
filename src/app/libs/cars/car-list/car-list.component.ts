@@ -1,6 +1,7 @@
 import { Dialog, DialogModule } from '@angular/cdk/dialog';
 import {
   Component,
+  computed,
   DestroyRef,
   effect,
   inject,
@@ -57,6 +58,8 @@ export class CarListComponent implements OnDestroy {
   dropdowns = viewChildren(DropdownDirective);
 
   textSearch = signal('');
+
+  carRoute = computed(() => (this.isAdmin() ? '/v/admin/cars' : '/v/cars'));
 
   constructor() {
     effect(() => {

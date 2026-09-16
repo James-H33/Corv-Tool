@@ -12,6 +12,7 @@ import { apiErrorInterceptor } from '@common/interceptors/error.interceptor';
 import { ApplicationStoreModule } from '@common/store/application/application-store.module';
 import { CarStoreModule } from '@common/store/car/car-store.module';
 import { routes } from './app.routes';
+import { UserStoreModule } from '@common/store/user/user-store.module';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,6 +25,7 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom([
       // Stores
       CarStoreModule,
+      UserStoreModule,
       ApplicationStoreModule,
     ]),
   ],

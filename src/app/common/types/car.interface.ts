@@ -1,3 +1,5 @@
+import { User } from './user.interface';
+
 export interface CarTagData {
   body: string;
   trim: string;
@@ -21,8 +23,9 @@ export interface Car {
   name: string;
   vin: string;
   year: string;
-  dateCreated?: number;
   tagData: CarTagData;
+  user?: User;
+  dateCreated?: number;
   vinData?: CarVinData;
   tagImageUrl?: string;
   vinImageUrl?: string;

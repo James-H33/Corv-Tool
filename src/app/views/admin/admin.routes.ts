@@ -4,6 +4,11 @@ import { AdminCarsComponent } from './cars/admin-cars.component';
 
 export const adminRoutes = [
   {
+    path: 'cars/:id',
+    component: AdminCarComponent,
+  },
+
+  {
     path: '',
     component: AdminHubComponent,
     children: [
@@ -14,16 +19,14 @@ export const adminRoutes = [
             path: '',
             component: AdminCarsComponent,
           },
-          {
-            path: ':id',
-            component: AdminCarComponent,
-          },
         ],
       },
+
       {
         path: 'users',
         loadChildren: () => import('../users/users.routes').then((m) => m.usersRoutes),
       },
+
       {
         path: '**',
         redirectTo: 'cars',

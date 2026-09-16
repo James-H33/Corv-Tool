@@ -73,6 +73,10 @@ export class CarViewComponent {
     this.store.dispatch(CarActions.updateCar({ id: event.id, data: event.data }));
   }
 
+  onActiveFormSet(event: { formType: FormTypes }): void {
+    this.store.dispatch(CarActions.setActiveForm({ formType: event.formType }));
+  }
+
   onClearFormState(): void {
     this.store.dispatch(CarActions.clearFormState());
   }

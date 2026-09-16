@@ -22,6 +22,9 @@ export const CarActions = createActionGroup({
     loadCarById: props<{ id: string }>(),
     loadCarByIdSuccess: props<{ cars: Car[] }>(),
 
+    loadCarByIdForAdmin: props<{ id: string }>(),
+    loadCarByIdForAdminSuccess: props<{ cars: Car[] }>(),
+
     updateCar: props<{ id: string; data: Partial<Car> }>(),
     updateCarSuccess: props<{ cars: Car[] }>(),
 
