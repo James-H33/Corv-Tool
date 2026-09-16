@@ -63,6 +63,25 @@ export const loadCarById$ = createEffect(
   { functional: true },
 );
 
+export const loadCarByIdForAdmin$ = createEffect(
+  (actions$ = inject(Actions), store = inject(Store), carService = inject(CarService)) => {
+    return actions$.pipe(
+      ofType(CarActions.loadCarByIdForAdmin),
+      concatLatestFrom(() => store.select(selectCars)),
+      switchMap(([{ id }, cars]) => {
+        return carService
+          .getCarByIdForAdmin(id)
+          .pipe(
+            map((car) =>
+              CarActions.loadCarByIdSuccess({ cars: [...cars.filter((c) => c.id !== id), car] }),
+            ),
+          );
+      }),
+    );
+  },
+  { functional: true },
+);
+
 export const updateCar$ = createEffect(
   (actions$ = inject(Actions), store = inject(Store), carService = inject(CarService)) => {
     return actions$.pipe(

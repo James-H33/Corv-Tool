@@ -49,6 +49,11 @@ export class CarComponent implements OnDestroy {
   isExtractingDataForVin = computed(() => this.extractingDataFor() === FormTypes.Vin);
 
   nameModel = signal('');
+  backRoute = computed(() => {
+    console.log('Is Admin: ', this.isAdmin());
+
+    return this.isAdmin() ? '/v/admin/cars' : '/v/cars';
+  });
 
   ngOnDestroy() {
     this.clearFormState.emit();

@@ -1,6 +1,8 @@
 import { Car } from '@common/types/car.interface';
 import { carFeature, ExtractedData } from './car.reducer';
 import { createSelector } from '@ngrx/store';
+import { User } from '@common/types/user.interface';
+import { selectUsersMap } from '../user/user.selectors';
 
 export const {
   selectCars,
@@ -65,5 +67,16 @@ export const selectExtractedDataByType = (type: 'vin' | 'tag') => createSelector
     }
 
     return null;
+  }
+)
+
+export const selectCarsWithUserData = createSelector(
+  selectCars,
+  selectUsersMap,
+  (cars: Car[], usersMap: Record<string, User>) => {
+    return cars.map(car => ({
+      ...car,
+      user: usersMap[car.userId] || null,
+    }));
   }
 )

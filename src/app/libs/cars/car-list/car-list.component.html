@@ -19,12 +19,16 @@
 
     @if (cars().length > 0 && !isLoadingCars()) {
       @for (car of cars(); track $index) {
-        <a [routerLink]="['/v/cars', car.id]" class="ct-car-card__link">
+        <a [routerLink]="[carRoute(), car.id]" class="ct-car-card__link">
           <div class="ct-car-card">
             <div class="ct-car-card__left">
               <div class="ct-car-card__title">{{ car.name }}</div>
 
               <div class="ct-car-card__subtitle">vin: {{ car.vin }}</div>
+
+              @if (car.user) {
+                <div class="ct-car-card__owner">Owner: {{ car.user.email }}</div>
+              }
             </div>
 
             <div class="ct-car-card__right">

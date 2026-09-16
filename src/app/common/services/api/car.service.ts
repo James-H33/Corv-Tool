@@ -15,33 +15,37 @@ export class CarService {
   apiUrl = `${this.baseUrl}/cars`;
 
   geAllCars(): Observable<Car[]> {
-    return this.http.get<Car[]>(`${this.apiUrl}/all`).pipe(
-      map((response) => response),
-    );
+    return this.http.get<Car[]>(`${this.apiUrl}/all`).pipe(map((response) => response));
   }
 
   geAllCarsForAdmin(): Observable<Car[]> {
-    return this.http.get<Car[]>(`${this.apiUrl}/admin/all`).pipe(
-      map((response) => response),
-    );
+    return this.http.get<Car[]>(`${this.apiUrl}/admin/all`).pipe(map((response) => response));
+  }
+
+  getCarsByIds(ids: string): Observable<Car[]> {
+    return this.http
+      .post<Car[]>(`${this.apiUrl}/admin/all`, { ids })
+      .pipe(map((response) => response));
   }
 
   getCarById(id: string): Observable<Car> {
-    return this.http.get<Car>(`${this.apiUrl}/${id}`).pipe(
-      map((response) => response),
-    );
+    return this.http.get<Car>(`${this.apiUrl}/${id}`).pipe(map((response) => response));
+  }
+
+  getCarByIdForAdmin(id: string): Observable<Car> {
+    return this.http
+      .get<Car>(`${this.apiUrl}/admin/single/${id}`)
+      .pipe(map((response) => response));
   }
 
   createCar(car: CreateCarDto): Observable<Car> {
-    return this.http.post<Car>(`${this.apiUrl}/create`, car).pipe(
-      map((response) => response),
-    );
+    return this.http.post<Car>(`${this.apiUrl}/create`, car).pipe(map((response) => response));
   }
 
   updateCar(id: string, data: Partial<Car>): Observable<Car> {
-    return this.http.put<Car>(`${this.apiUrl}/update/${id}`, data).pipe(
-      map((response) => response),
-    );
+    return this.http
+      .put<Car>(`${this.apiUrl}/update/${id}`, data)
+      .pipe(map((response) => response));
   }
 
   deleteCar(id: string): Observable<void> {

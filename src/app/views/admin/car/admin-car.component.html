@@ -1,3 +1,15 @@
 <div class="ct-admin-car">
-  <ct-car></ct-car>
+  <ct-car
+    [isAdmin]="true"
+    [car]="car()"
+    [activeForm]="activeForm()"
+    [extractedData]="extractedData()"
+    [extractedVinData]="extractedVinData()"
+    [extractedTagData]="extractedTagData()"
+    [extractingDataFor]="extractingDataFor()"
+    (carUpdated)="onCarUpdated($event)"
+    (uploadingCarImageForExtraction)="onUploadingCarImageForExtraction($event)"
+    (clearFormState)="onClearFormState()"
+  >
+  </ct-car>
 </div>

@@ -16,7 +16,7 @@ export const viewsRoutes = [
       },
       {
         path: 'admin',
-        loadChildren: () => import('./admin/admin.routes').then((m) => m.adminRoutes),
+        loadChildren: () => import('./admin/admin-hub.module').then((m) => m.AdminHubModule),
       }
     ],
   },
