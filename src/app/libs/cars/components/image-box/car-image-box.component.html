@@ -15,14 +15,20 @@
       ></div>
     }
   } @else {
-    <div class="ct-car-item__no-image" (click)="upload()" role="button" tabindex="0">
-      <label
-        [for]="type() === 'vin' ? 'vinPicture' : 'tagPicture'"
-        class="ct-car-options-menu__upload-label"
-      >
-        Click here to add {{ type() === 'vin' ? 'Vin' : 'Tag' }} Image
-      </label>
-    </div>
+    @if (canEdit()) {
+      <div class="ct-car-item__no-image" (click)="upload()" role="button" tabindex="0">
+        <label
+          [for]="type() === 'vin' ? 'vinPicture' : 'tagPicture'"
+          class="ct-car-options-menu__upload-label"
+        >
+          Click here to add {{ type() === 'vin' ? 'Vin' : 'Tag' }} Image
+        </label>
+      </div>
+    } @else {
+      <div class="ct-car-item__no-image">
+        <span class="ct-car-item__no-image-text">No Image Available</span>
+      </div>
+    }
   }
 } @else {
   <div class="ct-car-item__no-image">

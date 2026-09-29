@@ -40,6 +40,7 @@ export class CarVinComponent {
   isFormActive = input(false);
   extractedVinData = input<ExtractedData | null>();
   isExtracting = input(false);
+  canEdit = input(false);
   uploading = output<void>();
   isUsingSketchView = signal(false);
 

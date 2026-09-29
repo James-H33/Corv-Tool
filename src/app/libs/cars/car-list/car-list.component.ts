@@ -43,6 +43,8 @@ export class CarListComponent implements OnDestroy {
   title = input<string>('Your Cars');
   isAdmin = input<boolean>(false);
   isLoadingCars = input<boolean>(false);
+  hideAddCar = input<boolean>(false);
+  showOwners = input<boolean>(false);
   cars = input<Car[]>([]);
 
   // Ouputs

@@ -1,3 +1,5 @@
+@use 'text-overflow.mixin' as m;
+
 :host {
   position: relative;
 }
@@ -46,15 +48,18 @@
   &__title {
     font-size: 18px;
     font-weight: 500;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    text-wrap: nowrap;
-    white-space: nowrap;
+    @include m.text-overflow;
   }
 
   &__subtitle {
     font-size: 14px;
     color: var(--ct-text-color-secondary);
+  }
+
+  &__owner {
+    font-size: 14px;
+    color: var(--ct-text-color-secondary);
+    @include m.text-overflow;
   }
 
   &__left {

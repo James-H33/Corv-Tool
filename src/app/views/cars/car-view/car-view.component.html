@@ -1,3 +1,11 @@
+<div class="ct-car-view-nav">
+  <button ctButtonIcon ctButtonVariant="outline">
+    <a [routerLink]="['/v/cars']" class="ct-car-view-nav__link">
+      <ct-icon [icon]="backArrowIcon" size="16"></ct-icon>
+    </a>
+  </button>
+</div>
+
 <ct-car
   [car]="car()"
   [activeForm]="activeForm()"

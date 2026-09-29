@@ -5,6 +5,7 @@
   [isUsingSketchView]="isUsingSketchView()"
   [isLoading]="isExtracting()"
   (uploading)="closeDropdown()"
+  [canEdit]="canEdit()"
 ></ct-car-image-box>
 
 <div class="ct-car-item__action">
@@ -18,7 +19,7 @@
   }
 
   <div class="ct-car-item__action-right">
-    @if (car()?.vin) {
+    @if (car()?.vin && canEdit()) {
       <button
         #vinDropdown
         ctButtonIcon

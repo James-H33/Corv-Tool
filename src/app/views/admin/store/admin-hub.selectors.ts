@@ -6,6 +6,11 @@ import { selectUsersMap } from '@common/store/user/user.selectors';
 export const {
   selectCarIds,
   selectIsLoadingCars,
+
+  selectUserIds,
+  selectLoadedUserIds,
+  selectPage,
+  selectIsLoadingUsers,
 } = adminHubFeature;
 
 export const selectCarsWithUsers = createSelector(
@@ -16,5 +21,13 @@ export const selectCarsWithUsers = createSelector(
       ...car,
       user: usersMap[car.userId] || null,
     }));
+  }
+);
+
+export const selectAdminViewUsers = createSelector(
+  selectUsersMap,
+  selectLoadedUserIds,
+  (usersMap, loadedUserIds) => {
+    return loadedUserIds.map(userId => usersMap[userId]).filter(user => !!user);
   }
 );

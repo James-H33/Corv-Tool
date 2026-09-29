@@ -1,7 +1,6 @@
-import { Component, computed, effect, inject } from '@angular/core';
+import { Injectable, computed, effect, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Router, RouterLink } from '@angular/router';
-import { Icon, IconComponent } from '@common/components/icon/icon.component';
+import { Router } from '@angular/router';
 import { RouterEventService } from '@common/services/router.service';
 import { CarActions } from '@common/store/car/car.actions';
 import {
@@ -12,22 +11,13 @@ import {
 } from '@common/store/car/car.selectors';
 import { Car } from '@common/types/car.interface';
 import { FormTypes } from '@common/types/form-types.enum';
-import { CarComponent } from '@libs/cars/car/car.component';
-import { parseCarIdFromRoute } from '@libs/cars/utils/parse-car-id-from-route.function';
 import { Store } from '@ngrx/store';
 
-@Component({
-  selector: 'ct-car-view',
-  templateUrl: './car-view.component.html',
-  styleUrls: ['./car-view.component.scss'],
-  imports: [CarComponent, RouterLink, IconComponent],
-})
-export class CarViewComponent {
+@Injectable()
+export class CarFacadeService {
   store = inject(Store);
   router = inject(Router);
   routerService = inject(RouterEventService);
-
-  backArrowIcon = Icon.BackArrow;
 
   activeForm = this.store.selectSignal(selectActiveForm);
   extractedData = this.store.selectSignal(selectExtractedData);
@@ -35,7 +25,7 @@ export class CarViewComponent {
   extractedTagData = this.store.selectSignal(selectExtractedDataByType('tag'));
   extractingDataFor = this.store.selectSignal((state) => state.car.extractingDataFor);
 
-  routeChanges = toSignal(this.routerService.routeUrl$);
+  routeUrl = toSignal(this.routerService.routeUrl$);
 
   car = computed(() => {
     const id = this.carIdFromRoute();
@@ -48,13 +38,16 @@ export class CarViewComponent {
   });
 
   carIdFromRoute = computed(() => {
-    const route = this.routeChanges();
+    const route = this.routeUrl();
 
     if (!route) {
       return null;
     }
 
-    return parseCarIdFromRoute(route);
+    const urlSegments = route.split('/');
+    const endSegment = urlSegments[urlSegments.length - 1];
+
+    return endSegment.split('?')[0] || null;
   });
 
   constructor() {
@@ -65,16 +58,12 @@ export class CarViewComponent {
         return;
       }
 
-      this.store.dispatch(CarActions.loadCarById({ id: carId }));
+      this.store.dispatch(CarActions.loadCarByIdForAdmin({ id: carId }));
     });
   }
 
   onCarUpdated(event: { id: string; data: Partial<Car> }): void {
     this.store.dispatch(CarActions.updateCar({ id: event.id, data: event.data }));
-  }
-
-  onActiveFormSet(event: { formType: FormTypes }): void {
-    this.store.dispatch(CarActions.setActiveForm({ formType: event.formType }));
   }
 
   onClearFormState(): void {

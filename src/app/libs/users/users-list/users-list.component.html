@@ -2,7 +2,7 @@
   <h2>Users</h2>
 
   <div class="ct-users-list__body">
-    @for (user of users; track $index) {
+    @for (user of users(); track $index) {
       <div class="ct-users-card">
         <div class="ct-users-card__left">
           <div class="ct-users-card__email">Email: {{ user.email }}</div>

@@ -1,11 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CarActions } from '@common/store/car/car.actions';
-import { selectIsLoadingCars } from '@common/store/car/car.selectors';
 import { AddCar } from '@common/types/add-car.interface';
 import { CarListComponent } from '@libs/cars/car-list/car-list.component';
 import { Store } from '@ngrx/store';
 import { AdminHubActions } from '../store/admin-hub.actions';
-import { selectCarsWithUsers } from '../store/admin-hub.selectors';
+import { selectCarsWithUsers, selectIsLoadingCars } from '../store/admin-hub.selectors';
 
 @Component({
   selector: 'ct-admin-cars',
