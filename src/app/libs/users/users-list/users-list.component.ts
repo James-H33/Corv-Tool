@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
+import { User } from '@common/types/user.interface';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'ct-users-list',
@@ -6,9 +8,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./users-list.component.scss'],
 })
 export class UsersListComponent {
-  users = [
-    { name: 'John Doe', email: 'john.doe@example.com', role: 'Admin', totalCars: 2 },
-    { name: 'Jane Smith', email: 'jane.smith@example.com', role: 'User', totalCars: 1 },
-    { name: 'Alice Johnson', email: 'alice.johnson@example.com', role: 'User', totalCars: 3 },
-  ];
+  store = inject(Store);
+
+  users = input<User[]>([]);
 }

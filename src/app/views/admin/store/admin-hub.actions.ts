@@ -6,7 +6,10 @@ export const AdminHubActions = createActionGroup({
     loadCars: emptyProps(),
     loadCarsSuccess: props<{ carIds: string[] }>(),
 
-    loadUsers: emptyProps(),
-    loadUsersSuccess: props<{ userIds: string[] }>(),
+    loadUsersInit: emptyProps(),
+    loadUsersInitSuccess: props<{ userIds: string[]; page: number; loadedUserIds: string[] }>(),
+
+    loadNextSetOfUsers: emptyProps(),
+    loadNextSetOfUsersSuccess: props<{ page: number; loadedUserIds: string[] }>(),
   },
 });

@@ -28,3 +28,11 @@ export class AdminHubService {
     );
   }
 }
+
+/**
+ * 1. Load All user ids for the view
+ * 2. Load the first 10 users of all user ids for the view
+ * 3. Store the loaded users in the state for quick loading later
+ * 4. Store the loaded user ids in the admin state for future reference
+ * 5. When user requests additional users, load them as needed and update the state accordingly
+ */

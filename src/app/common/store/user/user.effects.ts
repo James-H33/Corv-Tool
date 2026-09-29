@@ -3,9 +3,22 @@ import { UserService } from '@common/services/api/user.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatLatestFrom } from '@ngrx/operators';
 import { Store } from '@ngrx/store';
-import { concatMap, map } from 'rxjs';
+import { concatMap, map, switchMap } from 'rxjs';
 import { UserActions } from './user.actions';
 import { selectUsersMap } from './user.selectors';
+
+export const loadUsersView = createEffect(
+  (actions$ = inject(Actions), userService = inject(UserService)) =>
+    actions$.pipe(
+      ofType(UserActions.loadUsersView),
+      switchMap(() => {
+        return userService
+          .getUserIdsForView()
+          .pipe(map((ids) => UserActions.loadUsersViewSuccess({ ids })));
+      }),
+    ),
+  { functional: true },
+);
 
 export const loadUsers = createEffect(
   (actions$ = inject(Actions), store = inject(Store), userService = inject(UserService)) =>

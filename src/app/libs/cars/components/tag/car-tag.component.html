@@ -3,6 +3,7 @@
     [car]="car()"
     type="tag"
     [extractedData]="extractedTagData()"
+    [canEdit]="canEdit()"
     [isUsingSketchView]="isUsingSketchView()"
     [isLoading]="isExtracting()"
     (uploading)="uploadTag()"
@@ -19,7 +20,7 @@
     }
 
     <div class="ct-car-item__action-right">
-      @if (car()?.tagData) {
+      @if (car()?.tagData && canEdit()) {
         <button
           #tagDropdown
           ctButtonIcon

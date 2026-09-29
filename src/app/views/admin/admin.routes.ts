@@ -1,6 +1,7 @@
 import { AdminHubComponent } from './admin-hub.component';
 import { AdminCarComponent } from './car/admin-car.component';
 import { AdminCarsComponent } from './cars/admin-cars.component';
+import { AdminUsersComponent } from './users/admin-users.component';
 
 export const adminRoutes = [
   {
@@ -24,7 +25,12 @@ export const adminRoutes = [
 
       {
         path: 'users',
-        loadChildren: () => import('../users/users.routes').then((m) => m.usersRoutes),
+        children: [
+          {
+            path: '',
+            component: AdminUsersComponent,
+          }
+        ],
       },
 
       {

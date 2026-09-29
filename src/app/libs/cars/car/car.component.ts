@@ -1,23 +1,19 @@
 import { Component, computed, input, OnDestroy, output, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { RouterLink } from '@angular/router';
-import { Icon, IconComponent } from '@common/components/icon/icon.component';
 import { AutoFocusDirective } from '@common/directives/auto-focus/auto-focus.directive';
 import { ButtonIconDirective } from '@common/directives/button-icon/button-icon.directives';
+import { ExtractedData } from '@common/store/car/car.reducer';
 import { Car } from '@common/types/car.interface';
 import { FormTypes } from '@common/types/form-types.enum';
 import { CarTagComponent } from '../components/tag/car-tag.component';
 import { CarVinComponent } from '../components/vin/car-vin.component';
-import { ExtractedData } from '@common/store/car/car.reducer';
 
 @Component({
   selector: 'ct-car',
   templateUrl: './car.component.html',
   styleUrls: ['./car.component.scss'],
   imports: [
-    IconComponent,
-    RouterLink,
     ButtonIconDirective,
     ReactiveFormsModule,
     AutoFocusDirective,
@@ -26,7 +22,7 @@ import { ExtractedData } from '@common/store/car/car.reducer';
   ],
 })
 export class CarComponent implements OnDestroy {
-  isAdmin = input(false);
+  canEdit = input(true);
   car = input<Car | null>();
   activeForm = input();
   extractedData = input<ExtractedData | null>();
@@ -43,17 +39,10 @@ export class CarComponent implements OnDestroy {
     for: FormTypes;
   }>();
 
-  backArrowIcon = Icon.BackArrow;
-
   isExtractingDataForTag = computed(() => this.extractingDataFor() === FormTypes.TrimTag);
   isExtractingDataForVin = computed(() => this.extractingDataFor() === FormTypes.Vin);
 
   nameModel = signal('');
-  backRoute = computed(() => {
-    console.log('Is Admin: ', this.isAdmin());
-
-    return this.isAdmin() ? '/v/admin/cars' : '/v/cars';
-  });
 
   ngOnDestroy() {
     this.clearFormState.emit();

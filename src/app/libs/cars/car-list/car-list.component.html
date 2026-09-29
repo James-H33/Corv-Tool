@@ -13,9 +13,11 @@
   </div>
 
   <div class="ct-car-list-body">
-    <div class="ct-car-list__add-new">
-      <button ctButton ctButtonVariant="primary" (click)="openDialog()">Add New Car</button>
-    </div>
+    @if (!hideAddCar()) {
+      <div class="ct-car-list__add-new">
+        <button ctButton ctButtonVariant="primary" (click)="openDialog()">Add New Car</button>
+      </div>
+    }
 
     @if (cars().length > 0 && !isLoadingCars()) {
       @for (car of cars(); track $index) {
@@ -26,8 +28,10 @@
 
               <div class="ct-car-card__subtitle">vin: {{ car.vin }}</div>
 
-              @if (car.user) {
-                <div class="ct-car-card__owner">Owner: {{ car.user.email }}</div>
+              @if (showOwners()) {
+                <div class="ct-car-card__owner">
+                  Owner: {{ car?.user?.email ?? 'Not Available' }}
+                </div>
               }
             </div>
 

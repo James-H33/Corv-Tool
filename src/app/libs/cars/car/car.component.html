@@ -1,12 +1,4 @@
 <div class="ct-car">
-  <div class="ct-car-nav">
-    <button ctButtonIcon ctButtonVariant="outline">
-      <a [routerLink]="backRoute()" class="ct-car-nav__link">
-        <ct-icon [icon]="backArrowIcon" size="16"></ct-icon>
-      </a>
-    </button>
-  </div>
-
   <header class="ct-car-header">
     @if (activeForm() === 'name') {
       <div class="ct-car-header__name-form">
@@ -27,7 +19,7 @@
         </div>
       </div>
     } @else {
-      <div class="ct-car-header__title" (click)="editName()" role="button" tabindex="0">
+      <div class="ct-car-header__title" (click)="canEdit() && editName()" role="button" tabindex="0">
         {{ car()?.name }}
       </div>
     }
@@ -37,6 +29,7 @@
     <div class="ct-car-item">
       <ct-car-vin
         [car]="car()"
+        [canEdit]="canEdit()"
         [extractedVinData]="extractedVinData()"
         [isFormActive]="activeForm() === 'vin'"
         [isExtracting]="isExtractingDataForVin()"
@@ -46,6 +39,7 @@
     <div class="ct-car-item">
       <ct-car-tag
         [car]="car()"
+        [canEdit]="canEdit()"
         [extractedTagData]="extractedTagData()"
         [isFormActive]="activeForm() === 'tag'"
         [isExtracting]="isExtractingDataForTag()"

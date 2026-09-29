@@ -1,15 +1,11 @@
 <div class="ct-admin-car">
-  <ct-car
-    [isAdmin]="true"
-    [car]="car()"
-    [activeForm]="activeForm()"
-    [extractedData]="extractedData()"
-    [extractedVinData]="extractedVinData()"
-    [extractedTagData]="extractedTagData()"
-    [extractingDataFor]="extractingDataFor()"
-    (carUpdated)="onCarUpdated($event)"
-    (uploadingCarImageForExtraction)="onUploadingCarImageForExtraction($event)"
-    (clearFormState)="onClearFormState()"
-  >
-  </ct-car>
+  <div class="ct-admin-car-nav">
+    <button ctButtonIcon ctButtonVariant="outline">
+      <a [routerLink]="['/v/admin/cars']" class="ct-admin-car-nav__link">
+        <ct-icon [icon]="backArrowIcon" size="16"></ct-icon>
+      </a>
+    </button>
+  </div>
+
+  <ct-car [canEdit]="false" [car]="car()"> </ct-car>
 </div>

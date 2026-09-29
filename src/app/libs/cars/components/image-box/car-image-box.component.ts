@@ -15,6 +15,7 @@ export class CarImageBoxComponent {
   type = input<'vin' | 'tag'>();
   isUsingSketchView = input<boolean>();
   isLoading = input<boolean>();
+  canEdit = input<boolean>(true);
 
   extractedData = input<{ imageId: string } | null | undefined>();
 
