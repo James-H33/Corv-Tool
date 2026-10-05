@@ -22,7 +22,7 @@ export class CarService {
     return this.http.get<Car[]>(`${this.apiUrl}/admin/all`).pipe(map((response) => response));
   }
 
-  getCarsByIds(ids: string): Observable<Car[]> {
+  getCarsByIds(ids: string[]): Observable<Car[]> {
     return this.http
       .post<Car[]>(`${this.apiUrl}/admin/all`, { ids })
       .pipe(map((response) => response));

@@ -1,0 +1,16 @@
+<div class="ct-admin-user">
+  <div class="ct-admin-user-nav">
+    <button ctButtonIcon ctButtonVariant="outline">
+      <a (click)="goBack()" tabindex="0" role="button" class="ct-admin-user-nav__link">
+        <ct-icon [icon]="backArrowIcon" size="16"></ct-icon>
+      </a>
+    </button>
+  </div>
+
+  <ct-user
+    [user]="user()"
+    [cars]="cars()"
+    [isAdmin]="true"
+    (carSearchTextChanged)="onCarSearchTextChanged($event)">
+  </ct-user>
+</div>

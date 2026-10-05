@@ -51,6 +51,7 @@ export class CarListComponent implements OnDestroy {
   searchTermChanged = output<string>();
   carCreated = output<AddCar>();
   carDeleted = output<string>();
+  carClicked = output<string>();
 
   ellipsesMenuIcon = Icon.EllipsesMenu;
   galleryIcon = Icon.Gallery;

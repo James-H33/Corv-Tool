@@ -1,0 +1,17 @@
+.ct-user {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+
+.ct-user__header {
+  font-size: 24px;
+  font-weight: bold;
+  padding-inline: 20px;
+  margin-bottom: 10px;
+}
+
+.ct-user__details {
+  padding-inline: 20px;
+  margin-bottom: 30px;
+}

@@ -14,3 +14,8 @@ export const selectUsersMap = createSelector(
   }, {} as Record<string, User>)
 );
 
+export const selectUserById = (userId: string) => createSelector(
+  selectUsersMap,
+  (usersMap) => usersMap[userId] || null
+);
+
