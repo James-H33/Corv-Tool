@@ -1,12 +1,18 @@
 import { AdminHubComponent } from './admin-hub.component';
 import { AdminCarComponent } from './car/admin-car.component';
 import { AdminCarsComponent } from './cars/admin-cars.component';
+import { AdminUserComponent } from './user/admin-user.component';
 import { AdminUsersComponent } from './users/admin-users.component';
 
 export const adminRoutes = [
   {
     path: 'cars/:id',
     component: AdminCarComponent,
+  },
+
+  {
+    path: 'users/:id',
+    component: AdminUserComponent,
   },
 
   {
@@ -29,7 +35,7 @@ export const adminRoutes = [
           {
             path: '',
             component: AdminUsersComponent,
-          }
+          },
         ],
       },
 

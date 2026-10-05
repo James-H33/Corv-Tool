@@ -1,3 +1,8 @@
 <div class="ct-admin-users">
-  <ct-users-list [users]="users()"></ct-users-list>
+  <ct-users-list
+    [users]="users()"
+    [isLoadingUsers]="isLoadingUsers()"
+    (loadMore)="loadNextSetOfUsers()"
+    (userClicked)="onUserClicked($event)">
+  </ct-users-list>
 </div>

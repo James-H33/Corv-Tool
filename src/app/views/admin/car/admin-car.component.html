@@ -1,7 +1,7 @@
 <div class="ct-admin-car">
   <div class="ct-admin-car-nav">
     <button ctButtonIcon ctButtonVariant="outline">
-      <a [routerLink]="['/v/admin/cars']" class="ct-admin-car-nav__link">
+      <a class="ct-admin-car-nav__link" (click)="goBack()" tabindex="0" role="button">
         <ct-icon [icon]="backArrowIcon" size="16"></ct-icon>
       </a>
     </button>

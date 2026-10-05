@@ -1,6 +1,7 @@
+import { Location } from '@angular/common';
 import { Component, computed, effect, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { Icon, IconComponent } from '@common/components/icon/icon.component';
 import { RouterEventService } from '@common/services/router.service';
 import { CarActions } from '@common/store/car/car.actions';
@@ -13,12 +14,13 @@ import { Store } from '@ngrx/store';
   selector: 'ct-admin-car',
   templateUrl: './admin-car.component.html',
   styleUrls: ['./admin-car.component.scss'],
-  imports: [CarComponent, RouterLink, IconComponent],
+  imports: [CarComponent, IconComponent],
 })
 export class AdminCarComponent {
   store = inject(Store);
   router = inject(Router);
   routerService = inject(RouterEventService);
+  location = inject(Location);
 
   backArrowIcon = Icon.BackArrow;
 
@@ -54,5 +56,9 @@ export class AdminCarComponent {
 
       this.store.dispatch(CarActions.loadCarByIdForAdmin({ id: carId }));
     });
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 }

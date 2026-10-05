@@ -1,1 +1,20 @@
-<h2>User Component</h2>
+<div class="ct-user">
+  <div class="ct-user__header">
+    User Profile
+  </div>
+
+  <div class="ct-user__details">
+    <div class="ct-user__details-email">Email: {{ user()?.email }}</div>
+  </div>
+
+  <div class="ct-user__cars">
+    <ct-car-list
+      title="Cars"
+      [hideAddCar]="true"
+      [showOwners]="false"
+      [isAdmin]="isAdmin()"
+      [cars]="cars()"
+      (searchTermChanged)="carSearchTextChanged.emit($event)"
+    ></ct-car-list>
+  </div>
+</div>

@@ -1,17 +1,35 @@
 <div class="ct-users-list">
-  <h2>Users</h2>
+  <div class="ct-users-list__title">
+    Users
+  </div>
 
   <div class="ct-users-list__body">
     @for (user of users(); track $index) {
-      <div class="ct-users-card">
+      <div
+        class="ct-users-card"
+        (click)="goToUser(user.id)"
+        (keydown)="goToUser(user.id)"
+        role="button"
+        tabindex="0"
+      >
         <div class="ct-users-card__left">
           <div class="ct-users-card__email">Email: {{ user.email }}</div>
           <div class="ct-users-card__role">Role: {{ user.role }}</div>
-          <div class="ct-users-card__total-cars">Cars: {{ user.totalCars }}</div>
+          <div class="ct-users-card__total-cars">Cars: {{ user.carIds?.length || 0 }}</div>
         </div>
 
         <div class="ct-users-card__right"></div>
       </div>
+    }
+
+    @if (isLoadingUsers()) {
+      @for (item of [].constructor(5); track $index) {
+        <ct-skeleton-loader [height]="100"></ct-skeleton-loader>
+      }
+    }
+
+    @if (!isLoadingUsers()) {
+      <div #loadMoreTrigger class="ct-users-list__load-more"></div>
     }
   </div>
 </div>

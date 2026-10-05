@@ -15,12 +15,8 @@ export class AdminHubComponent implements OnInit {
   routerEventService = inject(RouterEventService);
 
   routerEvent = toSignal(
-    this.routerEventService.listen$().pipe(
-      filter((event) => event instanceof NavigationEnd),
-    ),
+    this.routerEventService.listen$().pipe(filter((event) => event instanceof NavigationEnd)),
   );
-
-  // route = this.activatedRouter.event
 
   activeTab = signal<'users' | 'cars'>('users');
 
@@ -28,14 +24,10 @@ export class AdminHubComponent implements OnInit {
     effect(() => {
       const event = this.routerEvent();
 
-      console.log('Router event:', event);
-      // console.log('Router URL:', event?.url);
-
       if (event && event?.url) {
         const url = event.url;
 
         this.setActiveTab(url);
-        console.log('Router event:', event);
       }
     });
   }

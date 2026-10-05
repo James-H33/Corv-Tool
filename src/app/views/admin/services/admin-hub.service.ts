@@ -27,4 +27,22 @@ export class AdminHubService {
       })
     );
   }
+
+  getUserAndUserCars(userId: string): Observable<{ user: User; cars: Car[] }> {
+    return this.userService.getUsersByIds([userId]).pipe(
+      switchMap((users) => {
+        const user = users[0];
+
+        if (!user.carIds || user.carIds.length === 0) {
+          return [{ user, cars: [] }];
+        }
+
+        return this.carService.getCarsByIds(user.carIds).pipe(
+          switchMap((cars) => {
+            return [{ user, cars: cars }];
+          })
+        );
+      })
+    );
+  }
 }

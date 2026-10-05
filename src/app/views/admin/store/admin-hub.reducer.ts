@@ -7,18 +7,22 @@ interface AdminHubState {
   page: number;
   loadedUserIds: string[];
   isLoadingCars: boolean;
+  carSearchText: string;
   isLoadingUsers: boolean;
   searchText: string;
+  currentUserId: string | null;
 }
 
 export const initialAdminHubState: AdminHubState = {
   carIds: [],
   userIds: [],
-  page: 1,
+  page: 0,
   loadedUserIds: [],
   isLoadingCars: false,
   isLoadingUsers: false,
   searchText: '',
+  currentUserId: null,
+  carSearchText: '',
 };
 
 export const adminHubFeature = createFeature({
@@ -53,11 +57,10 @@ export const adminHubFeature = createFeature({
       isLoadingUsers: false,
     })),
 
-    // on(AdminHubActions.loadNextSetOfUsers, (state, { page }) => ({
-    //   ...state,
-    //   page,
-    //   isLoadingUsers: true,
-    // })),
+    on(AdminHubActions.loadNextSetOfUsers, (state) => ({
+      ...state,
+      isLoadingUsers: true,
+    })),
 
     on(AdminHubActions.loadNextSetOfUsersSuccess, (state, { page, loadedUserIds }) => ({
       ...state,
@@ -65,5 +68,15 @@ export const adminHubFeature = createFeature({
       loadedUserIds,
       isLoadingUsers: false,
     })),
+
+    on(AdminHubActions.loadCurrentUserStart, (state, { userId }) => ({
+      ...state,
+      currentUserId: userId,
+    })),
+
+    on(AdminHubActions.setCarSearchText, (state, { text }) => ({
+      ...state,
+      carSearchText: text,
+    }))
   ),
 });

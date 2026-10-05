@@ -3,11 +3,11 @@ import { CarActions } from '@common/store/car/car.actions';
 import { UserActions } from '@common/store/user/user.actions';
 import { UserService } from '@common/services/api/user.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { switchMap } from 'rxjs/operators';
+import { concatMap, delay, switchMap } from 'rxjs/operators';
 import { AdminHubService } from '../services/admin-hub.service';
 import { AdminHubActions } from './admin-hub.actions';
 import { concatLatestFrom } from '@ngrx/operators';
-import { selectLoadedUserIds, selectPage } from './admin-hub.selectors';
+import { selectLoadedUserIds, selectPage, selectUserIds } from './admin-hub.selectors';
 import { Store } from '@ngrx/store';
 
 export const loadCarsEffect = createEffect(
@@ -46,7 +46,7 @@ export const loadUsersInitEffect = createEffect(
                 return [
                   AdminHubActions.loadUsersInitSuccess({
                     userIds: ids,
-                    page: 2,
+                    page: 1,
                     loadedUserIds: firstTenIds,
                   }),
                   UserActions.addUsers({ users }),
@@ -65,23 +65,41 @@ export const loadNextSetOfUsersEffect = createEffect(
   (actions$ = inject(Actions), userService = inject(UserService), store = inject(Store)) => {
     return actions$.pipe(
       ofType(AdminHubActions.loadNextSetOfUsers),
-      concatLatestFrom(() => [store.select(selectPage), store.select(selectLoadedUserIds)]),
-      switchMap(([, page, loadedUserIds]) => {
-        return userService.getUserIdsForView().pipe(
-          switchMap((ids) => {
-            const nextTenIds = ids.slice(page * 10, (page + 1) * 10);
-
-            return userService.getUsersByIds(nextTenIds).pipe(
-              switchMap((users) => {
-                return [
-                  AdminHubActions.loadNextSetOfUsersSuccess({
-                    page: page + 1,
-                    loadedUserIds: [...loadedUserIds, ...nextTenIds],
-                  }),
-                  UserActions.addUsers({ users }),
-                ];
+      concatLatestFrom(() => [
+        store.select(selectPage),
+        store.select(selectUserIds),
+        store.select(selectLoadedUserIds),
+      ]),
+      concatMap(([{ userIds: nextUserIds }, page, , loadedUserIds]) => {
+        return userService.getUsersByIds(nextUserIds).pipe(
+          switchMap((users) => {
+            return [
+              AdminHubActions.loadNextSetOfUsersSuccess({
+                page: page + 1,
+                loadedUserIds: [...loadedUserIds, ...nextUserIds],
               }),
-            );
+              UserActions.addUsers({ users }),
+            ];
+          }),
+        );
+      }),
+    );
+  },
+  { functional: true },
+);
+
+export const loadCurrentUserEffect = createEffect(
+  (actions$ = inject(Actions), adminHubService = inject(AdminHubService)) => {
+    return actions$.pipe(
+      ofType(AdminHubActions.loadCurrentUserStart),
+      switchMap(({ userId }) => {
+        return adminHubService.getUserAndUserCars(userId).pipe(
+          switchMap(({ user, cars }) => {
+            return [
+              AdminHubActions.loadCurrentUserSuccess(),
+              CarActions.addCars({ cars }),
+              UserActions.addUsers({ users: [user] }),
+            ];
           }),
         );
       }),

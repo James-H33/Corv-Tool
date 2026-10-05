@@ -2,6 +2,12 @@
   padding: 20px;
 }
 
+.ct-users-list__title {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
 .ct-users-list__body {
   display: flex;
   flex-direction: column;
@@ -15,6 +21,8 @@
   padding: 16px;
   border: 1px solid var(--ct-border-default);
   border-radius: 8px;
+  text-decoration: none;
+  color: inherit;
 }
 
 .ct-users-card__left {
