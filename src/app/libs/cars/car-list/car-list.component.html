@@ -21,7 +21,7 @@
 
     @if (cars().length > 0 && !isLoadingCars()) {
       @for (car of cars(); track $index) {
-        <a [routerLink]="[carRoute(), car.id]" class="ct-car-card__link">
+        <a (click)="carClicked.emit(car)" tabindex="0" role="button" class="ct-car-card__link">
           <div class="ct-car-card">
             <div class="ct-car-card__left">
               <div class="ct-car-card__title">{{ car.name }}</div>

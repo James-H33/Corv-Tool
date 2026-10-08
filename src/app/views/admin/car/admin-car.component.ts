@@ -9,6 +9,7 @@ import { selectCarById } from '@common/store/car/car.selectors';
 import { CarComponent } from '@libs/cars/car/car.component';
 import { parseCarIdFromRoute } from '@libs/cars/utils/parse-car-id-from-route.function';
 import { Store } from '@ngrx/store';
+import { getGoBackRoute } from '../utils/get-go-back-route.function';
 
 @Component({
   selector: 'ct-admin-car',
@@ -59,6 +60,14 @@ export class AdminCarComponent {
   }
 
   goBack(): void {
-    this.location.back();
+    const url = this.routeUrl();
+
+    if (!url) {
+      return;
+    }
+
+    const goBackUrl = getGoBackRoute(url);
+
+    this.router.navigateByUrl(goBackUrl);
   }
 }
