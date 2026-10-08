@@ -16,6 +16,11 @@ export const adminRoutes = [
   },
 
   {
+    path: 'users/:id/car/:carId',
+    component: AdminCarComponent,
+  },
+
+  {
     path: '',
     component: AdminHubComponent,
     children: [

@@ -14,6 +14,7 @@ export class UserComponent {
   user = input<User | null>(null);
   isAdmin = input<boolean>(false);
   cars = input<Car[]>([]);
+  carClicked = output<Car>();
 
   // Outputs
   carSearchTextChanged = output<string>();

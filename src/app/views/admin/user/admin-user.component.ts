@@ -8,7 +8,13 @@ import { UserComponent } from '@libs/users/user/user.component';
 import { parseUserIdFromRoute } from '@libs/users/utils/parse-user-id-from-route.function';
 import { Store } from '@ngrx/store';
 import { AdminHubActions } from '../store/admin-hub.actions';
-import { selectCurrentUserId, selectFilteredCarsForCurrentUserId } from '../store/admin-hub.selectors';
+import {
+  selectCurrentUserId,
+  selectFilteredCarsForCurrentUserId,
+} from '../store/admin-hub.selectors';
+import { Router } from '@angular/router';
+import { Car } from '@common/types/car.interface';
+import { getGoBackRoute } from '@common/utils/get-go-back-route.function';
 
 @Component({
   selector: 'ct-admin-user',
@@ -18,6 +24,7 @@ import { selectCurrentUserId, selectFilteredCarsForCurrentUserId } from '../stor
 })
 export class AdminUserComponent {
   store = inject(Store);
+  router = inject(Router);
   routerService = inject(RouterEventService);
   location = inject(Location);
   backArrowIcon = Icon.BackArrow;
@@ -61,10 +68,22 @@ export class AdminUserComponent {
   }
 
   goBack(): void {
-    this.location.back();
+    const url = this.routeUrl();
+
+    if (!url) {
+      return;
+    }
+
+    const goBackUrl = getGoBackRoute(url);
+
+    this.router.navigateByUrl(goBackUrl);
   }
 
   onCarSearchTextChanged(text: string): void {
     this.store.dispatch(AdminHubActions.setCarSearchText({ text }));
+  }
+
+  onCarClicked(car: Car): void {
+    this.router.navigate(['v', 'admin', 'users', this.currentUserId(), 'car', car.id]);
   }
 }

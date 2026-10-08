@@ -3,12 +3,14 @@ import type { Event } from '@angular/router';
 import { NavigationEnd, Router } from '@angular/router';
 import { merge, Observable, of, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { RouteHistoryService } from './route-history.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RouterEventService {
   private router = inject(Router);
+  private RouteHistoryService = inject(RouteHistoryService);
 
   private routerEvents$ = this.router.events;
 
@@ -31,5 +33,13 @@ export class RouterEventService {
 
   getCurrentUrl(): string {
     return this.router.url;
+  }
+
+  goBack(): void {
+    const previousUrl = this.RouteHistoryService.getPreviousUrl();
+
+    if (previousUrl) {
+      this.router.navigateByUrl(previousUrl);
+    }
   }
 }

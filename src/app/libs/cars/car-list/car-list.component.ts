@@ -12,28 +12,20 @@ import {
   viewChildren,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { RouterLink } from '@angular/router';
 import { Icon, IconComponent } from '@common/components/icon/icon.component';
 import { SkeletonLoaderComponent } from '@common/components/skeleton/skeleton-loader.component';
 import { DropdownDirective } from '@common/directives/dropdown/dropdown.directive';
 import { InputModule } from '@common/directives/input/input.module';
+import { AddCar } from '@common/types/add-car.interface';
 import { Car } from '@common/types/car.interface';
 import { Store } from '@ngrx/store';
 import { NewCarFormComponent } from '../components/new-car-form/new-car-form.component';
-import { AddCar } from '@common/types/add-car.interface';
 
 @Component({
   selector: 'ct-car-list',
   templateUrl: './car-list.component.html',
   styleUrls: ['./car-list.component.scss'],
-  imports: [
-    InputModule,
-    RouterLink,
-    IconComponent,
-    SkeletonLoaderComponent,
-    DialogModule,
-    DropdownDirective,
-  ],
+  imports: [InputModule, IconComponent, SkeletonLoaderComponent, DialogModule, DropdownDirective],
 })
 export class CarListComponent implements OnDestroy {
   store = inject(Store);
@@ -51,7 +43,7 @@ export class CarListComponent implements OnDestroy {
   searchTermChanged = output<string>();
   carCreated = output<AddCar>();
   carDeleted = output<string>();
-  carClicked = output<string>();
+  carClicked = output<Car>();
 
   ellipsesMenuIcon = Icon.EllipsesMenu;
   galleryIcon = Icon.Gallery;

@@ -1,14 +1,14 @@
 import { inject } from '@angular/core';
+import { UserService } from '@common/services/api/user.service';
 import { CarActions } from '@common/store/car/car.actions';
 import { UserActions } from '@common/store/user/user.actions';
-import { UserService } from '@common/services/api/user.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { concatMap, delay, switchMap } from 'rxjs/operators';
+import { concatLatestFrom } from '@ngrx/operators';
+import { Store } from '@ngrx/store';
+import { concatMap, switchMap } from 'rxjs/operators';
 import { AdminHubService } from '../services/admin-hub.service';
 import { AdminHubActions } from './admin-hub.actions';
-import { concatLatestFrom } from '@ngrx/operators';
 import { selectLoadedUserIds, selectPage, selectUserIds } from './admin-hub.selectors';
-import { Store } from '@ngrx/store';
 
 export const loadCarsEffect = createEffect(
   (actions$ = inject(Actions), adminHubService = inject(AdminHubService)) => {

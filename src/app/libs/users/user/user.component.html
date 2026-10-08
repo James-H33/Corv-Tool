@@ -15,6 +15,7 @@
       [isAdmin]="isAdmin()"
       [cars]="cars()"
       (searchTermChanged)="carSearchTextChanged.emit($event)"
+      (carClicked)="carClicked.emit($event)"
     ></ct-car-list>
   </div>
 </div>
