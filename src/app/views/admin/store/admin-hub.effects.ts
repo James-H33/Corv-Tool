@@ -36,8 +36,8 @@ export const loadUsersInitEffect = createEffect(
   (actions$ = inject(Actions), userService = inject(UserService)) => {
     return actions$.pipe(
       ofType(AdminHubActions.loadUsersInit),
-      switchMap(() => {
-        return userService.getUserIdsForView().pipe(
+      switchMap(({ filters }) => {
+        return userService.getUserIdsForView(filters).pipe(
           switchMap((ids) => {
             const firstTenIds = ids.slice(0, 10);
 
@@ -45,6 +45,35 @@ export const loadUsersInitEffect = createEffect(
               switchMap((users) => {
                 return [
                   AdminHubActions.loadUsersInitSuccess({
+                    userIds: ids,
+                    page: 1,
+                    loadedUserIds: firstTenIds,
+                  }),
+                  UserActions.addUsers({ users }),
+                ];
+              }),
+            );
+          }),
+        );
+      }),
+    );
+  },
+  { functional: true },
+);
+
+export const loadUsersEffect = createEffect(
+  (actions$ = inject(Actions), userService = inject(UserService)) => {
+    return actions$.pipe(
+      ofType(AdminHubActions.loadUsers),
+      switchMap(({ filters }) => {
+        return userService.getUserIdsForView(filters).pipe(
+          switchMap((ids) => {
+            const firstTenIds = ids.slice(0, 10);
+
+            return userService.getUsersByIds(firstTenIds).pipe(
+              switchMap((users) => {
+                return [
+                  AdminHubActions.loadUsersSuccess({
                     userIds: ids,
                     page: 1,
                     loadedUserIds: firstTenIds,

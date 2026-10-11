@@ -1,6 +1,16 @@
 <div class="ct-users-list">
-  <div class="ct-users-list__title">
-    Users
+  <div class="ct-users-list-header">
+    <div class="ct-users-list-header__title">Users</div>
+
+    <div class="ct-users-list-header__search">
+      <input
+        ctInput
+        type="text"
+        placeholder="Search Users..."
+        [value]="textSearch()"
+        (input)="onTextSearchChanged($event)"
+      />
+    </div>
   </div>
 
   <div class="ct-users-list__body">

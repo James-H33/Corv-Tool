@@ -6,6 +6,7 @@ import { selectUsersMap } from '@common/store/user/user.selectors';
 export const {
   selectCarIds,
   selectIsLoadingCars,
+  selectUsersTextSearch,
 
   selectUserIds,
   selectLoadedUserIds,

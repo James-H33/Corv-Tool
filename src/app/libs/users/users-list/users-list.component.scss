@@ -2,10 +2,20 @@
   padding: 20px;
 }
 
-.ct-users-list__title {
+.ct-users-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.ct-users-list-header__title {
   font-size: 24px;
   font-weight: 500;
-  margin-bottom: 16px;
+}
+
+.ct-users-list-header__search {
+  width: 200px;
 }
 
 .ct-users-list__body {

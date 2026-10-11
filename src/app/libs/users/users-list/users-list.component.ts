@@ -1,9 +1,9 @@
 import { Component, effect, ElementRef, inject, input, output, viewChild } from '@angular/core';
-import { toObservable } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { SkeletonLoaderComponent } from '@common/components/skeleton/skeleton-loader.component';
 import { User } from '@common/types/user.interface';
 import { Store } from '@ngrx/store';
-import { Subject, takeWhile, withLatestFrom } from 'rxjs';
+import { debounceTime, Subject, takeWhile, withLatestFrom } from 'rxjs';
 
 @Component({
   selector: 'ct-users-list',
@@ -16,9 +16,13 @@ export class UsersListComponent {
 
   users = input<User[]>([]);
 
+  textSearch = input<string>('');
+
   isLoadingUsers = input<boolean>(false);
 
   loadMore = output();
+
+  textSearchChanged = output<string>();
 
   userClicked = output<string>();
 
@@ -29,6 +33,8 @@ export class UsersListComponent {
   loadMore$ = new Subject<void>();
 
   isLoadingUsers$ = toObservable(this.isLoadingUsers);
+
+  textSearch$ = new Subject<string>();
 
   constructor() {
     effect(() => {
@@ -43,9 +49,19 @@ export class UsersListComponent {
       .pipe(
         withLatestFrom(this.isLoadingUsers$),
         takeWhile(([, isLoading]) => !isLoading),
+        takeUntilDestroyed(),
       )
       .subscribe(() => {
         this.loadMore.emit();
+      });
+
+    this.textSearch$
+      .pipe(
+        debounceTime(500),
+        takeUntilDestroyed(),
+      )
+      .subscribe((value: string) => {
+        this.textSearchChanged.emit(value);
       });
   }
 
@@ -67,6 +83,14 @@ export class UsersListComponent {
     if (trigger) {
       this.loadMoreTriggerWatcher.observe(trigger.nativeElement);
     }
+  }
+
+  onTextSearchChanged(event: Event): void {
+    const target = event.target as HTMLInputElement;
+
+    console.log(target.value);
+
+    this.textSearch$.next(target.value);
   }
 
   goToUser(userId: string): void {
