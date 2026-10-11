@@ -18,8 +18,10 @@ export class UserService {
     });
   }
 
-  getUserIdsForView(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.baseUrl}/users/admin/ids-for-view`, {
+  getUserIdsForView(filters: { searchText: string }): Observable<string[]> {
+    return this.http.post<string[]>(`${this.baseUrl}/users/admin/ids-for-view`, {
+      searchText: filters.searchText,
+    }, {
       withCredentials: true,
     });
   }

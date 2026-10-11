@@ -2,7 +2,9 @@
   <ct-users-list
     [users]="users()"
     [isLoadingUsers]="isLoadingUsers()"
+    [textSearch]="usersTextSearch()"
     (loadMore)="loadNextSetOfUsers()"
+    (textSearchChanged)="onTextSearchChanged($event)"
     (userClicked)="onUserClicked($event)">
   </ct-users-list>
 </div>

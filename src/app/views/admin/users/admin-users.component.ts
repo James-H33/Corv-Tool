@@ -6,6 +6,7 @@ import {
   selectAdminViewUsers,
   selectIsLoadingUsers,
   selectNextSetOfUsersToLoad,
+  selectUsersTextSearch,
 } from '../store/admin-hub.selectors';
 import { Router } from '@angular/router';
 
@@ -19,16 +20,18 @@ export class AdminUsersComponent implements OnInit {
   store = inject(Store);
   router = inject(Router);
 
+  usersTextSearch = this.store.selectSignal(selectUsersTextSearch);
   users = this.store.selectSignal(selectAdminViewUsers);
   isLoadingUsers = this.store.selectSignal(selectIsLoadingUsers);
   nextSetOfUsersToLoad = this.store.selectSignal(selectNextSetOfUsersToLoad);
 
   ngOnInit(): void {
-    this.store.dispatch(AdminHubActions.loadUsersInit());
+    this.store.dispatch(AdminHubActions.loadUsersInit({ filters: { searchText: '' } }));
   }
 
   loadNextSetOfUsers(): void {
     console.log('Loading next set of users: ', this.nextSetOfUsersToLoad());
+
     if (this.nextSetOfUsersToLoad()?.length === 0) {
       console.log('No more users to load.');
       return;
@@ -41,5 +44,9 @@ export class AdminUsersComponent implements OnInit {
 
   onUserClicked(userId: string): void {
     this.router.navigate(['/v/admin/users', userId]);
+  }
+
+  onTextSearchChanged(searchText: string): void {
+    this.store.dispatch(AdminHubActions.loadUsers({ filters: { searchText } }));
   }
 }
