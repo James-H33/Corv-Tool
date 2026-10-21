@@ -9,23 +9,34 @@ import {
   OnDestroy,
   output,
   signal,
+  viewChild,
   viewChildren,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Icon, IconComponent } from '@common/components/icon/icon.component';
+import { ModalComponent } from '@common/components/modal/modal.component';
 import { SkeletonLoaderComponent } from '@common/components/skeleton/skeleton-loader.component';
 import { DropdownDirective } from '@common/directives/dropdown/dropdown.directive';
 import { InputModule } from '@common/directives/input/input.module';
 import { AddCar } from '@common/types/add-car.interface';
 import { Car } from '@common/types/car.interface';
 import { Store } from '@ngrx/store';
+import { DeleteCarModalComponent } from '../components/delete-car-modal/delete-car-modal.component';
 import { NewCarFormComponent } from '../components/new-car-form/new-car-form.component';
 
 @Component({
   selector: 'ct-car-list',
   templateUrl: './car-list.component.html',
   styleUrls: ['./car-list.component.scss'],
-  imports: [InputModule, IconComponent, SkeletonLoaderComponent, DialogModule, DropdownDirective],
+  imports: [
+    InputModule,
+    IconComponent,
+    SkeletonLoaderComponent,
+    DialogModule,
+    DropdownDirective,
+    ModalComponent,
+    DeleteCarModalComponent,
+  ],
 })
 export class CarListComponent implements OnDestroy {
   store = inject(Store);
@@ -50,9 +61,12 @@ export class CarListComponent implements OnDestroy {
   cameraIcon = Icon.Camera;
   destroyRef = inject(DestroyRef);
 
+  deleteCarModal = viewChild<ModalComponent>(ModalComponent);
   dropdowns = viewChildren(DropdownDirective);
 
   textSearch = signal('');
+
+  carIdToDelete: string | null = null;
 
   carRoute = computed(() => (this.isAdmin() ? '/v/admin/cars' : '/v/cars'));
 
@@ -92,12 +106,31 @@ export class CarListComponent implements OnDestroy {
   }
 
   onDeleteCar(carId: string): void {
+    this.carIdToDelete = carId;
+
+    this.deleteCarModal()?.open();
     const dropdownsArray = this.dropdowns();
 
     for (const dropdown of dropdownsArray) {
       dropdown?.close();
     }
+  }
 
-    this.carDeleted.emit(carId);
+  closeModal(): void {
+    this.deleteCarModal()?.close();
+  }
+
+  onDeleteCarConfirmed(): void {
+    if (!this.carIdToDelete) {
+      return;
+    }
+
+    this.carDeleted.emit(this.carIdToDelete);
+    this.carIdToDelete = null;
+    this.closeModal();
+  }
+
+  onDeleteCarCanceled(): void {
+    this.closeModal();
   }
 }

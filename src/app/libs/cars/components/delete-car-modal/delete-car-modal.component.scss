@@ -1,0 +1,15 @@
+:host {
+  display: block;
+}
+
+.ct-delete-car-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ct-delete-car-modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}

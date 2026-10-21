@@ -28,6 +28,16 @@ export const selectCarsWithUsers = createSelector(
   }
 );
 
+export const selectFilteredCarsWithUsers = createSelector(
+  selectCarsWithUsers,
+  selectCarSearchText,
+  (cars, carSearchText) => {
+    return cars.filter(car =>
+      car.name.toLowerCase().includes(carSearchText.toLowerCase())
+    );
+  }
+);
+
 export const selectAdminViewUsers = createSelector(
   selectUsersMap,
   selectLoadedUserIds,

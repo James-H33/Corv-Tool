@@ -78,3 +78,12 @@
     }
   </div>
 </div>
+
+<ct-modal #modal>
+  <div modalContent>
+    <ct-delete-car-modal
+      (deleted)="onDeleteCarConfirmed()"
+      (canceled)="onDeleteCarCanceled()"
+    ></ct-delete-car-modal>
+  </div>
+</ct-modal>
