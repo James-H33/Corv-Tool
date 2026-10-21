@@ -66,6 +66,23 @@ button[ctButton] {
     box-shadow: none;
   }
 
+  &[ctButtonVariant='danger'] {
+    color: #fff;
+    background-color: var(--ct-background-danger);
+    box-shadow:
+      0 2px 4px 0px rgb(177 183 188),
+      0 1px 3px 0 rgb(200, 207, 233);
+
+    &:hover {
+      background-color: var(--ct-background-danger);
+    }
+
+    &:active,
+    &:focus {
+      background-color: var(--ct-background-danger);
+    }
+  }
+
   &:hover {
     background-color: #fafafa;
   }

@@ -1,0 +1,11 @@
+<ng-template #template>
+  <div class="ct-modal">
+    <button class="ct-modal-close" ctButton ctButtonVariant="ghost" (click)="close()">
+      <span>&times;</span>
+    </button>
+
+    <ng-content select="[modalHeader]"></ng-content>
+    <ng-content select="[modalContent]"></ng-content>
+    <ng-content select="[modalFooter]"></ng-content>
+  </div>
+</ng-template>
