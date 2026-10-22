@@ -21,6 +21,33 @@
   }
 }
 
+.ct-nav-mobile-menu-backdrop {
+   visibility: hidden;
+    opacity: 0;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -80px;
+    width: 80px;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: -1;
+
+    .ct-nav-mobile-menu.open & {
+      visibility: visible;
+      animation: showBackdrop 0.5s ease-in-out forwards 0.1s;
+    }
+}
+
+@keyframes showBackdrop {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .ct-nav-mobile-menu-content__item {
   display: flex;
   align-items: center;

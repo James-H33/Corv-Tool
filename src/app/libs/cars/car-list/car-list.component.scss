@@ -34,7 +34,7 @@
 
 .ct-car-card {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr 40px;
   gap: 8px;
   padding: 16px;
   border: 1px solid var(--ct-border-default);

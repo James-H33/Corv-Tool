@@ -1,5 +1,4 @@
-import { DialogRef } from '@angular/cdk/dialog';
-import { Component, inject, output, signal } from '@angular/core';
+import { Component, output, signal } from '@angular/core';
 import { AutoFocusDirective } from '@common/directives/auto-focus/auto-focus.directive';
 import { ButtonModule } from '@common/directives/button/button.module';
 import { AddCar, AddCarActionType } from '@common/types/add-car.interface';
@@ -13,9 +12,9 @@ import { AddCar, AddCarActionType } from '@common/types/add-car.interface';
 export class NewCarFormComponent {
   name = signal('');
   year = signal('');
-  dialogRef = inject(DialogRef);
 
   create = output<AddCar>();
+  canceled = output<void>();
 
   myOptions = signal([
     { label: '1963', value: '1963' },
@@ -30,7 +29,7 @@ export class NewCarFormComponent {
   }
 
   cancel(): void {
-    this.dialogRef.close();
+    this.canceled.emit();
   }
 
   useManualEntry(): void {

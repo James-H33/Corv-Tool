@@ -1,4 +1,4 @@
-import { Dialog, DialogModule } from '@angular/cdk/dialog';
+import { DialogModule } from '@angular/cdk/dialog';
 import {
   Component,
   computed,
@@ -12,7 +12,6 @@ import {
   viewChild,
   viewChildren,
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Icon, IconComponent } from '@common/components/icon/icon.component';
 import { ModalComponent } from '@common/components/modal/modal.component';
 import { SkeletonLoaderComponent } from '@common/components/skeleton/skeleton-loader.component';
@@ -36,11 +35,11 @@ import { NewCarFormComponent } from '../components/new-car-form/new-car-form.com
     DropdownDirective,
     ModalComponent,
     DeleteCarModalComponent,
+    NewCarFormComponent,
   ],
 })
 export class CarListComponent implements OnDestroy {
   store = inject(Store);
-  dialog = inject(Dialog);
 
   // Inputs
   title = input<string>('Your Cars');
@@ -61,7 +60,8 @@ export class CarListComponent implements OnDestroy {
   cameraIcon = Icon.Camera;
   destroyRef = inject(DestroyRef);
 
-  deleteCarModal = viewChild<ModalComponent>(ModalComponent);
+  deleteCarModal = viewChild<ModalComponent>('deleteCarModal');
+  newCarModal = viewChild<ModalComponent>('newCarModal');
   dropdowns = viewChildren(DropdownDirective);
 
   textSearch = signal('');
@@ -83,21 +83,7 @@ export class CarListComponent implements OnDestroy {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open<string>(NewCarFormComponent, {
-      width: '90vw',
-      maxWidth: '400px',
-    });
-
-    const instance = dialogRef.componentInstance as NewCarFormComponent;
-
-    const createSubscription = instance.create.subscribe((newCar) => {
-      dialogRef.close();
-      this.carCreated.emit(newCar);
-    });
-
-    dialogRef.closed.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-      createSubscription?.unsubscribe();
-    });
+    this.newCarModal()?.open();
   }
 
   openOptionsMenu(event: MouseEvent): void {
@@ -118,6 +104,15 @@ export class CarListComponent implements OnDestroy {
 
   closeModal(): void {
     this.deleteCarModal()?.close();
+  }
+
+  onCreateCar(car: AddCar): void {
+    this.carCreated.emit(car);
+    this.newCarModal()?.close();
+  }
+
+  onCancelCreateCar(): void {
+    this.newCarModal()?.close();
   }
 
   onDeleteCarConfirmed(): void {

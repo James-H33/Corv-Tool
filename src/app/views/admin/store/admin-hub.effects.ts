@@ -32,35 +32,6 @@ export const loadCarsEffect = createEffect(
   { functional: true },
 );
 
-export const loadUsersInitEffect = createEffect(
-  (actions$ = inject(Actions), userService = inject(UserService)) => {
-    return actions$.pipe(
-      ofType(AdminHubActions.loadUsersInit),
-      switchMap(({ filters }) => {
-        return userService.getUserIdsForView(filters).pipe(
-          switchMap((ids) => {
-            const firstTenIds = ids.slice(0, 10);
-
-            return userService.getUsersByIds(firstTenIds).pipe(
-              switchMap((users) => {
-                return [
-                  AdminHubActions.loadUsersInitSuccess({
-                    userIds: ids,
-                    page: 1,
-                    loadedUserIds: firstTenIds,
-                  }),
-                  UserActions.addUsers({ users }),
-                ];
-              }),
-            );
-          }),
-        );
-      }),
-    );
-  },
-  { functional: true },
-);
-
 export const loadUsersEffect = createEffect(
   (actions$ = inject(Actions), userService = inject(UserService)) => {
     return actions$.pipe(
