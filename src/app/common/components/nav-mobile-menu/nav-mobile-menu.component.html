@@ -26,4 +26,11 @@
       <a [routerLink]="['/logout']" (click)="logout()">Logout</a>
     </div>
   </div>
+
+  <span
+    class="ct-nav-mobile-menu-backdrop"
+    (click)="closeMenu()"
+    (keydown)="closeMenu()"
+    tabindex="0"
+  ></span>
 </div>

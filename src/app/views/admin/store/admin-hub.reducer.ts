@@ -41,22 +41,6 @@ export const adminHubFeature = createFeature({
       isLoadingCars: false,
     })),
 
-    on(AdminHubActions.loadUsersInit, (state) => ({
-      ...state,
-      userIds: [],
-      loadedUserIds: [],
-      page: 1,
-      isLoadingUsers: true,
-    })),
-
-    on(AdminHubActions.loadUsersInitSuccess, (state, { loadedUserIds, userIds, page }) => ({
-      ...state,
-      loadedUserIds,
-      userIds,
-      page,
-      isLoadingUsers: false,
-    })),
-
     on(AdminHubActions.loadUsers, (state, { filters }) => ({
       ...state,
       usersTextSearch: filters?.searchText || '',

@@ -26,7 +26,7 @@ export class AdminUsersComponent implements OnInit {
   nextSetOfUsersToLoad = this.store.selectSignal(selectNextSetOfUsersToLoad);
 
   ngOnInit(): void {
-    this.store.dispatch(AdminHubActions.loadUsersInit({ filters: { searchText: '' } }));
+    this.store.dispatch(AdminHubActions.loadUsers({ filters: { searchText: '' } }));
   }
 
   loadNextSetOfUsers(): void {

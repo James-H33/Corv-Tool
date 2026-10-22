@@ -21,9 +21,9 @@
 
     @if (cars().length > 0 && !isLoadingCars()) {
       @for (car of cars(); track $index) {
-        <a (click)="carClicked.emit(car)" tabindex="0" role="button" class="ct-car-card__link">
+        <div class="ct-car-card__link">
           <div class="ct-car-card">
-            <div class="ct-car-card__left">
+            <div class="ct-car-card__left" (click)="carClicked.emit(car)" tabindex="0" role="button">
               <div class="ct-car-card__title">{{ car.name }}</div>
 
               <div class="ct-car-card__subtitle">VIN: {{ car.vin }}</div>
@@ -50,7 +50,7 @@
               </div>
             </div>
           </div>
-        </a>
+        </div>
 
         <ng-template #optionsMenu>
           <div class="cdk-overlay-pane-default ct-car-list-options-menu">
@@ -79,11 +79,20 @@
   </div>
 </div>
 
-<ct-modal #modal>
+<ct-modal #deleteCarModal>
   <div modalContent>
     <ct-delete-car-modal
       (deleted)="onDeleteCarConfirmed()"
       (canceled)="onDeleteCarCanceled()"
     ></ct-delete-car-modal>
+  </div>
+</ct-modal>
+
+<ct-modal #newCarModal>
+  <div modalContent>
+    <ct-new-car-form
+      (create)="onCreateCar($event)"
+      (canceled)="onCancelCreateCar()">
+    </ct-new-car-form>
   </div>
 </ct-modal>

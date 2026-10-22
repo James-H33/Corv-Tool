@@ -4,7 +4,6 @@
   border-radius: 8px;
   padding: 20px;
   background-color: var(--ct-background-main);
-  min-height: 400px;
 }
 
 .ct-new-car-form {
@@ -12,19 +11,6 @@
   padding-top: 0;
   display: flex;
   flex-direction: column;
-}
-
-.ct-new-car-form__header {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 6px;
-}
-
-.ct-new-car-form__close {
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--ct-text-secondary);
-  cursor: pointer;
 }
 
 .ct-new-car-form__title {
@@ -48,12 +34,11 @@
 }
 
 .ct-new-car-form__year-options {
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
   gap: 12px;
 
   button {
-    flex: 1;
     font-size: 16px;
   }
 }
