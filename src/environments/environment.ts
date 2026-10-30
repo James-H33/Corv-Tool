@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  baseAPIUrl: 'http://192.168.1.148:3000',
-  imageBaseUrl: 'http://192.168.1.148:3000/static-images/'
+  baseAPIUrl: 'http://api.midyearhub.com',
+  imageBaseUrl: 'http://api.midyearhub.com/static-images/'
 };

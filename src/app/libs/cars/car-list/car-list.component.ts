@@ -22,6 +22,7 @@ import { Car } from '@common/types/car.interface';
 import { Store } from '@ngrx/store';
 import { DeleteCarModalComponent } from '../components/delete-car-modal/delete-car-modal.component';
 import { NewCarFormComponent } from '../components/new-car-form/new-car-form.component';
+import { StylesService } from '@common/services/styles.service';
 
 @Component({
   selector: 'ct-car-list',
@@ -40,6 +41,7 @@ import { NewCarFormComponent } from '../components/new-car-form/new-car-form.com
 })
 export class CarListComponent implements OnDestroy {
   store = inject(Store);
+  stylesService = inject(StylesService);
 
   // Inputs
   title = input<string>('Your Cars');
@@ -67,6 +69,13 @@ export class CarListComponent implements OnDestroy {
   textSearch = signal('');
 
   carIdToDelete: string | null = null;
+
+  isMobile = this.stylesService.isMobile;
+
+  newCarDialogConfig = computed(() => ({
+    width: this.isMobile() ? '100%' : '600px',
+    maxWidth: '90vw',
+  }));
 
   carRoute = computed(() => (this.isAdmin() ? '/v/admin/cars' : '/v/cars'));
 

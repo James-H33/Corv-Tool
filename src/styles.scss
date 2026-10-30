@@ -1,6 +1,8 @@
 @use './app/common/common.styles' as *;
 @use '@angular/cdk' as cdk;
 
+@use 'scroll-bar.mixin' as scrollbar;
+
 @include cdk.overlay();
 
 *,
@@ -65,12 +67,9 @@ body {
   overflow-x: hidden;
   background: var(--ct-background-main);
   color: var(--ct-text-color-default);
-}
 
-// Maybe?
-// body:has(.cdk-overlay-pane-default) {
-//   overflow: hidden;
-// }
+  @include scrollbar.scrollbar();
+}
 
 .cdk-overlay-pane-default {
   background: white;

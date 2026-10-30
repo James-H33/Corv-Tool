@@ -1,5 +1,13 @@
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
-import { Component, DestroyRef, inject, output, TemplateRef, viewChild } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  input,
+  output,
+  TemplateRef,
+  viewChild,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ButtonModule } from '@common/directives/button/button.module';
 import { take } from 'rxjs';
@@ -17,6 +25,14 @@ export class ModalComponent {
 
   dialogRef: DialogRef<unknown, unknown> | undefined;
 
+  config = input<{
+    width: string;
+    maxWidth: string;
+  }>({
+    width: '90vw',
+    maxWidth: '360px',
+  });
+
   opened = output<void>();
   closed = output<void>();
 
@@ -27,10 +43,7 @@ export class ModalComponent {
       return;
     }
 
-    this.dialogRef = this.dialog.open(templateRef, {
-      width: '90vw',
-      maxWidth: '360px'
-    });
+    this.dialogRef = this.dialog.open(templateRef, this.config());
 
     this.opened.emit();
 

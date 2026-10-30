@@ -5,7 +5,7 @@
       <input
         ctInput
         type="text"
-        placeholder="Search cars..."
+        placeholder="Search Cars..."
         [value]="textSearch()"
         (input)="textSearch.set($event.target.value)"
       />
@@ -88,7 +88,7 @@
   </div>
 </ct-modal>
 
-<ct-modal #newCarModal>
+<ct-modal #newCarModal [config]="newCarDialogConfig()">
   <div modalContent>
     <ct-new-car-form
       (create)="onCreateCar($event)"

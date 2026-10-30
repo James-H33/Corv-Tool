@@ -88,8 +88,6 @@ export class UsersListComponent {
   onTextSearchChanged(event: Event): void {
     const target = event.target as HTMLInputElement;
 
-    console.log(target.value);
-
     this.textSearch$.next(target.value);
   }
 
