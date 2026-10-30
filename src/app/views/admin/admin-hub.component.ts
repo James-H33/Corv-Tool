@@ -34,7 +34,6 @@ export class AdminHubComponent implements OnInit {
 
   ngOnInit(): void {
     const currentUrl = this.routerEventService.getCurrentUrl();
-    console.log('Current URL on init:', currentUrl);
     this.setActiveTab(currentUrl);
   }
 

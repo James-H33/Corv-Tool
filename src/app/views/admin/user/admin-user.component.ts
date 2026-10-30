@@ -59,8 +59,6 @@ export class AdminUserComponent {
     effect(() => {
       const userId = this.userIdFromRoute();
 
-      console.log('userId from route:', userId);
-
       if (userId) {
         this.store.dispatch(AdminHubActions.loadCurrentUserStart({ userId }));
       }

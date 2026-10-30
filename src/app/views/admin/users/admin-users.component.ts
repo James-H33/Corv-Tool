@@ -30,8 +30,6 @@ export class AdminUsersComponent implements OnInit {
   }
 
   loadNextSetOfUsers(): void {
-    console.log('Loading next set of users: ', this.nextSetOfUsersToLoad());
-
     if (this.nextSetOfUsersToLoad()?.length === 0) {
       console.log('No more users to load.');
       return;
